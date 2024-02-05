@@ -1,0 +1,9 @@
+{
+    "ip":"localhost",
+    "port" : "27017",
+    "database" : "Cowstronauts",
+    "collections" : [
+        "Upgrades",
+        "Users"
+    ]
+}
