@@ -26,6 +26,10 @@ public class GetEndpointController {
 	private MongoClient mongoClient;
 	private MongoDatabase database;
 	
+	GetEndpointController() {
+		connect();
+	}
+	
 	@GetMapping("/login")
 	ResponseEntity<JSONObject> login() {
 		JSONObject jsonString = new JSONObject();
@@ -48,7 +52,7 @@ public class GetEndpointController {
 	private JSONObject readJSONFile() {
 		JSONParser jsonParser = new JSONParser();
 		
-		File jsonFile = new File("./src/es/florida/AE03/db.json");
+		File jsonFile = new File("./src/config.json");
 		JSONObject obj;
 		try {
 			obj = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
