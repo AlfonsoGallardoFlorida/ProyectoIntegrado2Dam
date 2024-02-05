@@ -7,15 +7,19 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.bson.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 @RestController
@@ -26,13 +30,20 @@ public class GetEndpointController {
 	private MongoClient mongoClient;
 	private MongoDatabase database;
 	
-	GetEndpointController() {
-		connect();
-	}
+
 	
 	@GetMapping("/login")
-	ResponseEntity<JSONObject> login() {
+	ResponseEntity<JSONObject> login(@RequestParam(value = "user") String user, @RequestParam(value = "pass") String pass) {
 		JSONObject jsonString = new JSONObject();
+		connect();
+		String collection = (String) this.collections.get(1);
+		MongoCollection<Document> userCollection = this.database.getCollection(collection);
+		MongoCursor<Document> cursor = userCollection.find().iterator();
+		while(cursor.hasNext()) {
+			JSONObject response = new JSONObject(cursor.next());
+			System.out.println(response.get("name"));
+		}
+		
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 	
