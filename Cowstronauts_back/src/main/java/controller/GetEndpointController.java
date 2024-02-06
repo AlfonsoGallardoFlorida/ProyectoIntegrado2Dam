@@ -55,6 +55,13 @@ public class GetEndpointController {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonString);
 	}
 	
+	@GetMapping("/upgrades")
+	ResponseEntity<JSONObject> getUpgrades() {
+		JSONObject jsonString = new JSONObject();
+		connect();
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
+	}
+	
 	private void connect() {
 		JSONObject dbData = readJSONFile();
 		Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
