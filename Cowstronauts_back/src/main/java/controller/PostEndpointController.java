@@ -49,6 +49,9 @@ public class PostEndpointController {
 			}
 		}
 
+		String encryptedPass = encryptToMD5(newUser.getPassword());
+		newUser.setPassword(encryptedPass);
+		System.out.println(encryptedPass);
 		usersRepository.save(newUser);
 
 		return new ResponseEntity<>("Usuario registrado exitosamente.", HttpStatus.OK);
@@ -67,6 +70,32 @@ public class PostEndpointController {
 		upgradesRepository.save(newUpgrade);
 
 		return new ResponseEntity<>("Mejora registrada exitosamente.", HttpStatus.OK);
+	}
+
+	public static String encryptToMD5(String input) {
+		try {
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
+
+			byte[] inputBytes = input.getBytes();
+
+			byte[] hashBytes = md.digest(inputBytes);
+
+			StringBuilder hexStringBuilder = new StringBuilder();
+			for (byte b : hashBytes) {
+				String hex = Integer.toHexString(0xFF & b);
+				if (hex.length() == 1) {
+					hexStringBuilder.append('0');
+				}
+				hexStringBuilder.append(hex);
+			}
+
+			return hexStringBuilder.toString();
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
