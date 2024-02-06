@@ -9,22 +9,25 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 
 import main.java.model.Users;
 import main.java.model.userSave;
 import main.java.repository.UsersRepository;
 
-public class putEndpointController {
+@RestController
+public class PutEndpointController {
 
 	@Autowired
 	private UsersRepository usersRepository;
 	
 	@PutMapping("/load")
-	ResponseEntity<JSONObject> loadSave(@PathVariable int id) {
+	ResponseEntity<JSONObject> loadSave(@RequestParam(value = "id") int id, @RequestBody userSave body) {
 		JSONObject jsonString = new JSONObject();
 		Users user = usersRepository.searchOneUser(id);
-		System.out.println(user.getName());
+		System.out.println(body.getCps());
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 	
 }
+
