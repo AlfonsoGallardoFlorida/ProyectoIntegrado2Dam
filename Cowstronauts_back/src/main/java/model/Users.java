@@ -15,7 +15,7 @@ public class Users {
 	private String password;
 	private String dateCreated;
 	private String lastSave;
-	private List<userSave> save;
+	private userSave save;
 
 	public String getMongoId() {
 		return mongoId;
@@ -65,12 +65,11 @@ public class Users {
 		this.lastSave = lastSave;
 	}
 
-	public List<userSave> getSave() {
+	public userSave getSave() {
 		return save;
 	}
 
-	public void setSave(List<userSave> save) {
+	public void setSave(userSave save) {
 		this.save = save;
 	}
-
 }
