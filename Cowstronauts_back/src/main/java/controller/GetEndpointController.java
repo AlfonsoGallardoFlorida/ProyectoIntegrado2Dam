@@ -1,8 +1,8 @@
 package main.java.controller;
 
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ import main.java.repository.UsersRepository;
 
 @RestController
 public class GetEndpointController {
-	
+
 	@Autowired
 	private UsersRepository usersRepository;
-	
+
 	@Autowired
 	private UpgradesRepository upgradesRepository;
 
-	
 	@GetMapping("/login")
-	ResponseEntity<JSONObject> login(@RequestParam(value = "user") String user, @RequestParam(value = "pass") String pass) {
+	ResponseEntity<JSONObject> login(@RequestParam(value = "user") String user,
+			@RequestParam(value = "pass") String pass) {
 		JSONObject jsonString = new JSONObject();
 		List<Users> listUsers = usersRepository.findAll();
 			System.out.println(listUsers);
@@ -46,7 +46,7 @@ public class GetEndpointController {
 		
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonString);
 	}
-	
+
 	@GetMapping("/upgrades")
 	ResponseEntity<JSONObject> getUpgrades() {
 		JSONObject jsonString = new JSONObject();
@@ -56,14 +56,42 @@ public class GetEndpointController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
-	
-	private Boolean checkPassword(String dbPass, String userPass) {
-		
-		if(dbPass.equals(userPass)) {
+
+	public static String encryptToMD5(String input) {
+		try {
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
+
+			byte[] inputBytes = input.getBytes();
+
+			byte[] hashBytes = md.digest(inputBytes);
+
+			StringBuilder hexStringBuilder = new StringBuilder();
+			for (byte b : hashBytes) {
+				String hex = Integer.toHexString(0xFF & b);
+				if (hex.length() == 1) {
+					hexStringBuilder.append('0');
+				}
+				hexStringBuilder.append(hex);
+			}
+
+			return hexStringBuilder.toString();
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private Boolean checkPassword(String name, String dbPass, String userPass) {
+
+		String userEncrypted = encryptToMD5(userPass);
+		String dbEncrypted = encryptToMD5(dbPass);
+		if (dbEncrypted.equals(userEncrypted)) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
-		
+
 	}
 }
