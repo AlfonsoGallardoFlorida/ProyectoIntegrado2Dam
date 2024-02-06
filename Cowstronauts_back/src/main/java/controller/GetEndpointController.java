@@ -36,7 +36,7 @@ public class GetEndpointController {
 				String name = u.getName().toLowerCase();
 				System.out.println(name);
 				if(name.equals(user.toLowerCase())) {
-					if(checkPassword(pass, u.getPassword())) {
+					if(checkPassword(u.getPassword(), pass)) {
 						return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 					}else {
 						return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonString);
@@ -51,9 +51,7 @@ public class GetEndpointController {
 	ResponseEntity<JSONObject> getUpgrades() {
 		JSONObject jsonString = new JSONObject();
 		List<Upgrades> listUpgrades = upgradesRepository.findAll();
-		for(Upgrades u : listUpgrades) {
-			jsonString.put("upgrade", u);
-		}
+		jsonString.put("upgrade", listUpgrades);
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
@@ -83,7 +81,7 @@ public class GetEndpointController {
 		}
 	}
 
-	private Boolean checkPassword(String name, String dbPass, String userPass) {
+	private Boolean checkPassword(String dbPass, String userPass) {
 
 		String userEncrypted = encryptToMD5(userPass);
 		String dbEncrypted = encryptToMD5(dbPass);
