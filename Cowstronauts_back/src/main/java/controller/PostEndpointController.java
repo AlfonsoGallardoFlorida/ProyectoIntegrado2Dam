@@ -2,6 +2,8 @@ package main.java.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.ParseException;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import main.java.model.Upgrades;
 import main.java.model.Users;
 import main.java.repository.UpgradesRepository;
 import main.java.repository.UsersRepository;
@@ -32,6 +35,9 @@ public class PostEndpointController {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
+	@Autowired
+	private UpgradesRepository upgradesRepository;
 
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@RequestBody Users newUser) {
@@ -48,14 +54,19 @@ public class PostEndpointController {
 		return new ResponseEntity<>("Usuario registrado exitosamente.", HttpStatus.OK);
 	}
 
-	private Boolean checkUser(String name, String dbName) {
+	@PostMapping("/newUpgrade")
+	public ResponseEntity<String> newUpgrade(@RequestBody Upgrades newUpgrade) {
+		List<Upgrades> existingUpgrades = upgradesRepository.findAll();
 
-		if (name.equals(dbName)) {
-			return true;
-		} else {
-			return false;
+		for (Upgrades existingUser : existingUpgrades) {
+			if (existingUser.getName().equals(newUpgrade.getName())) {
+				return new ResponseEntity<>("La mejora ya existe.", HttpStatus.BAD_REQUEST);
+			}
 		}
 
+		upgradesRepository.save(newUpgrade);
+
+		return new ResponseEntity<>("Mejora registrada exitosamente.", HttpStatus.OK);
 	}
 
 }
