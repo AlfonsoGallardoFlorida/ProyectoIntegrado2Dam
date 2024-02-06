@@ -41,13 +41,21 @@ public class GetEndpointController {
 		MongoCursor<Document> cursor = userCollection.find().iterator();
 		while(cursor.hasNext()) {
 			JSONObject response = new JSONObject(cursor.next());
-			System.out.println(response.get("name"));
+			String name = ((String) response.get("name")).toLowerCase();
+			System.out.println(name);
+			if(name.equals(user)) {
+				Boolean passEquals = checkPassword(name, (String) response.get("password"), pass);
+				if(passEquals) {
+					return ResponseEntity.status(HttpStatus.OK).body(jsonString);
+				}else {
+					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonString);
+				}
+			}
 		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonString);
 	}
 	
-	public void connect() {
+	private void connect() {
 		JSONObject dbData = readJSONFile();
 		Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
 		mongoLogger.setLevel(Level.SEVERE);
@@ -58,6 +66,16 @@ public class GetEndpointController {
 		this.collections = (JSONArray) dbData.get("collections");
 		this.mongoClient = new MongoClient(ip, port);
 		this.database = this.mongoClient.getDatabase(databaseName);
+	}
+	
+	private Boolean checkPassword(String name, String dbPass, String userPass) {
+		
+		if(dbPass.equals(userPass)) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 	
 	private JSONObject readJSONFile() {
