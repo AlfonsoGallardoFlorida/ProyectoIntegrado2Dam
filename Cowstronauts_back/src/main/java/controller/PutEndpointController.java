@@ -20,14 +20,15 @@ public class PutEndpointController {
 
 	@Autowired
 	private UsersRepository usersRepository;
-	
+
 	@PutMapping("/load")
 	ResponseEntity<JSONObject> loadSave(@RequestParam(value = "id") int id, @RequestBody userSave body) {
 		JSONObject jsonString = new JSONObject();
-		Users user = usersRepository.searchOneUser(id);
+	    Users user = usersRepository.searchOneUser(id);
+		System.out.println("_____________________\n" + user);
+		System.out.println(user.getName());
 		System.out.println(body.getCps());
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
-	
-}
 
+}

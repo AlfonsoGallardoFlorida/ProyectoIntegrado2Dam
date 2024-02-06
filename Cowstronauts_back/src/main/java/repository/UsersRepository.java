@@ -7,7 +7,7 @@ import main.java.model.Users;
 
 public interface UsersRepository extends MongoRepository<Users, String> {
 	
-	@Query(value = "{ 'id': ? }")
+	@Query(value = "{ 'id': ?0 }")
 	Users searchOneUser(int id);
-	
+
 }
