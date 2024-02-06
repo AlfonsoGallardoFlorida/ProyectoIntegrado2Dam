@@ -54,6 +54,14 @@ public class GetEndpointController {
 		jsonString.put("upgrade", listUpgrades);
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
+	
+	@GetMapping("/getSaves")
+	ResponseEntity<JSONObject> getSaves(@RequestParam(value = "id") String id) {
+		JSONObject jsonString = new JSONObject();
+		Users user = usersRepository.searchOneUser(Integer.parseInt(id));
+		jsonString.put("saves", user.getSave());
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
+	}
 
 	public static String encryptToMD5(String input) {
 		try {

@@ -1,5 +1,7 @@
 package main.java.controller;
 
+import java.util.List;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +24,13 @@ public class PutEndpointController {
 	private UsersRepository usersRepository;
 	
 	@PutMapping("/load")
-	ResponseEntity<JSONObject> loadSave(@RequestParam(value = "id") int id, @RequestBody userSave body) {
+	ResponseEntity<JSONObject> loadSave(@RequestParam(value = "id") int id, @RequestBody List<userSave> body) {
 		JSONObject jsonString = new JSONObject();
+		System.out.println(id);
+		System.out.println(body.get(0).getCps());
 		Users user = usersRepository.searchOneUser(id);
-		System.out.println(body.getCps());
+		user.setSave(body);
+		usersRepository.save(user);
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 	
