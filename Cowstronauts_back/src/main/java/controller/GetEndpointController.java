@@ -84,8 +84,7 @@ public class GetEndpointController {
 	private Boolean checkPassword(String dbPass, String userPass) {
 
 		String userEncrypted = encryptToMD5(userPass);
-		String dbEncrypted = encryptToMD5(dbPass);
-		if (dbEncrypted.equals(userEncrypted)) {
+		if (dbPass.equals(userEncrypted)) {
 			return true;
 		} else {
 			return false;
