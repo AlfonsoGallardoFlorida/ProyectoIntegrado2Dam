@@ -49,9 +49,11 @@ public class PostEndpointController {
 				return new ResponseEntity<>("El nombre de usuario ya está en uso.", HttpStatus.BAD_REQUEST);
 			}
 		}
-
+		int maxId = getMaxIdUser();
+		int newId = maxId + 1;
 		String encryptedPass = encryptToMD5(newUser.getPassword());
 		newUser.setPassword(encryptedPass);
+		newUser.setId(newId);
 		System.out.println(encryptedPass);
 		usersRepository.save(newUser);
 
@@ -67,12 +69,41 @@ public class PostEndpointController {
 				return new ResponseEntity<>("La mejora ya existe.", HttpStatus.BAD_REQUEST);
 			}
 		}
-
+		
+		int maxId = getMaxIdUpgrade();
+		int newId = maxId++;
+		newUpgrade.setId(newId);
 		upgradesRepository.save(newUpgrade);
 
 		return new ResponseEntity<>("Mejora registrada exitosamente.", HttpStatus.OK);
 	}
 
+	private int getMaxIdUser() {
+		int maxId = 0;
+		List<Users> listUser = usersRepository.findAll();
+		for(Users u : listUser) {
+			int id = u.getId();
+			if(id > maxId) {
+				maxId = id;
+			}
+		}
+		return maxId;
+		
+	}
+	
+	private int getMaxIdUpgrade() {
+		int maxId = 0;
+		List<Upgrades> listUpgrades = upgradesRepository.findAll();
+		for(Upgrades u : listUpgrades) {
+			int id = u.getId();
+			if(id > maxId) {
+				maxId = id;
+			}
+		}
+		return maxId;
+		
+	}
+	
 	public static String encryptToMD5(String input) {
 		try {
 
