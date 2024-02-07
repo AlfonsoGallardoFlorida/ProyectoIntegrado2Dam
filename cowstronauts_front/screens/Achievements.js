@@ -25,7 +25,7 @@ const AchievementsScreen = () => {
           <Text style={styles.title}>Achievements</Text>
         </View>
         <Image
-          source={require('./trophy.png')}
+          source={require('../assets/img/trophy')}
           style={styles.trophyImage}
           resizeMode="contain"
         />
