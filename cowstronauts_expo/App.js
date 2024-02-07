@@ -1,63 +1,29 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './screens/Home';
-import Login from './screens/Login';
-import SignUp from './screens/SignUp';
-import Icon from 'react-native-vector-icons/Ionicons'; 
+import { NavigationContainer } from '@react-navigation/native';
+import { ScreensProvider } from './src/screens/ScreenContext';
+import 'react-native-gesture-handler';
+
+import Account from './src/screens/Account';
+import Login from './src/screens/Login';
+import SignUp from './src/screens/SignUp';
+import Home from './src/screens/HomeScreen';
+import TabsGame from './src/screens/TabsGame';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
-const AuthScreens = () => {
+export default function App() {
   return (
-    <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: '#FEAA16',
-        inactiveTintColor: '#E6E0E9',
-        style: {
-          backgroundColor: '#211F26',
-        },
-      }}
-    >
-      <Tab.Screen 
-        name="Login" 
-        component={Login} 
-        options={{ 
-          headerShown: false, 
-          tabBarActiveBackgroundColor: '#211F26',
-          tabBarInactiveBackgroundColor: '#211F26',
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="ios-log-in" color={color} size={size} /> 
-          )
-        }}
-      />
-      <Tab.Screen 
-        name="SignUp" 
-        component={SignUp} 
-        options={{ 
-          headerShown: false, 
-          tabBarActiveBackgroundColor: '#211F26',
-          tabBarInactiveBackgroundColor: '#211F26',
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="ios-person-add" color={color} size={size} /> 
-          )
-        }}
-      />
-    </Tab.Navigator>
+    <ScreensProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="TabsGame" component={TabsGame} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ScreensProvider>
   );
-};
-
-const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Auth" component={AuthScreens} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-export default App;
+}
