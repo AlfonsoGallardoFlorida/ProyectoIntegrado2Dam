@@ -29,13 +29,13 @@ const Login = ({ navigation }) => {
   };
   
   function onPressLogIn(name, pass) {
-    //getData(`http://localhost:8080/login?user=${name}&pass=${pass}`);
-    getData('http://10.0.2.2:8080/upgrades');
-/*     if (data.authorized) {
+    getData(`http://10.0.2.2:8080/login?user=${name}&pass=${pass}`);
+    //getData('http://localhost:8080/upgrades');
+     if (data.authorized) {
       navigation.navigate("TabsGame");
     } else {
       alert("Esta cuenta no está registrada");
-    } */
+    } 
   }
   return (
     <View style={styles.container}>
