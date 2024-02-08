@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import SvgLogo from '../../assets/img/svg/SvgLogo';
 
 const SignUp = () => {
   return (
    
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
+        <SvgLogo />
       </View>
 
       <View style={styles.loginForm}>

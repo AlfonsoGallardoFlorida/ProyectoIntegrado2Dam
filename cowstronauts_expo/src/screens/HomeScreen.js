@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import {Button} from 'react-native-paper';
-import SvgUri from 'react-native-svg-uri';
-import LogoSvg from '../../assets/img/logo.svg';
+import SvgLogo from '../../assets/img/svg/SvgLogo';
 
 const HomeScreen = ({navigation}) => {
   return (
@@ -14,12 +13,9 @@ const HomeScreen = ({navigation}) => {
         </TouchableOpacity>
         </View>
         <View style={styles.secondContainer}>
-        {/* <Image source={require('../../assets/img/Cowstronauts-Logo.png')} style={{width:200, height:200}}/> */}
-        {/* <LogoSvg width={200} height={200} /> */}
-
+          <SvgLogo />
         </View>
         <View style={styles.thirdContainer}>
-        <Image source={require('../../assets/img/Title.png')} style={{marginTop: 60, alignSelf:"center"}}/>
         <TouchableOpacity onPress={() => navigation.navigate('Account')} style={styles.tapSection}>
         <Text style={styles.tapTxt}>Pulsa para continuar...</Text>
         </TouchableOpacity>
