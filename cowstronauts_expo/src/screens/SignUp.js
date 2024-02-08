@@ -1,9 +1,46 @@
-import React from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+
+  const handleSignUp = async () => {
+    try {
+      if (password !== repeatPassword) {
+        alert("Las contraseñas no coinciden");
+        return;
+      }
+
+      const response = await fetch('http://localhost:8080/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: username,
+          password: password,
+          dateCreated: new Date().toISOString(),
+          lastSave: new Date().toISOString(),
+          save: [],
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Registro exitoso');
+        navigation.navigate('TabsGame'); 
+      } else {
+        alert(`Error en el registro: ${data.error}`);
+      }
+    } catch (error) {
+      console.error(`Error en la solicitud: ${error.message}`);
+    }
+  };
+
   return (
-   
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
@@ -14,27 +51,25 @@ const SignUp = () => {
           style={styles.inputField}
           placeholder="Username"
           placeholderTextColor="#ccc"
-        />
-        <TextInput
-          style={styles.inputField}
-          placeholder="Email"
-          placeholderTextColor="#ccc"
-          secureTextEntry
+          onChangeText={(text) => setUsername(text)}
         />
         <TextInput
           style={styles.inputField}
           placeholder="Password"
           placeholderTextColor="#ccc"
+          secureTextEntry
+          onChangeText={(text) => setPassword(text)}
         />
         <TextInput
           style={styles.inputField}
           placeholder="Repeat Password"
           placeholderTextColor="#ccc"
           secureTextEntry
+          onChangeText={(text) => setRepeatPassword(text)}
         />
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Sign Up</Text>
           </TouchableOpacity>
         </View>
