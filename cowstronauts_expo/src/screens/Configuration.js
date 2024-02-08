@@ -65,7 +65,7 @@ const Configuration = () => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../assets/img/config.png')}
+          source={require('../../assets/img/config.png')}
           style={styles.image}
         />
       </View>
