@@ -8,7 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Importa tus componentes de pantalla
-import Screen1 from './TapScreen_SVG'; // cambiar esto luego por " import Screen1 from './TapScreen "
+import Screen1 from './TapScreen';
 import Screen2 from './Shop1';
 import Screen3 from './Shop2';
 import Screen4 from './Configuration';

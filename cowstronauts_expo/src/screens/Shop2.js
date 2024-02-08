@@ -1,18 +1,35 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Audio } from 'expo-av';
 
 const App = () => {
+  const play = async () => {
+    const { sound } = await Audio.Sound.createAsync(require('../../assets/sound/Josh.exe.mp3'));
+    await sound.playAsync();
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TIENDA</Text>
-      
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Moneda</Text>
-        <View style={styles.product}>
-          <Text>JOSH HUTCHERSON</Text>
-          <Text>Aparecerán els doblets durant 3 minuts</Text>
-          {/* Agregar icono de corona */}
-        </View>
+        <TouchableOpacity onPress={play}>
+          <View style={styles.product}>
+            <View style={{ flex: 1 }}>
+              <Image
+                source={require('../../assets/img/Josh.jpg')}
+                style={{ width: 100, height: 100 }}
+              />
+            </View>
+            <View style={{ flex: 1, flexDirection: 'column' }}>
+              <Text>JOSH HUTCHERSON</Text>
+              <Text>
+                JoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutcherson
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <View style={styles.product}>
           <Text>SOY MILK</Text>
           <Text>Les vaques produiran el doble durant 3 minuts</Text>
@@ -52,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    textAlign:"center",
+    textAlign: 'center',
   },
   sectionText: {
     color: '#fff',
@@ -63,6 +80,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
+    flexDirection: 'row',
   },
   navigation: {
     flexDirection: 'row',

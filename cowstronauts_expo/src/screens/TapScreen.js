@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Animated, Easing } from 'react-native';
+import SvgMoon from '../../assets/img/svg/SvgMoon';
 
 const Tapcreen = () => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
@@ -9,14 +10,13 @@ const Tapcreen = () => {
   const [tapsPerSecond, setTapsPerSecond] = useState(0);
 
   // Configurar la animación de rotación constante
-  Animated.loop(
-    Animated.timing(rotateAnim, {
-      toValue: 1,
-      duration: 10000,
-      useNativeDriver: true,
-    })
-  ).start();
 
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(rotateAnim, { useNativeDriver: false, toValue: 1, easing: Easing.linear, duration: 20000})
+    ).start()
+  }, [])
   useEffect(() => {
     const timer = setInterval(() => {
       setTapsPerSecond(0);
@@ -49,11 +49,7 @@ const Tapcreen = () => {
       }),
     ]).start();
   };
-
-  const spin = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  });
+  
 
   return (
     <ImageBackground
@@ -66,19 +62,15 @@ const Tapcreen = () => {
         <Text style={styles.txtCoins}>{tapsPerSecond} Zloty/s</Text>
         </View>
         <View style={styles.secondContainer}>
-          <TouchableOpacity activeOpacity={1} onPress={handlePress} style={{width:"125%",height:"125%",alignSelf:"center"}}>
-            <Animated.Image
-              source={require('../../assets/img/moon.png')}
-              style={[
-                styles.moonImage,
-                { 
-                  transform: [
-                    { rotate: spin },
-                    { scale: scaleAnim },
-                  ] 
-                }
-              ]}
-            />
+          <TouchableOpacity activeOpacity={1} onPress={handlePress} style={{width:"100%",height:"100%",alignSelf:"center"}}>
+            <Animated.View style={{ transform: [{scale: scaleAnim}]}}>
+              <Animated.View style={{ transform: [{rotate: rotateAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['0deg', '360deg']
+              })}]}}>
+                <SvgMoon />
+              </Animated.View>
+            </Animated.View>
           </TouchableOpacity>
         </View>
       </View>
@@ -104,7 +96,6 @@ const styles = StyleSheet.create({
   },
   secondContainer: {
     flex: 1,
-    width: '100%',
     flexDirection: 'column-reverse',
   },
   moonImage: {
