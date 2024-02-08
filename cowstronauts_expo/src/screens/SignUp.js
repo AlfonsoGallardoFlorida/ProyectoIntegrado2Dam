@@ -1,10 +1,6 @@
-import React from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import SvgLogo from '../../assets/img/svg/SvgLogo';
-
-const SignUp = () => {
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 
 const SignUp = ({ navigation }) => {
   const [username, setUsername] = useState('');

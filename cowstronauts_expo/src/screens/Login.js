@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import SvgLogo from '../../assets/img/svg/SvgLogo';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [data, setData] = React.useState({});
+  const [data, setData] = useState({});
 
   const getData = async (url) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data)
   
       if (response.ok) {
+          const jsonResponse = await response.json();
         if (data.authorized) {
           navigation.navigate("TabsGame");
         } else {
@@ -26,19 +29,15 @@ const Login = ({ navigation }) => {
   };
   
   function onPressLogIn(name, pass) {
-    getData(`https://localhost:8080/login?user=${name}&pass=${pass}`);
-    if (data.authorized) {
+    //getData(`http://localhost:8080/login?user=${name}&pass=${pass}`);
+    getData('http://localhost:8080/upgrades');
+/*     if (data.authorized) {
       navigation.navigate("TabsGame");
     } else {
       alert("Esta cuenta no está registrada");
-    }
+    } */
   }
-
-
-import SvgLogo from '../../assets/img/svg/SvgLogo';
-const Login = ({navigation}) => {
   return (
-
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <SvgLogo />
@@ -73,7 +72,7 @@ const Login = ({navigation}) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
