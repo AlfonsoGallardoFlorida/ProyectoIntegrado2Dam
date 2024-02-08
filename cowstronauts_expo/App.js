@@ -9,6 +9,7 @@ import Login from './src/screens/Login';
 import SignUp from './src/screens/SignUp';
 import Home from './src/screens/HomeScreen';
 import TabsGame from './src/screens/TabsGame';
+import Configuration from './src/screens/Configuration';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="TabsGame" component={TabsGame} />
+          <Stack.Screen name="Configuration" component={Configuration} />
         </Stack.Navigator>
       </NavigationContainer>
     </ScreensProvider>
