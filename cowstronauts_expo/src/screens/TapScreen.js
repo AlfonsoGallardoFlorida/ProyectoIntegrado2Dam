@@ -2,8 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Animated, Easing } from 'react-native';
 import { Audio } from 'expo-av';
 import SvgMoon from '../../assets/img/svg/SvgMoon';
+import { useContext } from 'react';
+import ScreensContext from './ScreenContext';
 
-const Tapcreen = () => {
+
+const Tapcreen = ({ navigation }) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const [coin, setCoin] = useState(0);
@@ -16,9 +19,22 @@ const Tapcreen = () => {
     require('../../assets/sound/MoonClick4.mp3'),
     require('../../assets/sound/MoonClick5.mp3'),
   ]);
+  const {areConstellationsVisible, setAreConstellationsVisible} =
+  useContext(ScreensContext);
+
   const [sound, setSound] = useState();
 
   const soundObjects = useRef([]);
+
+  let url = require("../../assets/img/TapBackground.png");
+
+  useEffect(() => {
+    if(areConstellationsVisible) {
+      url = require("../../assets/img/TapBackground.png");
+    }else{
+      url = require("../../assets/img/TapBackground-NoConstellations.png")
+    }
+  }, [areConstellationsVisible]);
 
   useEffect(() => {
     Animated.loop(
@@ -75,10 +91,7 @@ const Tapcreen = () => {
   };
 
   return (
-    <ImageBackground
-      source={require('../../assets/img/TapBackground.png')}
-      style={styles.background}
-    >
+    <ImageBackground source={url} style={styles.background}>
       <View style={styles.container}>
         <View style={styles.firstContainer}>
           <Text style={styles.txtCoins}>{coin} Zloty</Text>

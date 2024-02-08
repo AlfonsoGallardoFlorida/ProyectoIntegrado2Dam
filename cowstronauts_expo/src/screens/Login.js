@@ -59,7 +59,8 @@ const Login = ({ navigation }) => {
         />
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
+{/*           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}> */}
+          <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}>
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
           </TouchableOpacity>
         </View>

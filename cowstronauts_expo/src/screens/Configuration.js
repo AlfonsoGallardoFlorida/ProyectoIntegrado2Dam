@@ -3,17 +3,21 @@ import { View, ScrollView, Image, Switch, Text, StyleSheet } from 'react-native'
 import { Slider, CheckBox, Button } from 'react-native-elements';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
+import ScreensContext from './ScreenContext';
 
-const Configuration = () => {
+
+const Configuration = ({ navigation }) => {
   const [isHorizontal, setIsHorizontal] = useState(false);
   const [volume, setVolume] = useState(50);
   const [isDaltonicMode, setIsDaltonicMode] = useState(false);
   const [isEpilepticMode, setIsEpilepticMode] = useState(false);
-  const [areConstellationsVisible, setAreConstellationsVisible] =
-    useState(false);
+  const {areConstellationsVisible, setAreConstellationsVisible} =
+    useContext(ScreensContext);
   const [isMoonMoving, setIsMoonMoving] = useState(false);
   const [selected, setSelected] = useState('');
-  const navigation = useNavigation();
+  const navigationUsage = useNavigation();
+
 
   const data = [
     { key: '1', value: 'English' },
