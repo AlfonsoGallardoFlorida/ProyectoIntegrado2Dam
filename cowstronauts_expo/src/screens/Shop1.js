@@ -3,13 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import SvgJupiter from '../../assets/img/svg/SvgJupiter';
 import SvgPluto from '../../assets/img/svg/SvgPluto';
 
-const ButtonTemplate = () => {
+const ButtonTemplate = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.firstContainer}></View>
       <View style={styles.secondContainer}>
         <View style={styles.planetContainer}>
-          <TouchableOpacity activeOpacity={1}>
+          <TouchableOpacity activeOpacity={1} onPress={()=>{navigation.navigate("ShopCPS")}}>
           <SvgJupiter style={styles.jupiterImage}/>
           </TouchableOpacity>
         </View>
@@ -18,7 +18,7 @@ const ButtonTemplate = () => {
       <View style={styles.secondContainer}>
         <View style={{flex:1}}></View>
         <View style={styles.planetContainer}>
-          <TouchableOpacity activeOpacity={1} >
+          <TouchableOpacity activeOpacity={1} onPress={()=>{navigation.navigate("ShopClick")}}>
           <SvgPluto style={styles.plutoImage}/>
           </TouchableOpacity>
         </View>
