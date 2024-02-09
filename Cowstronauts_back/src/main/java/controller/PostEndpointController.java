@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.java.model.Upgrades;
 import main.java.model.Users;
+import main.java.model.userAchievements;
 import main.java.model.userSave;
+import main.java.repository.AchievementsRepository;
 import main.java.repository.UpgradesRepository;
 import main.java.repository.UsersRepository;
 
@@ -40,6 +42,9 @@ public class PostEndpointController {
 	@Autowired
 	private UpgradesRepository upgradesRepository;
 
+	@Autowired
+	private AchievementsRepository achievementsRepository;
+
 	@PostMapping("/register")
 	public ResponseEntity<JSONObject> register(@RequestBody Users newUser) {
 
@@ -51,6 +56,10 @@ public class PostEndpointController {
 				jsonString.put("Status", "400");
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonString);
 			}
+			if (existingUser.getEmail().equals(newUser.getEmail())) {
+				jsonString.put("Status", "400");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonString);
+			}
 		}
 		int maxId = getMaxIdUser();
 		int newId = maxId + 1;
@@ -59,7 +68,7 @@ public class PostEndpointController {
 		newUser.setId(newId);
 		System.out.println(encryptedPass);
 		usersRepository.save(newUser);
-		jsonString.put("Status", "201");
+		jsonString.put("Status", "200");
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
@@ -67,8 +76,8 @@ public class PostEndpointController {
 	public ResponseEntity<String> newUpgrade(@RequestBody Upgrades newUpgrade) {
 		List<Upgrades> existingUpgrades = upgradesRepository.findAll();
 
-		for (Upgrades existingUser : existingUpgrades) {
-			if (existingUser.getName().equals(newUpgrade.getName())) {
+		for (Upgrades existingUpgrade : existingUpgrades) {
+			if (existingUpgrade.getName().equals(newUpgrade.getName())) {
 				return new ResponseEntity<>("La mejora ya existe.", HttpStatus.BAD_REQUEST);
 			}
 		}
@@ -79,6 +88,24 @@ public class PostEndpointController {
 		upgradesRepository.save(newUpgrade);
 
 		return new ResponseEntity<>("Mejora registrada exitosamente.", HttpStatus.OK);
+	}
+
+	@PostMapping("/newAchievement")
+	public ResponseEntity<String> newAchievement(@RequestBody userAchievements newAchievement) {
+		List<userAchievements> existingAchievements = achievementsRepository.findAll();
+
+		for (userAchievements existingAchievement : existingAchievements) {
+			if (existingAchievement.getName().equals(newAchievement.getName())) {
+				return new ResponseEntity<>("El logro ya existe.", HttpStatus.BAD_REQUEST);
+			}
+		}
+
+		int maxId = getMaxIdAchievement();
+		int newId = maxId++;
+		newAchievement.setId(newId);
+		achievementsRepository.save(newAchievement);
+
+		return new ResponseEntity<>("Logro registrado exitosamente.", HttpStatus.OK);
 	}
 
 	private int getMaxIdUser() {
@@ -99,6 +126,19 @@ public class PostEndpointController {
 		List<Upgrades> listUpgrades = upgradesRepository.findAll();
 		for (Upgrades u : listUpgrades) {
 			int id = u.getId();
+			if (id > maxId) {
+				maxId = id;
+			}
+		}
+		return maxId;
+
+	}
+
+	private int getMaxIdAchievement() {
+		int maxId = 0;
+		List<userAchievements> listAchievements = achievementsRepository.findAll();
+		for (userAchievements a : listAchievements) {
+			int id = a.getId();
 			if (id > maxId) {
 				maxId = id;
 			}
