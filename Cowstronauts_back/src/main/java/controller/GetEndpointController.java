@@ -34,9 +34,9 @@ public class GetEndpointController {
 		System.out.println(listUsers);
 		for (Users u : listUsers) {
 			String name = u.getName().toLowerCase();
-			System.out.println(name);
 			if (name.equals(user.toLowerCase())) {
 				if (checkPassword(u.getPassword(), pass)) {
+					jsonString.put("data", u);
 					return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 				} else {
 					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonString);
