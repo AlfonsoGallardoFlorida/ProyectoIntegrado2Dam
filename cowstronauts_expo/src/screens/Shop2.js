@@ -12,7 +12,7 @@ import { Audio } from 'expo-av';
 const App = () => {
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(
-      require('./assets/sound/Josh.exe.mp3')
+      require('../../assets/sound/Josh.exe.mp3')
     );
     await sound.playAsync();
   };
@@ -24,7 +24,7 @@ const App = () => {
       </View>
 
       <Image
-        source={require('./assets/img/jupiter.png')}
+        source={require('../../assets/img/jupiter.png')}
         style={styles.backgroundImage}
       />
 
@@ -34,7 +34,7 @@ const App = () => {
             <View style={styles.product}>
               <View style={{ flex: 1 }}>
                 <Image
-                  source={require('./assets/img/Josh.jpg')}
+                  source={require('../../assets/img/Josh.jpg')}
                   style={{ width: 100, height: 100 }}
                 />
               </View>
