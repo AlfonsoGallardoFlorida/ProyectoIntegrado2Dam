@@ -7,25 +7,26 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
+
   const handleSignUp = async () => {
     try {
       if (password !== repeatPassword) {
         alert("Las contraseñas no coinciden");
         return;
       }
-
-      const response = await fetch('http://localhost:8080/register', {
+      const jsonBody = {
+        name: username,
+        password: password,
+        dateCreated: new Date().toISOString().split("T")[0],
+        lastSave: new Date().toISOString().split("T")[0],
+        save: [],
+      }
+      const response = await fetch('http://18.213.13.32:8080/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: username,
-          password: password,
-          dateCreated: new Date().toISOString(),
-          lastSave: new Date().toISOString(),
-          save: [],
-        }),
+        body: JSON.stringify(jsonBody),
       });
 
       const data = await response.json();
@@ -37,7 +38,7 @@ const SignUp = ({ navigation }) => {
         alert(`Error en el registro: ${data.error}`);
       }
     } catch (error) {
-      console.error(`Error en la solicitud: ${error.message}`);
+      console.log(`Error en la solicitud: ${error.message}`);
     }
   };
 
