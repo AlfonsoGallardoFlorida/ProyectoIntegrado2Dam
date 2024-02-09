@@ -41,12 +41,15 @@ public class PostEndpointController {
 	private UpgradesRepository upgradesRepository;
 
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestBody Users newUser) {
+	public ResponseEntity<JSONObject> register(@RequestBody Users newUser) {
+
 		List<Users> existingUsers = usersRepository.findAll();
+		JSONObject jsonString = new JSONObject();
 
 		for (Users existingUser : existingUsers) {
 			if (existingUser.getName().equals(newUser.getName())) {
-				return new ResponseEntity<>("El nombre de usuario ya está en uso.", HttpStatus.BAD_REQUEST);
+				jsonString.put("Status", "400");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonString);
 			}
 		}
 		int maxId = getMaxIdUser();
@@ -56,8 +59,8 @@ public class PostEndpointController {
 		newUser.setId(newId);
 		System.out.println(encryptedPass);
 		usersRepository.save(newUser);
-
-		return new ResponseEntity<>("Usuario registrado exitosamente.", HttpStatus.OK);
+		jsonString.put("Status", "201");
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
 	@PostMapping("/newUpgrade")
@@ -69,7 +72,7 @@ public class PostEndpointController {
 				return new ResponseEntity<>("La mejora ya existe.", HttpStatus.BAD_REQUEST);
 			}
 		}
-		
+
 		int maxId = getMaxIdUpgrade();
 		int newId = maxId++;
 		newUpgrade.setId(newId);
@@ -81,29 +84,29 @@ public class PostEndpointController {
 	private int getMaxIdUser() {
 		int maxId = 0;
 		List<Users> listUser = usersRepository.findAll();
-		for(Users u : listUser) {
+		for (Users u : listUser) {
 			int id = u.getId();
-			if(id > maxId) {
+			if (id > maxId) {
 				maxId = id;
 			}
 		}
 		return maxId;
-		
+
 	}
-	
+
 	private int getMaxIdUpgrade() {
 		int maxId = 0;
 		List<Upgrades> listUpgrades = upgradesRepository.findAll();
-		for(Upgrades u : listUpgrades) {
+		for (Upgrades u : listUpgrades) {
 			int id = u.getId();
-			if(id > maxId) {
+			if (id > maxId) {
 				maxId = id;
 			}
 		}
 		return maxId;
-		
+
 	}
-	
+
 	public static String encryptToMD5(String input) {
 		try {
 
