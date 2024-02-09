@@ -32,6 +32,7 @@ import main.java.repository.UpgradesRepository;
 import main.java.repository.UsersRepository;
 
 import java.util.List;
+import java.util.Random;
 
 @RestController
 public class PostEndpointController {
@@ -66,6 +67,8 @@ public class PostEndpointController {
 		String encryptedPass = encryptToMD5(newUser.getPassword());
 		newUser.setPassword(encryptedPass);
 		newUser.setId(newId);
+		newUser.setValidationNum(validationNumGenerator());
+		newUser.setValidated(false);
 		System.out.println(encryptedPass);
 		usersRepository.save(newUser);
 		jsonString.put("Status", "200");
@@ -171,6 +174,16 @@ public class PostEndpointController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static String validationNumGenerator() {
+		Random random = new Random();
+
+		int randomNumber = random.nextInt(10000);
+
+		String formattedRandomNumber = String.format("%04d", randomNumber);
+
+		return formattedRandomNumber;
 	}
 
 }

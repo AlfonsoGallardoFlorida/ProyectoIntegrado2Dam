@@ -75,14 +75,14 @@ public class GetEndpointController {
 		jsonString.put("saves", user.getSave());
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
-	
-//	@GetMapping("/getValidationNum")
-//	ResponseEntity<JSONObject> getValidationNum(@RequestParam(value = "validationNum") String validationNum) {
-//		JSONObject jsonString = new JSONObject();
-//		Users user = usersRepository.searchOneUser(Integer.parseInt(id));
-//		jsonString.put("saves", user.getSave());
-//		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
-//	}
+
+	@GetMapping("/getValidationNum")
+	ResponseEntity<JSONObject> getValidationNum(@RequestParam(value = "validationNum") String validationNum) {
+		JSONObject jsonString = new JSONObject();
+		Users user = usersRepository.searchOneUser(Integer.parseInt(validationNum));
+		jsonString.put("saves", user.getValidationNum());
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
+	}
 
 	public static String encryptToMD5(String input) {
 		try {
