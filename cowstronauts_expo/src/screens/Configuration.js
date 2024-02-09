@@ -14,8 +14,14 @@ const Configuration = ({ navigation }) => {
   const [isEpilepticMode, setIsEpilepticMode] = useState(false);
   const {areConstellationsVisible, setAreConstellationsVisible} =
     useContext(ScreensContext);
+  const {userInfo, setUserInfo} = useContext(ScreensContext);
   const [isMoonMoving, setIsMoonMoving] = useState(false);
   const [selected, setSelected] = useState('');
+  const {cantClicks, setCantClicks} = useContext(ScreensContext);
+  const {coin, setCoin} = useContext(ScreensContext);
+  const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
+  const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
+  const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const navigationUsage = useNavigation();
 
 
@@ -49,8 +55,24 @@ const Configuration = ({ navigation }) => {
     setIsHorizontal(!isHorizontal);
   };
 
-  const handleRemoveAds = () => {
+  const saveProgress = () => {
+  
+    if(userInfo === undefined) return;
+    const id = userInfo.data.id;
+    const save = userInfo.data.save;
+
+    const jsonSave = [
+    {
+      upgrades: upgradesUnlocked,
+      cantClicks: cantClicks,
+      cantPoints: coin,
+      cps: tapsPerSecond,
+      pointsPerClick: pointsPerClick
+    }
+  ]
     
+
+
   };
 
   const handleShowCredits = () => {
@@ -150,8 +172,8 @@ const Configuration = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <View style={styles.leftButtons}>
             <Button
-              title="Remove Ads"
-              onPress={handleRemoveAds}
+              title="Save progress"
+              onPress={() => saveProgress()}
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
             />
@@ -161,15 +183,7 @@ const Configuration = ({ navigation }) => {
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
             />
-          </View>
-          <View style={styles.rightButtons}>
-            <Button
-              title="Credits"
-              onPress={handleShowCredits}
-              buttonStyle={styles.button}
-              textStyle={styles.buttonText}
-            />
-            <Button
+                        <Button
               title="Close Game"
               onPress={handleCloseGame}
               buttonStyle={[styles.button, { marginBottom: 20 }]} 
@@ -237,7 +251,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
     justifyContent: 'space-between',
     marginTop: 10, 
@@ -246,10 +260,11 @@ const styles = StyleSheet.create({
   leftButtons: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    maxWidth: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    maxWidth: 800,
     marginRight: 5,
+    marginBottom: 10
   },
 
   rightButtons: {
@@ -261,7 +276,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 110,
+    width: 300,
     maxWidth: 300,
     borderRadius: 20,
     backgroundColor: '#777777',

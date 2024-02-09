@@ -12,9 +12,10 @@ const Login = ({ navigation }) => {
     try {
       const response = await fetch(url);
       console.log(response.status);
+      const jsonResponse = await response.json();
       if (response.status === 200) {
-        console.log(response.json());
-        setUserInfo(response)
+        console.log(jsonResponse);
+        setUserInfo(jsonResponse);
         navigation.navigate("TabsGame");
       }else if(response.status === 401) {
         alert("Login not correct. Please try again");

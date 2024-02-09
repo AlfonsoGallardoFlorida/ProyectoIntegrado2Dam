@@ -12,7 +12,8 @@ const Tapcreen = ({ navigation }) => {
   const {coin, setCoin} = useContext(ScreensContext);
   const {cantClicks, setCantClicks} = useContext(ScreensContext);
   const [lastTapTime, setLastTapTime] = useState(null);
-  const [tapsPerSecond, setTapsPerSecond] = useState(0);
+  const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
+  const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const [path, setPath] = useState([
     require('../../assets/sound/moonClick1.mp3'),
     require('../../assets/sound/MoonClick2.mp3'),
@@ -54,7 +55,7 @@ const Tapcreen = ({ navigation }) => {
 
 
   const handlePress = async () => {
-    setCoin(coin + 1);
+    setCoin(coin + pointsPerClick);
     setCantClicks(cantClicks + 1)
     const now = Date.now();
     
