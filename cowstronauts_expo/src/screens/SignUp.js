@@ -31,10 +31,10 @@ const SignUp = ({ navigation }) => {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.status === 200) {
         alert('Registro exitoso');
         navigation.navigate('TabsGame'); 
-      } else {
+      } else if(response.status === 400){
         alert(`Error en el registro: ${data.error}`);
       }
     } catch (error) {
