@@ -1,18 +1,26 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { useContext, useEffect } from 'react';
+import ScreensContext from './ScreenContext';
 
 const AchievementsScreen = () => {
+
+  const {cantClicks, setCantClicks} = useContext(ScreensContext);
   
   const achievements = [
-    { name: 'Make 100 clicks', description: 'Click the planet 100 times.', progress: 0, total: 100 },
-    { name: 'Make 1,000 clicks', description: 'Click the planet 1000 times.', progress: 0, total: 1000 },
-    { name: 'Make 10K clicks', description: 'Click the planet 10,000 times.', progress: 0, total: 10000 },
-    { name: 'Make 1M clicks', description: 'Click the planet 10,000 times.', progress: 0, total: 1000000 },
+    { name: 'Make 100 clicks', description: 'Click the planet 100 times.', progress: cantClicks, total: 100 },
+    { name: 'Make 1,000 clicks', description: 'Click the planet 1000 times.', progress: cantClicks, total: 1000 },
+    { name: 'Make 10K clicks', description: 'Click the planet 10,000 times.', progress: cantClicks, total: 10000 },
+    { name: 'Make 1M clicks', description: 'Click the planet 10,000 times.', progress: cantClicks, total: 1000000 },
     { name: 'Buy 1 upgrades', description: 'Purchase 1 upgrades.', progress: 0, total: 1 },
     { name: 'Buy 20 upgrades', description: 'Purchase 20 upgrades.', progress: 0, total: 20 },
     { name: 'Travel to Mars', description: 'Travel to Mars.', progress: 0, total: 1 },
   ];
-  
+
+  useEffect(() => {
+
+  }, [cantClicks]);
+
   return (
     <View style={styles.container}>
       <Image
@@ -30,20 +38,22 @@ const AchievementsScreen = () => {
           resizeMode="contain"
         />
         <ScrollView contentContainerStyle={styles.achievementList}>
-          {achievements.map((achievement, index) => (
-            <View key={index} style={styles.achievement}>
-              <Text style={styles.achievementNumber}>{index + 1}</Text>
-              <View style={styles.achievementInfo}>
-                <Text style={styles.achievementName}>{achievement.name}</Text>
-                <Text style={styles.achievementDescription}>
-                  {achievement.description}
-                </Text>
+          {achievements.map((achievement, index) => {
+            return (
+              <View key={index} style={styles.achievement}>
+                <Text style={styles.achievementNumber}>{index + 1}</Text>
+                <View style={styles.achievementInfo}>
+                  <Text style={styles.achievementName}>{achievement.name}</Text>
+                  <Text style={styles.achievementDescription}>
+                    {achievement.description}
+                  </Text>
+                </View>
+                <View style={styles.progressCounter}>
+                  {(achievement.progress <= achievement.total) ? <Text style={styles.progressText}>{achievement.progress} / {achievement.total}</Text> : <Text style={styles.progressText}>complete</Text>}
+                </View>
               </View>
-              <View style={styles.progressCounter}>
-                <Text style={styles.progressText}>{achievement.progress} / {achievement.total}</Text>
-              </View>
-            </View>
-          ))}
+            )
+          })}
         </ScrollView>
       </View>
     </View>
