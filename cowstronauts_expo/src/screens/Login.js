@@ -5,23 +5,16 @@ import SvgLogo from '../../assets/img/svg/SvgLogo';
 const Login = ({ navigation }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [data, setData] = useState({});
+  //const [data, setData] = useState({});
 
   const getData = async (url) => {
     try {
       const response = await fetch(url);
-      const data = await response.json();
-      console.log(data)
-  
-      if (response.ok) {
-          const jsonResponse = await response.json();
-        if (data.authorized) {
-          navigation.navigate("TabsGame");
-        } else {
-          alert("Usuario no autorizado");
-        }
-      } else {
-        console.error(`Error en la respuesta: ${data}`);
+      console.log(response.status);
+      if (response.status === 200) {
+        navigation.navigate("TabsGame");
+      }else if(response.status === 401) {
+        alert("Login not correct. Please try again");
       }
     } catch (error) {
       console.error(`Error en la solicitud: ${error.message}`);
@@ -29,13 +22,8 @@ const Login = ({ navigation }) => {
   };
   
   function onPressLogIn(name, pass) {
-    getData(`http://10.0.2.2:8080/login?user=${name}&pass=${pass}`);
-    //getData('http://localhost:8080/upgrades');
-     if (data.authorized) {
-      navigation.navigate("TabsGame");
-    } else {
-      alert("Esta cuenta no está registrada");
-    } 
+    getData(`http://18.213.13.32:8080/login?user=${name}&pass=${pass}`);
+
   }
   return (
     <View style={styles.container}>
@@ -59,8 +47,8 @@ const Login = ({ navigation }) => {
         />
 
         <View style={styles.buttonContainer}>
-{/*           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}> */}
-          <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}>
+          <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
+{/*           <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}> */}
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
           </TouchableOpacity>
         </View>
