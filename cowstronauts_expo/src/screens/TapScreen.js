@@ -9,7 +9,8 @@ import ScreensContext from './ScreenContext';
 const Tapcreen = ({ navigation }) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
-  const [coin, setCoin] = useState(0);
+  const {coin, setCoin} = useContext(ScreensContext);
+  const {cantClicks, setCantClicks} = useContext(ScreensContext);
   const [lastTapTime, setLastTapTime] = useState(null);
   const [tapsPerSecond, setTapsPerSecond] = useState(0);
   const [path, setPath] = useState([
@@ -54,6 +55,7 @@ const Tapcreen = ({ navigation }) => {
 
   const handlePress = async () => {
     setCoin(coin + 1);
+    setCantClicks(cantClicks + 1)
     const now = Date.now();
     
     const randomIndex = Math.floor(Math.random() * path.length); // Generar un índice aleatorio válido
