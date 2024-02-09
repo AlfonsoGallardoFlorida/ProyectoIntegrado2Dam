@@ -26,15 +26,7 @@ const Tapcreen = ({ navigation }) => {
 
   const soundObjects = useRef([]);
 
-  let url = require("../../assets/img/TapBackground.png");
-
-  useEffect(() => {
-    if(areConstellationsVisible) {
-      url = require("../../assets/img/TapBackground.png");
-    }else{
-      url = require("../../assets/img/TapBackground-NoConstellations.png")
-    }
-  }, [areConstellationsVisible]);
+  let url = "../../assets/img/TapBackground.png";
 
   useEffect(() => {
     Animated.loop(
@@ -91,7 +83,7 @@ const Tapcreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground source={url} style={styles.background}>
+    <ImageBackground source={(areConstellationsVisible) ? require("../../assets/img/TapBackground.png") : require("../../assets/img/TapBackground-NoConstellations.png")} style={styles.background}>
       <View style={styles.container}>
         <View style={styles.firstContainer}>
           <Text style={styles.txtCoins}>{coin} Zloty</Text>
