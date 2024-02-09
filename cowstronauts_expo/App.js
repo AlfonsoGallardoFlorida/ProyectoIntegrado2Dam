@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreensProvider } from './src/screens/ScreenContext';
 import 'react-native-gesture-handler';
+import { LogBox } from 'react-native';
 
 import Account from './src/screens/Account';
 import Login from './src/screens/Login';
@@ -14,6 +15,9 @@ import Configuration from './src/screens/Configuration';
 const Stack = createStackNavigator();
 
 export default function App() {
+  LogBox.ignoreLogs(["Require cycle:"])
+  LogBox.ignoreAllLogs();
+
   return (
     <ScreensProvider>
       <NavigationContainer>
