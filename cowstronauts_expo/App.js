@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreensProvider } from './src/screens/ScreenContext';
 import 'react-native-gesture-handler';
+import { LogBox } from 'react-native';
 
 import Account from './src/screens/Account';
 import Login from './src/screens/Login';
@@ -10,10 +11,15 @@ import SignUp from './src/screens/SignUp';
 import Home from './src/screens/HomeScreen';
 import TabsGame from './src/screens/TabsGame';
 import Configuration from './src/screens/Configuration';
+import ShopCPS from './src/screens/ShopCPS';
+import ShopClick from './src/screens/ShopClick';
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  LogBox.ignoreLogs(["Require cycle:"])
+  LogBox.ignoreAllLogs();
+
   return (
     <ScreensProvider>
       <NavigationContainer>
@@ -24,6 +30,8 @@ export default function App() {
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="TabsGame" component={TabsGame} />
           <Stack.Screen name="Configuration" component={Configuration} />
+          <Stack.Screen name="ShopCPS" component={ShopCPS} />
+          <Stack.Screen name="ShopClick" component={ShopClick} />
         </Stack.Navigator>
       </NavigationContainer>
     </ScreensProvider>
