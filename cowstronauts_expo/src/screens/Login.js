@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import SvgLogo from '../../assets/img/svg/SvgLogo';
+import { useContext } from 'react';
+import ScreensContext from './ScreenContext';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  //const [data, setData] = useState({});
-
+  const {userInfo, setUserInfo} = useContext(ScreensContext);
   const getData = async (url) => {
     try {
       const response = await fetch(url);
       console.log(response.status);
       if (response.status === 200) {
+        console.log(response.json());
+        setUserInfo(response)
         navigation.navigate("TabsGame");
       }else if(response.status === 401) {
         alert("Login not correct. Please try again");

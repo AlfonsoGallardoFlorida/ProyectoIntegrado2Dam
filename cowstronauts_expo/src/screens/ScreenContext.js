@@ -15,7 +15,8 @@ export const ScreensProvider = ({ children }) => {
         uris, setUris,
          areConstellationsVisible, setAreConstellationsVisible,
          coin, setCoin,
-         cantClicks, setCantClicks
+         cantClicks, setCantClicks,
+         userInfo, setUserInfo
           }}>
             {children}
         </ScreensContext.Provider>
