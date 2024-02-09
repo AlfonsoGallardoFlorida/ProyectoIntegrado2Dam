@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.java.model.Users;
+import main.java.model.userAchievements;
 import main.java.model.Upgrades;
+import main.java.repository.AchievementsRepository;
 import main.java.repository.UpgradesRepository;
 import main.java.repository.UsersRepository;
 
@@ -25,6 +27,9 @@ public class GetEndpointController {
 
 	@Autowired
 	private UpgradesRepository upgradesRepository;
+
+	@Autowired
+	private AchievementsRepository achievementsRepository;
 
 	@GetMapping("/login")
 	ResponseEntity<JSONObject> login(@RequestParam(value = "user") String user,
@@ -54,7 +59,15 @@ public class GetEndpointController {
 		jsonString.put("upgrade", listUpgrades);
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
-	
+
+	@GetMapping("/achievements")
+	ResponseEntity<JSONObject> getAchievements() {
+		JSONObject jsonString = new JSONObject();
+		List<userAchievements> listAchievements = achievementsRepository.findAll();
+		jsonString.put("achievement", listAchievements);
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
+	}
+
 	@GetMapping("/getSaves")
 	ResponseEntity<JSONObject> getSaves(@RequestParam(value = "id") String id) {
 		JSONObject jsonString = new JSONObject();
@@ -62,6 +75,14 @@ public class GetEndpointController {
 		jsonString.put("saves", user.getSave());
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
+	
+//	@GetMapping("/getValidationNum")
+//	ResponseEntity<JSONObject> getValidationNum(@RequestParam(value = "validationNum") String validationNum) {
+//		JSONObject jsonString = new JSONObject();
+//		Users user = usersRepository.searchOneUser(Integer.parseInt(id));
+//		jsonString.put("saves", user.getSave());
+//		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
+//	}
 
 	public static String encryptToMD5(String input) {
 		try {

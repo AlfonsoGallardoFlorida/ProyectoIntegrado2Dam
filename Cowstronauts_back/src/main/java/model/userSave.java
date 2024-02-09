@@ -9,7 +9,7 @@ public class userSave {
 	private int cantPoints;
 	private int cps;
 	private int pointsPerClick;
-
+	
 	public List<saveUpgrades> getUpgrades() {
 		return upgrades;
 	}

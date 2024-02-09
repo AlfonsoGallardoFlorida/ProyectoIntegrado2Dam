@@ -11,8 +11,11 @@ public class Users {
 	@Id
 	private String mongoId;
 	private int id;
+	private String validationNum;
+	private boolean isValidated;
 	private String name;
 	private String password;
+	private String email;
 	private String dateCreated;
 	private String lastSave;
 	private List<userSave> save;
@@ -71,6 +74,30 @@ public class Users {
 
 	public void setSave(List<userSave> save) {
 		this.save = save;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getValidationNum() {
+		return validationNum;
+	}
+
+	public void setValidationNum(String validationNum) {
+		this.validationNum = validationNum;
+	}
+
+	public boolean isValidated() {
+		return isValidated;
+	}
+
+	public void setValidated(boolean isValidated) {
+		this.isValidated = isValidated;
 	}
 
 }
