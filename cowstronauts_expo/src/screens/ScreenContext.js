@@ -12,6 +12,7 @@ export const ScreensProvider = ({ children }) => {
     const [ tapsPerSecond, setTapsPerSecond ] = useState(0);
     const [ pointsPerClick, setPointsPerClick ] = useState(1);
     const [ upgradesUnlocked, setUpgradesUnlocked ] = useState([]);
+    const [ allUpgrades, setAllUpgrades ] = useState([]);
 
     return (
         <ScreensContext.Provider value ={{ 
@@ -22,7 +23,8 @@ export const ScreensProvider = ({ children }) => {
          userInfo, setUserInfo,
          tapsPerSecond, setTapsPerSecond,
          pointsPerClick, setPointsPerClick,
-         upgradesUnlocked, setUpgradesUnlocked
+         upgradesUnlocked, setUpgradesUnlocked,
+         allUpgrades, setAllUpgrades
           }}>
             {children}
         </ScreensContext.Provider>

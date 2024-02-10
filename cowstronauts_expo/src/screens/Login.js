@@ -8,6 +8,7 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const {userInfo, setUserInfo} = useContext(ScreensContext);
+  
   const getData = async (url) => {
     try {
       const response = await fetch(url);

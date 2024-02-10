@@ -14,6 +14,8 @@ const Tapcreen = ({ navigation }) => {
   const [lastTapTime, setLastTapTime] = useState(null);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
+  const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
+
   const [path, setPath] = useState([
     require('../../assets/sound/moonClick1.mp3'),
     require('../../assets/sound/MoonClick2.mp3'),
@@ -35,6 +37,10 @@ const Tapcreen = ({ navigation }) => {
       Animated.timing(rotateAnim, { useNativeDriver: false, toValue: 1, easing: Easing.linear, duration: 20000})
     ).start();
   }, []);
+
+  useEffect(() => {
+    getAllUpgrades();
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -84,6 +90,18 @@ const Tapcreen = ({ navigation }) => {
       }),
     ]).start();
   };
+
+  const getAllUpgrades = async () => {
+    try {
+      const response = await fetch("http://18.213.13.32:8080/upgrades");
+      const jsonResponse = await response.json();
+      if(response.ok) {
+        setAllUpgrades(jsonResponse);
+      }
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <ImageBackground source={(areConstellationsVisible) ? require("../../assets/img/TapBackground.png") : require("../../assets/img/TapBackground-NoConstellations.png")} style={styles.background}>
