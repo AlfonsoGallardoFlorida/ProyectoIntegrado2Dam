@@ -15,6 +15,7 @@ const Tapcreen = ({ navigation }) => {
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
+  const {userInfo, setUserInfo} = useContext(ScreensContext);
 
   const [path, setPath] = useState([
     require('../../assets/sound/moonClick1.mp3'),
@@ -40,6 +41,10 @@ const Tapcreen = ({ navigation }) => {
 
   useEffect(() => {
     getAllUpgrades();
+    console.log(userInfo.data.save);
+    if(userInfo.data.save[0].cantPoints !== undefined) {
+      setCoin(userInfo.data.save[0].cantPoints)
+    }
   }, [])
 
   useEffect(() => {

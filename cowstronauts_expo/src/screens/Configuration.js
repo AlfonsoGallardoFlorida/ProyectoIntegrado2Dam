@@ -58,9 +58,6 @@ const Configuration = ({ navigation }) => {
   const saveProgress = () => {
   
     if(userInfo === undefined) return;
-    const id = userInfo.data.id;
-    const save = userInfo.data.save;
-
     const jsonSave = [
     {
       upgrades: upgradesUnlocked,
@@ -70,10 +67,26 @@ const Configuration = ({ navigation }) => {
       pointsPerClick: pointsPerClick
     }
   ]
+  saveApi(jsonSave);
     
 
 
   };
+
+  const saveApi = async (jsonSave) => {
+    try {
+        const response = await fetch('http://18.213.13.32:8080/load?id=' + userInfo.data.id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jsonSave)
+        })
+        
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleShowCredits = () => {
     
