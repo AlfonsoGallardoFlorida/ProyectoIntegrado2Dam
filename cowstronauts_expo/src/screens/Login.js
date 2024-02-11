@@ -8,15 +8,19 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const {userInfo, setUserInfo} = useContext(ScreensContext);
-  
+  const {cantClicks, setCantClicks} = useContext(ScreensContext);
+  const {coin, setCoin} = useContext(ScreensContext);
+  const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
+
   const getData = async (url) => {
     try {
       const response = await fetch(url);
-      console.log(response.status);
       const jsonResponse = await response.json();
       if (response.status === 200) {
-        console.log(jsonResponse);
         setUserInfo(jsonResponse);
+        setCantClicks(jsonResponse.data.save[0].cantClicks)
+        setCoin(jsonResponse.data.save[0].cantPoints)
+        setTapsPerSecond(jsonResponse.data.save[0].cps)
         navigation.navigate("TabsGame");
       }else if(response.status === 401) {
         alert("Login not correct. Please try again");
