@@ -84,10 +84,10 @@ const SignUp = ({ navigation }) => {
         </View>
       </View>
 
-      <Image source={require('../../assets/img/martesignup.png')} style={styles.marteImage} />
+      <Image source={require('../../assets/img/planets/planetSignUp.png')} style={styles.marteImage} />
 
       <View style={styles.footerTextContainer}>
-        <Text style={styles.footerText}>Have an account?</Text>
+        <Text style={styles.footerText} onPress={()=> navigation.navigate('Login')}>Have an account?</Text>
       </View>
     </View>
   );
@@ -143,10 +143,10 @@ const styles = StyleSheet.create({
 
   marteImage: {
     position: 'absolute',
-    top: 610,
+    top: 760,
     bottom: 0,
-    right: 0,
-    width: 125,
+    right: -5,
+    width: 150,
     height: 125,
     resizeMode: 'contain',
   },

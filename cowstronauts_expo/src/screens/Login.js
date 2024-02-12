@@ -66,16 +66,16 @@ const Login = ({ navigation }) => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
-            {/*           <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}> */}
+            {/*En caso de que no funcione el LogIn  <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}> */}
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <Image source={require('../../assets/img/marte.png')} style={styles.marteImage} />
+      <Image source={require('../../assets/img/planets/planetLogin.png')} style={styles.marteImage} />
 
       <View style={styles.footerTextContainer}>
-        <Text style={styles.footerText}>Don't have an account?</Text>
+        <Text style={styles.footerText} onPress={()=>navigation.navigate('SignUp')}>Don't have an account?</Text>
       </View>
     </View>
   );
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   logo: {
+    position: 'absolute',
     width: 200,
     height: 200,
     resizeMode: 'contain',
@@ -131,10 +132,10 @@ const styles = StyleSheet.create({
 
   marteImage: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: 100,
-    height: 100,
+    bottom: 2,
+    left: -18,
+    width: 150,
+    height: 125,
     resizeMode: 'contain',
   },
   footerTextContainer: {

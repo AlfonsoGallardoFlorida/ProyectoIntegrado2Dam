@@ -18,7 +18,7 @@ const App = () => {
           <View style={styles.product}>
             <View style={{ flex: 1 }}>
               <Image
-                source={require('../../assets/img/Josh.jpg')}
+                source={require('../../assets/img/upgrades_cps/Josh.jpg')}
                 style={{ width: 100, height: 100 }}
               />
             </View>

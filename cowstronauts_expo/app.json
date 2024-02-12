@@ -4,11 +4,11 @@
     "slug": "cowstronauts_expo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/logo.png",
+    "icon": "./assets/img/logos/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       // imagen de carga
-      "image": "./assets/img/logo.png",
+      "image": "./assets/img/logos/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,12 +20,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/img/logo.png",
+        "foregroundImage": "./assets/img/logos/logo.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/img/logo.png"
+      "favicon": "./assets/img/logos/logo.png"
     }
   }
 }

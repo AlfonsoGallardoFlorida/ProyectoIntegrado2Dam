@@ -108,7 +108,7 @@ const Configuration = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../../assets/img/config.png')}
+          source={require('../../assets/img/logos/config.png')}
           style={styles.image}
         />
       </View>
