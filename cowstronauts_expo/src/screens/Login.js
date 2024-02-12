@@ -11,6 +11,7 @@ const Login = ({ navigation }) => {
   const {cantClicks, setCantClicks} = useContext(ScreensContext);
   const {coin, setCoin} = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
+  const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
 
   const getData = async (url) => {
     try {
@@ -21,6 +22,7 @@ const Login = ({ navigation }) => {
         setCantClicks(jsonResponse.data.save[0].cantClicks)
         setCoin(jsonResponse.data.save[0].cantPoints)
         setTapsPerSecond(jsonResponse.data.save[0].cps)
+        setUpgradesUnlocked(jsonResponse.data.save[0].upgrades)
         navigation.navigate("TabsGame");
       }else if(response.status === 401) {
         alert("Login not correct. Please try again");
