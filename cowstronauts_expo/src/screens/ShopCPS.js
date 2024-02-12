@@ -9,7 +9,7 @@ const ShopCPS = () => {
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const {coin, setCoin} = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
-  const {poinstPerSecond, setPointsPerSecond} = useContext(ScreensContext);
+  const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
 
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../assets/sound/Josh.exe.mp3'));
@@ -55,7 +55,7 @@ const ShopCPS = () => {
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
 
-      setPointsPerSecond(poinstPerSecond+data.effect[0].quantity);
+      setPointsPerSecond(pointsPerSecond+data.effect[0].quantity);
     }else{
       alert("Not enough Zlotys to buy this upgrade.")
     }
@@ -74,7 +74,7 @@ const ShopCPS = () => {
               <View style={styles.product}>
                 <View style={{ flex: 1 }}>
                   <Image
-                    source={require('../../assets/img/upgrades_cps/Josh.jpg')}
+                    source={{uri: 'data:image/gif;base64,' + element.img}}
                     style={{ width: 100, height: 100 }}
                   />
                 </View>
@@ -89,22 +89,6 @@ const ShopCPS = () => {
             )
           }
         })}
-{/*         <TouchableOpacity onPress={play}>
-          <View style={styles.product}>
-            <View style={{ flex: 1 }}>
-              <Image
-                source={require('../../assets/img/Josh.jpg')}
-                style={{ width: 100, height: 100 }}
-              />
-            </View>
-            <View style={{ flex: 1, flexDirection: 'column' }}>
-              <Text>JOSH HUTCHERSON</Text>
-              <Text>
-                JoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutcherson
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity> */}
         <View style={styles.product}>
           <Text>SOY MILK</Text>
           <Text>Les vaques produiran el doble durant 3 minuts</Text>
