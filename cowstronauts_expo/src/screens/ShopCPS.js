@@ -9,7 +9,7 @@ const ShopCPS = () => {
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const {coin, setCoin} = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
-  const {poinstPerSecond, setPointsPerSecond} = useContext(ScreensContext);
+  const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
 
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../assets/sound/Josh.exe.mp3'));
@@ -55,7 +55,7 @@ const ShopCPS = () => {
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
 
-      setPointsPerSecond(poinstPerSecond+data.effect[0].quantity);
+      setPointsPerSecond(pointsPerSecond+data.effect[0].quantity);
     }else{
       alert("Not enough Zlotys to buy this upgrade.")
     }
