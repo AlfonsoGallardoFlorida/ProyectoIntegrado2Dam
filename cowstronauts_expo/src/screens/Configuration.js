@@ -22,6 +22,7 @@ const Configuration = ({ navigation }) => {
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
+  const {poinstPerSecond, setPointsPerSecond} = useContext(ScreensContext);
   const navigationUsage = useNavigation();
 
 
@@ -63,7 +64,7 @@ const Configuration = ({ navigation }) => {
       upgrades: upgradesUnlocked,
       cantClicks: cantClicks,
       cantPoints: coin,
-      cps: tapsPerSecond,
+      cps: poinstPerSecond,
       pointsPerClick: pointsPerClick
     }
   ]
