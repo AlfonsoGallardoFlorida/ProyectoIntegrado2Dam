@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
+import { useContext } from 'react';
+import ScreensContext from './ScreenContext';
 
-const App = () => {
+const ShopCPS = () => {
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../assets/sound/Josh.exe.mp3'));
     await sound.playAsync();
@@ -89,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default ShopCPS;

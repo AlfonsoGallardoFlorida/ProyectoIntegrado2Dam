@@ -82,7 +82,7 @@ const Configuration = ({ navigation }) => {
           },
           body: JSON.stringify(jsonSave)
         })
-        
+        if(response.ok) console.log("Progress Saved!");
     } catch (error) {
       console.log(error)
     }
@@ -97,7 +97,7 @@ const Configuration = ({ navigation }) => {
   };
 
   const handleCloseGame = () => {
-    navigation.navigate('HomeScreen');
+    navigation.navigate('Home');
   };
 
   return (
