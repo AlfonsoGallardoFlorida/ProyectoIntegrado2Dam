@@ -7,9 +7,9 @@ import ScreensContext from './ScreenContext';
 const Login = ({ navigation }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const {userInfo, setUserInfo} = useContext(ScreensContext);
-  const {cantClicks, setCantClicks} = useContext(ScreensContext);
-  const {coin, setCoin} = useContext(ScreensContext);
+  const { userInfo, setUserInfo } = useContext(ScreensContext);
+  const { cantClicks, setCantClicks } = useContext(ScreensContext);
+  const { coin, setCoin } = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
 
@@ -18,20 +18,27 @@ const Login = ({ navigation }) => {
       const response = await fetch(url);
       const jsonResponse = await response.json();
       if (response.status === 200) {
-        setUserInfo(jsonResponse);
-        (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
-        (jsonResponse.data.save[0] !== undefined) ? setCoin(jsonResponse.data.save[0].cantPoints) : setCoin(0);
-        (jsonResponse.data.save[0] !== undefined) ? setTapsPerSecond(jsonResponse.data.save[0].cps) : setTapsPerSecond(0);
-        (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([])
-        navigation.navigate("TabsGame");
-      }else if(response.status === 401) {
+        if (jsonResponse.data.validated) {
+          setUserInfo(jsonResponse);
+          (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
+          (jsonResponse.data.save[0] !== undefined) ? setCoin(jsonResponse.data.save[0].cantPoints) : setCoin(0);
+          (jsonResponse.data.save[0] !== undefined) ? setTapsPerSecond(jsonResponse.data.save[0].cps) : setTapsPerSecond(0);
+          (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked({});
+          navigation.navigate("TabsGame");
+        } else {
+          setUserInfo(null);
+          alert("Correct Credentials\nUser is NOT validated, check your e-mail");
+        }
+      } else if (response.status === 401) {
+        setUserInfo(null);
         alert("Login not correct. Please try again");
       }
     } catch (error) {
       console.error(`Error en la solicitud: ${error.message}`);
     }
   };
-  
+
+
   function onPressLogIn(name, pass) {
     getData(`http://18.213.13.32:8080/login?user=${name}&pass=${pass}`);
 
@@ -59,7 +66,7 @@ const Login = ({ navigation }) => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
-{/*           <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}> */}
+            {/*           <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}> */}
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
           </TouchableOpacity>
         </View>
