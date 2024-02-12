@@ -77,7 +77,7 @@ public class PostEndpointController {
 
 		try {
 			SendEmailController sendEmail = new SendEmailController(
-					"Click the link below to validate your Cowstronauts account!\nClick to verify: http://localhost:8080/validate?number="
+					"Click the link below to validate your Cowstronauts account!\nClick to verify: http://18.213.13.32:8080/validate?number="
 							+ newUser.getValidationNum(),
 					"Validation code from Cowstronauts", "cowstronauts@gmail.com", "sewv apxu wpzb xgri",
 					"smtp.gmail.com", "587", new String[] { newUser.getEmail() });
