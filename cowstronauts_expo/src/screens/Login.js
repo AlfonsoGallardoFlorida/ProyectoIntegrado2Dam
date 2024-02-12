@@ -19,10 +19,10 @@ const Login = ({ navigation }) => {
       const jsonResponse = await response.json();
       if (response.status === 200) {
         setUserInfo(jsonResponse);
-        setCantClicks(jsonResponse.data.save[0].cantClicks)
-        setCoin(jsonResponse.data.save[0].cantPoints)
-        setTapsPerSecond(jsonResponse.data.save[0].cps)
-        setUpgradesUnlocked(jsonResponse.data.save[0].upgrades)
+        (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
+        (jsonResponse.data.save[0] !== undefined) ? setCoin(jsonResponse.data.save[0].cantPoints) : setCoin(0);
+        (jsonResponse.data.save[0] !== undefined) ? setTapsPerSecond(jsonResponse.data.save[0].cps) : setTapsPerSecond(0);
+        (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked({})
         navigation.navigate("TabsGame");
       }else if(response.status === 401) {
         alert("Login not correct. Please try again");
