@@ -16,6 +16,7 @@ const Tapcreen = ({ navigation }) => {
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const {userInfo, setUserInfo} = useContext(ScreensContext);
+  const {poinstPerSecond, setPointsPerSecond} = useContext(ScreensContext);
 
   const [path, setPath] = useState([
     require('../../assets/sound/moonClick1.mp3'),
@@ -46,6 +47,13 @@ const Tapcreen = ({ navigation }) => {
       setCoin(userInfo.data.save[0].cantPoints)
     } */
   }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCoin(prevCoin => prevCoin + poinstPerSecond);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [coin, poinstPerSecond]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -113,7 +121,7 @@ const Tapcreen = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.firstContainer}>
           <Text style={styles.txtCoins}>{coin} Zloty</Text>
-          <Text style={styles.txtCoins}>{tapsPerSecond} Zloty/s</Text>
+          <Text style={styles.txtCoins}>{poinstPerSecond} Zloty/s</Text>
         </View>
         <View style={styles.secondContainer}>
           <TouchableOpacity activeOpacity={1} onPress={handlePress} style={{ width: "100%", height: "100%", alignSelf: "center" }}>
