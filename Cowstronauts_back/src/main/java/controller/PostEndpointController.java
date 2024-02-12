@@ -93,7 +93,7 @@ public class PostEndpointController {
 	}
 
 	@GetMapping("/validate")
-	public ResponseEntity<String> validateUser(@RequestParam String number) {
+	public ResponseEntity<String> validateUser(@RequestParam(value = "number") String number) {
 		Users user = usersRepository.findByValidationNum(number);
 
 		if (user != null && !user.isValidated()) {
