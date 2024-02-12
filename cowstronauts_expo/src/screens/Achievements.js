@@ -6,20 +6,17 @@ import ScreensContext from './ScreenContext';
 const AchievementsScreen = () => {
 
   const {cantClicks, setCantClicks} = useContext(ScreensContext);
-  
+  const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
+
   const achievements = [
     { name: 'Make 100 clicks', description: 'Click the planet 100 times.', progress: cantClicks, total: 100 },
     { name: 'Make 1,000 clicks', description: 'Click the planet 1000 times.', progress: cantClicks, total: 1000 },
     { name: 'Make 10K clicks', description: 'Click the planet 10,000 times.', progress: cantClicks, total: 10000 },
     { name: 'Make 1M clicks', description: 'Click the planet 10,000 times.', progress: cantClicks, total: 1000000 },
-    { name: 'Buy 1 upgrades', description: 'Purchase 1 upgrades.', progress: 0, total: 1 },
-    { name: 'Buy 20 upgrades', description: 'Purchase 20 upgrades.', progress: 0, total: 20 },
+    { name: 'Buy 1 upgrades', description: 'Purchase 1 upgrades.', progress: upgradesUnlocked.length, total: 1 },
+    { name: 'Buy 20 upgrades', description: 'Purchase 20 upgrades.', progress: upgradesUnlocked.length, total: 20 },
     { name: 'Travel to Mars', description: 'Travel to Mars.', progress: 0, total: 1 },
   ];
-
-  useEffect(() => {
-
-  }, [cantClicks]);
 
   return (
     <View style={styles.container}>
@@ -49,7 +46,7 @@ const AchievementsScreen = () => {
                   </Text>
                 </View>
                 <View style={styles.progressCounter}>
-                  {(achievement.progress <= achievement.total) ? <Text style={styles.progressText}>{achievement.progress} / {achievement.total}</Text> : <Text style={styles.progressText}>complete</Text>}
+                  {(achievement.progress < achievement.total) ? <Text style={styles.progressText}>{achievement.progress} / {achievement.total}</Text> : <Text style={styles.progressText}>complete</Text>}
                 </View>
               </View>
             )
