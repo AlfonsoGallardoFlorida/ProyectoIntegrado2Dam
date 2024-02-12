@@ -58,6 +58,7 @@ const Configuration = ({ navigation }) => {
   const saveProgress = () => {
   
     if(userInfo === undefined) return;
+
     const jsonSave = [
     {
       upgrades: upgradesUnlocked,
@@ -67,6 +68,7 @@ const Configuration = ({ navigation }) => {
       pointsPerClick: pointsPerClick
     }
   ]
+  console.log(upgradesUnlocked);
   saveApi(jsonSave);
     
 
@@ -82,6 +84,7 @@ const Configuration = ({ navigation }) => {
           },
           body: JSON.stringify(jsonSave)
         })
+        console.log(response.status);
         if(response.ok) console.log("Progress Saved!");
     } catch (error) {
       console.log(error)
