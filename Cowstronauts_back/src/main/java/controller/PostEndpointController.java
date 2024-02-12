@@ -2,6 +2,7 @@ package main.java.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.FileReader;
@@ -10,6 +11,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.mail.MessagingException;
 
 import org.bson.Document;
 import org.json.JSONObject;
@@ -30,7 +33,6 @@ import main.java.model.userSave;
 import main.java.repository.AchievementsRepository;
 import main.java.repository.UpgradesRepository;
 import main.java.repository.UsersRepository;
-
 import java.util.List;
 import java.util.Random;
 
@@ -71,6 +73,20 @@ public class PostEndpointController {
 		newUser.setValidated(false);
 		System.out.println(encryptedPass);
 		usersRepository.save(newUser);
+
+		try {
+			SendEmailController sendEmail = new SendEmailController(
+					"Click the link below to validate your Cowstronauts account!\nClick to verify: http://18.213.13.32:8080/validate?number="
+							+ newUser.getValidationNum(),
+					"Validation code from Cowstronauts", "cowstronauts@gmail.com", "sewv apxu wpzb xgri",
+					"smtp.gmail.com", "587", new String[] { newUser.getEmail() });
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Mensaje enviado");
 		jsonString.put("Status", "200");
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
