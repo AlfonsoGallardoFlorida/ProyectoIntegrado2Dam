@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 const SignUp = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-
 
   const handleSignUp = async () => {
     try {
@@ -17,6 +17,7 @@ const SignUp = ({ navigation }) => {
       const jsonBody = {
         name: username,
         password: password,
+        email: email,
         dateCreated: new Date().toISOString().split("T")[0],
         lastSave: new Date().toISOString().split("T")[0],
         save: [],
@@ -33,8 +34,8 @@ const SignUp = ({ navigation }) => {
 
       if (response.status === 200) {
         alert('Registro exitoso');
-        navigation.navigate('TabsGame'); 
-      } else if(response.status === 400){
+        navigation.navigate('Login');
+      } else if (response.status === 400) {
         alert(`Error en el registro: ${data.error}`);
       }
     } catch (error) {
@@ -54,6 +55,12 @@ const SignUp = ({ navigation }) => {
           placeholder="Username"
           placeholderTextColor="#ccc"
           onChangeText={(text) => setUsername(text)}
+        />
+        <TextInput
+          style={styles.inputField}
+          placeholder="Email"
+          placeholderTextColor="#ccc"
+          onChangeText={(text) => setEmail(text)}
         />
         <TextInput
           style={styles.inputField}
@@ -133,14 +140,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
   },
-  
+
   marteImage: {
     position: 'absolute',
     top: 610,
     bottom: 0,
     right: 0,
-    width: 125,  
-    height: 125, 
+    width: 125,
+    height: 125,
     resizeMode: 'contain',
   },
   footerTextContainer: {
