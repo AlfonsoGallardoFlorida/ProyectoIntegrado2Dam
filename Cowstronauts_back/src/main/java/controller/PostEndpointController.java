@@ -117,7 +117,7 @@ public class PostEndpointController {
 		}
 
 		int maxId = getMaxIdUpgrade();
-		int newId = maxId++;
+		int newId = maxId + 1;
 		newUpgrade.setId(newId);
 		upgradesRepository.save(newUpgrade);
 
@@ -135,7 +135,7 @@ public class PostEndpointController {
 		}
 
 		int maxId = getMaxIdAchievement();
-		int newId = maxId++;
+		int newId = maxId + 1;
 		newAchievement.setId(newId);
 		achievementsRepository.save(newAchievement);
 
