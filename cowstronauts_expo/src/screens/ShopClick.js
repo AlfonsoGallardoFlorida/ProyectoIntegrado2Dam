@@ -63,7 +63,7 @@ const ShopClick = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>TIENDA CPS</Text>
+      <Text style={styles.title}>TIENDA CLICK MULTIPLIER</Text>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Moneda</Text>
