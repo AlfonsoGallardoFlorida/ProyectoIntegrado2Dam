@@ -30,22 +30,34 @@ const App = () => {
         resizeMode="cover"
         style={styles.backgroundImage}>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <TouchableOpacity onPress={play}>
-            <View style={styles.product}>
-              <View style={{ flex: 1 }}>
-                <Image
-                  source={require('../../../assets/img/upgrades_cps/images/Josh.jpg')}
-                  style={{ width: 100, height: 100 }}
-                />
-              </View>
-              <View style={{ flex: 1, flexDirection: 'column' }}>
-                <Text>JOSH HUTCHERSON</Text>
-                <Text>
-                  JoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutcherson
-                </Text>
-              </View>
+          <TouchableOpacity onPress={play} style={styles.product}>
+            <View style={styles.productImageContainer}>
+              <Image
+                source={require('../../../assets/img/upgrades_cps/images/Josh.jpg')}
+                style={styles.productImage}
+              />
+            </View>
+            <View style={styles.productInfo}>
+              <Text style={styles.productTitle}>JOSH HUTCHERSON</Text>
+              <Text style={styles.productDescription}>
+                JoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutcherson
+              </Text>
             </View>
           </TouchableOpacity>
+
+          <View style={styles.product}>
+            <Text style={styles.productTitle}>SOY MILK</Text>
+            <Text style={styles.productDescription}>
+              Les vaques produiran el doble durant 3 minuts
+            </Text>
+          </View>
+
+          <View style={styles.product}>
+            <Text style={styles.productTitle}>VACA TANICA</Text>
+            <Text style={styles.productDescription}>
+              Probabilitat del 32% que aparega una vaca satànica
+            </Text>
+          </View>
         </ScrollView>
       </ImageBackground>
       <View style={styles.navigation} />
