@@ -46,20 +46,6 @@ const App = () => {
               </View>
             </View>
           </TouchableOpacity>
-
-          <View style={styles.product}>
-            <Text style={styles.productTitle}>SOY MILK</Text>
-            <Text style={styles.productDescription}>
-              Les vaques produiran el doble durant 3 minuts
-            </Text>
-          </View>
-
-          <View style={styles.product}>
-            <Text style={styles.productTitle}>VACA TANICA</Text>
-            <Text style={styles.productDescription}>
-              Probabilitat del 32% que aparega una vaca satànica
-            </Text>
-          </View>
         </ScrollView>
       </ImageBackground>
       <View style={styles.navigation} />

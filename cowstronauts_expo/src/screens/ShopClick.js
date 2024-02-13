@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { Audio } from 'expo-av';
 import { useContext } from 'react';
 import ScreensContext from './ScreenContext';
@@ -7,9 +7,9 @@ import ScreensContext from './ScreenContext';
 const ShopClick = () => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
-  const {coin, setCoin} = useContext(ScreensContext);
+  const { coin, setCoin } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
-  const {pointsPerClick, setPointsPerClick} = useContext(ScreensContext);
+  const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
 
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../assets/sound/Josh.exe.mp3'));
@@ -23,16 +23,16 @@ const ShopClick = () => {
     let upgradeLevel = 0;
     let isupgradeSaved = false;
     upgradesUnlocked.map(element => {
-      if(element.idUpgrade === id) {
+      if (element.idUpgrade === id) {
         upgradeLevel = element.cantUpgrade
         isupgradeSaved = true;
-      }else{
+      } else {
         upgradeLevel = 0;
-      } 
+      }
     })
     console.log(upgradeLevel);
 
-    if(upgradeLevel < lvlMax) {
+    if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved);
     }
 
@@ -40,14 +40,14 @@ const ShopClick = () => {
 
   const buyOne = (data, isUpgradeSaved) => {
     console.log(upgradesUnlocked);
-    if(data.cost <= coin) {
+    if (data.cost <= coin) {
       setCoin(coin - data.cost);
-      if(isUpgradeSaved) {
+      if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)
         console.log(upgradesSave);
         setUpgradesUnlocked(upgradesSave);
-      }else{
+      } else {
         let newUpgrade = {
           idUpgrade: data.id,
           cantUpgrade: 1
@@ -55,56 +55,40 @@ const ShopClick = () => {
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
 
-      setPointsPerClick(pointsPerClick+data.effect[0].quantity);
-    }else{
+      setPointsPerClick(pointsPerClick + data.effect[0].quantity);
+    } else {
       alert("Not enough Zlotys to buy this upgrade.")
     }
   }
 
   return (
     <View style={styles.container}>
+      <Text style={styles.sectionTitle}>Moneda</Text>
       <Text style={styles.title}>TIENDA CLICK MULTIPLIER</Text>
-
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Moneda</Text>
-        {allUpgrades.upgrade.map((element, i) => {
-          if(element.effect[0].type === "click") {
-            return(
+        {allUpgrades?.upgrade?.map((element, i) => {
+          if (element.effect[0]?.type === "click") {
+            return (
               <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
-              <View style={styles.product}>
-                <View style={{ flex: 1 }}>
-                  <Image
-                    source={{uri: 'data:image/gif;base64,' + element.img}}
-                    style={{ width: 100, height: 100 }}
-                  />
+                <View style={styles.product}>
+                  <View style={{ flex: 1 }}>
+                    <Image
+                      source={{ uri: 'data:image/gif;base64,' + element.img }}
+                      style={{ width: 100, height: 100 }}
+                    />
+                  </View>
+                  <View style={{ flex: 1, flexDirection: 'column' }}>
+                    <Text>{element.name}</Text>
+                    <Text>
+                      {element.description}
+                    </Text>
+                  </View>
                 </View>
-                <View style={{ flex: 1, flexDirection: 'column' }}>
-                  <Text>{element.name}</Text>
-                  <Text>
-                    {element.description}
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            )
+              </TouchableOpacity>
+            );
           }
+          return null; // Agrega esta línea si deseas ignorar elementos que no cumplen con la condición
         })}
-{/*         <TouchableOpacity onPress={play}>
-          <View style={styles.product}>
-            <View style={{ flex: 1 }}>
-              <Image
-                source={require('../../assets/img/upgrades_cps/Josh.jpg')}
-                style={{ width: 100, height: 100 }}
-              />
-            </View>
-            <View style={{ flex: 1, flexDirection: 'column' }}>
-              <Text>JOSH HUTCHERSON</Text>
-              <Text>
-                JoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutcherson
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity> */}
         <View style={styles.product}>
           <Text>SOY MILK</Text>
           <Text>Les vaques produiran el doble durant 3 minuts</Text>
@@ -119,9 +103,12 @@ const ShopClick = () => {
       <View style={styles.navigation}>
         {/* Agregar botones de navegación con iconos */}
       </View>
-    </View>
+    </View >
   );
-};
+}
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -161,6 +148,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
+  }, backgroundImage: {
+    width: windowWidth,
+    height: windowHeight * 0.85,
+    justifyContent: 'center',
   },
 });
 
