@@ -74,7 +74,7 @@ const ShopClick = () => {
               <View style={styles.product}>
                 <View style={{ flex: 1 }}>
                   <Image
-                    source={require('../../assets/img/Josh.jpg')}
+                    source={{uri: 'data:image/gif;base64,' + element.img}}
                     style={{ width: 100, height: 100 }}
                   />
                 </View>
