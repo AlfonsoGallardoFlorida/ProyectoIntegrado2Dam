@@ -21,11 +21,11 @@ const Tapcreen = ({ navigation }) => {
 
   
   const [path, setPath] = useState([
-    require('../../assets/sound/moonClick1.mp3'),
-    require('../../assets/sound/MoonClick2.mp3'),
-    require('../../assets/sound/MoonClick3.mp3'),
-    require('../../assets/sound/MoonClick4.mp3'),
-    require('../../assets/sound/MoonClick5.mp3'),
+    require('../../../assets/sound/moonClick1.mp3'),
+    require('../../../assets/sound/MoonClick2.mp3'),
+    require('../../../assets/sound/MoonClick3.mp3'),
+    require('../../../assets/sound/MoonClick4.mp3'),
+    require('../../../assets/sound/MoonClick5.mp3'),
   ]);
   const { areConstellationsVisible, setAreConstellationsVisible } =
     useContext(ScreensContext);
@@ -34,7 +34,7 @@ const Tapcreen = ({ navigation }) => {
 
   const soundObjects = useRef([]);
 
-  let url = "../../assets/img/backgrounds/TapBackground.png";
+  let url = "../../../assets/img/backgrounds/TapBackground.png";
 
   useEffect(() => {
     Animated.loop(
@@ -124,11 +124,11 @@ const Tapcreen = ({ navigation }) => {
   }
 
   return (
-    <ImageBackground source={(areConstellationsVisible) ? require("../../assets/img/backgrounds/TapBackground.png") : require("../../assets/img/backgrounds/TapBackground-NoConstellations.png")} style={styles.background}>
+    <ImageBackground source={(areConstellationsVisible) ? require("../../../assets/img/backgrounds/TapBackground.png") : require("../../../assets/img/backgrounds/TapBackground-NoConstellations.png")} style={styles.background}>
       <View style={styles.container}>
         <View style={styles.firstContainer}>
-          <Text style={styles.txtCoins}>{coin} <Image source={require("../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
-          <Text style={styles.txtCoins}>{pointsPerSecond}  <Image source={require("../../assets/img/logos/zloty.png")} style={styles.coinImage} />
+          <Text style={styles.txtCoins}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+          <Text style={styles.txtCoins}>{pointsPerSecond}  <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />
         /s</Text>
          </View>
         <View style={styles.secondContainer}>

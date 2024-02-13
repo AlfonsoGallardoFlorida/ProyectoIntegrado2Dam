@@ -21,7 +21,7 @@ const AchievementsScreen = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/img/planets/neptune.png')}
+        source={require('../../../assets/img/planets/neptune.png')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
@@ -30,7 +30,7 @@ const AchievementsScreen = () => {
           <Text style={styles.title}>Achievements</Text>
         </View>
         <Image
-          source={require('../../assets/img/logos/trophy.png')}
+          source={require('../../../assets/img/logos/trophy.png')}
           style={styles.trophyImage}
           resizeMode="contain"
         />

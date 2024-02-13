@@ -84,7 +84,7 @@ const SignUp = ({ navigation }) => {
         </View>
       </View>
 
-      <Image source={require('../../assets/img/planets/planetSignUp.png')} style={styles.marteImage} />
+      <Image source={require('../../../assets/img/planets/planetSignUp.png')} style={styles.marteImage} />
 
       <View style={styles.footerTextContainer}>
         <Text style={styles.footerText} onPress={()=> navigation.navigate('Login')}>Have an account?</Text>

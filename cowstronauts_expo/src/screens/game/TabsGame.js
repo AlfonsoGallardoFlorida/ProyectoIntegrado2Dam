@@ -11,8 +11,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Screen1 from './TapScreen';
 import Screen2 from '../shops/Shop1';
 import Screen3 from '../shops/Shop2';
-import Screen4 from '../Configuration';
-import Screen5 from '../Achievements';
+import Screen4 from '../infoPlayer/Configuration';
+import Screen5 from '../infoPlayer/Achievements';
 
 // Crea un componente de navegación en pestañas
 const Tab = createBottomTabNavigator();

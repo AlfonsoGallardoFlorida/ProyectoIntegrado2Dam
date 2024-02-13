@@ -5,14 +5,14 @@ import { ScreensProvider } from './src/screens/ScreenContext';
 import 'react-native-gesture-handler';
 import { LogBox } from 'react-native';
 
-import Account from './src/screens/Account';
-import Login from './src/screens/Login';
-import SignUp from './src/screens/SignUp';
-import Home from './src/screens/HomeScreen';
-import TabsGame from './src/screens/TabsGame';
-import Configuration from './src/screens/Configuration';
-import ShopCPS from './src/screens/ShopCPS';
-import ShopClick from './src/screens/ShopClick';
+import Account from './src/screens/infoPlayer/Account';
+import Login from './src/screens/home/Login';
+import SignUp from './src/screens/home/SignUp';
+import Home from './src/screens/home/HomeScreen';
+import TabsGame from './src/screens/game/TabsGame';
+import Configuration from './src/screens/infoPlayer/Configuration';
+import ShopCPS from './src/screens/shops/ShopCPS';
+import ShopClick from './src/screens/shops/ShopClick';
 
 const Stack = createStackNavigator();
 

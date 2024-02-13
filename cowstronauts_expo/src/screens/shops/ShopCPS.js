@@ -12,7 +12,7 @@ const ShopCPS = () => {
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
 
   const play = async () => {
-    const { sound } = await Audio.Sound.createAsync(require('../../assets/sound/Josh.exe.mp3'));
+    const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/Josh.exe.mp3'));
     await sound.playAsync();
   };
 

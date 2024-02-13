@@ -75,7 +75,7 @@ const Login = ({ navigation }) => {
         </View>
       </View>
 
-      <Image source={require('../../assets/img/planets/planetLogin.png')} style={styles.marteImage} />
+      <Image source={require('../../../assets/img/planets/planetLogin.png')} style={styles.marteImage} />
 
       <View style={styles.footerTextContainer}>
         <Text style={styles.footerText} onPress={()=>navigation.navigate('SignUp')}>Don't have an account?</Text>

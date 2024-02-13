@@ -8,7 +8,7 @@ let soundObject;
 const playSound = async () => {
   try {
     const { sound } = await Audio.Sound.createAsync(
-      require('../../assets/sound/GameSong.mp3')
+      require('../../../assets/sound/GameSong.mp3')
     );
     soundObject = sound;
     await soundObject.playAsync();
@@ -41,11 +41,11 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <ImageBackground source={require('../../assets/img/backgrounds/inicio.png')} style={styles.background}>
+    <ImageBackground source={require('../../../assets/img/backgrounds/inicio.png')} style={styles.background}>
       <View style={styles.container}>
         <View style={styles.firstContainer}>
           <TouchableOpacity onPress={() => {stopSound(); navigation.navigate('Configuration')}}>
-            <Image source={require('../../assets/img/logos/screw.png')} style={{ width: 45, height: 50 }} />
+            <Image source={require('../../../assets/img/logos/screw.png')} style={{ width: 45, height: 50 }} />
           </TouchableOpacity>
         </View>
         <View style={styles.secondContainer}>
