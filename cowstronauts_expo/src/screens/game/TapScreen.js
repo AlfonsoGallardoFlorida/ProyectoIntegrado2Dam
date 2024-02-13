@@ -18,6 +18,7 @@ const Tapcreen = ({ navigation }) => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const {userInfo, setUserInfo} = useContext(ScreensContext);
   const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
+  const {isMoonMoving, setIsMoonMoving} = useContext(ScreensContext);
 
   
   const [path, setPath] = useState([
@@ -36,11 +37,18 @@ const Tapcreen = ({ navigation }) => {
 
   let url = "../../../assets/img/backgrounds/TapBackground.png";
 
+  
   useEffect(() => {
-    Animated.loop(
-      Animated.timing(rotateAnim, { useNativeDriver: false, toValue: 1, easing: Easing.linear, duration: 20000 })
-    ).start();
-  }, []);
+    if(isMoonMoving){
+      Animated.loop(
+        Animated.timing(rotateAnim, { useNativeDriver: false, toValue: 1, easing: Easing.linear, duration: 20000 })
+        ).start();
+      }else{
+      Animated.loop(
+        Animated.timing(rotateAnim, { useNativeDriver: false, toValue: 1, easing: Easing.linear, duration: 20000 })
+        ).stop();
+      }
+  }, [isMoonMoving]);
 
   useEffect(() => {
     getAllUpgrades();

@@ -12,17 +12,17 @@ const Configuration = ({ navigation }) => {
   const [volume, setVolume] = useState(50);
   const [isDaltonicMode, setIsDaltonicMode] = useState(false);
   const [isEpilepticMode, setIsEpilepticMode] = useState(false);
-  const {areConstellationsVisible, setAreConstellationsVisible} =
+  const { areConstellationsVisible, setAreConstellationsVisible } =
     useContext(ScreensContext);
-  const {userInfo, setUserInfo} = useContext(ScreensContext);
-  const [isMoonMoving, setIsMoonMoving] = useState(false);
+  const { userInfo, setUserInfo } = useContext(ScreensContext);
+  const {isMoonMoving, setIsMoonMoving} = useContext(ScreensContext);
   const [selected, setSelected] = useState('');
-  const {cantClicks, setCantClicks} = useContext(ScreensContext);
-  const {coin, setCoin} = useContext(ScreensContext);
+  const { cantClicks, setCantClicks } = useContext(ScreensContext);
+  const { coin, setCoin } = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
-  const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
+  const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const navigationUsage = useNavigation();
 
 
@@ -57,43 +57,43 @@ const Configuration = ({ navigation }) => {
   };
 
   const saveProgress = () => {
-  
-    if(userInfo === undefined) return;
+
+    if (userInfo === undefined) return;
 
     const jsonSave = [
-    {
-      upgrades: upgradesUnlocked,
-      cantClicks: cantClicks,
-      cantPoints: coin,
-      cps: pointsPerSecond,
-      pointsPerClick: pointsPerClick
-    }
-  ]
-  console.log(upgradesUnlocked);
-  saveApi(jsonSave);
-    
+      {
+        upgrades: upgradesUnlocked,
+        cantClicks: cantClicks,
+        cantPoints: coin,
+        cps: pointsPerSecond,
+        pointsPerClick: pointsPerClick
+      }
+    ]
+    console.log(upgradesUnlocked);
+    saveApi(jsonSave);
+
 
 
   };
 
   const saveApi = async (jsonSave) => {
     try {
-        const response = await fetch('http://18.213.13.32:8080/load?id=' + userInfo.data.id, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(jsonSave)
-        })
-        console.log(response.status);
-        if(response.ok) console.log("Progress Saved!");
+      const response = await fetch('http://18.213.13.32:8080/load?id=' + userInfo.data.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonSave)
+      })
+      console.log(response.status);
+      if (response.ok) console.log("Progress Saved!");
     } catch (error) {
       console.log(error)
     }
   }
 
   const handleShowCredits = () => {
-    
+
   };
 
   const handleLogout = () => {
@@ -181,8 +181,8 @@ const Configuration = ({ navigation }) => {
             style={styles.selectList}
             itemStyle={styles.selectListItem}
             itemTextStyle={styles.selectListItemText}
-            
-            defaultOption={{ key:'1', value:'English' }}
+
+            defaultOption={{ key: '1', value: 'English' }}
           />
         </View>
 
@@ -200,10 +200,10 @@ const Configuration = ({ navigation }) => {
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
             />
-                        <Button
+            <Button
               title="Close Game"
               onPress={handleCloseGame}
-              buttonStyle={[styles.button, { marginBottom: 20 }]} 
+              buttonStyle={[styles.button, { marginBottom: 20 }]}
               textStyle={styles.buttonText}
             />
           </View>
@@ -220,13 +220,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#2B2930',
-    paddingVertical: 20, 
+    paddingVertical: 20,
   },
 
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 1, 
+    marginBottom: 1,
   },
 
   image: {
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     width: '93%',
-    marginBottom: 10, 
+    marginBottom: 10,
   },
 
   slider: {
@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
 
   checkBox: {
     marginTop: 5,
-    backgroundColor: 'transparent', 
-    borderWidth: 0, 
+    backgroundColor: 'transparent',
+    borderWidth: 0,
   },
 
   settingRow: {
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     justifyContent: 'space-between',
-    marginTop: 10, 
+    marginTop: 10,
   },
 
   leftButtons: {
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     borderRadius: 20,
     backgroundColor: '#777777',
-    marginBottom: 10, 
+    marginBottom: 10,
   },
 
   buttonText: {
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 5, 
+    marginTop: 5,
     marginBottom: 10,
   },
 
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#8C81A7',
     marginBottom: 10,
-    textAlign: 'center', 
+    textAlign: 'center',
   },
 });
 

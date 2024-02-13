@@ -14,6 +14,7 @@ export const ScreensProvider = ({ children }) => {
     const [ upgradesUnlocked, setUpgradesUnlocked ] = useState([]);
     const [ allUpgrades, setAllUpgrades ] = useState([]);
     const [ pointsPerSecond, setPointsPerSecond] = useState(0);
+    const [isMoonMoving, setIsMoonMoving] = useState(true);
 
     return (
         <ScreensContext.Provider value ={{ 
@@ -26,7 +27,9 @@ export const ScreensProvider = ({ children }) => {
          pointsPerClick, setPointsPerClick,
          upgradesUnlocked, setUpgradesUnlocked,
          allUpgrades, setAllUpgrades,
-         pointsPerSecond,setPointsPerSecond
+         pointsPerSecond,setPointsPerSecond,
+         isMoonMoving, setIsMoonMoving,
+
           }}>
             {children}
         </ScreensContext.Provider>
