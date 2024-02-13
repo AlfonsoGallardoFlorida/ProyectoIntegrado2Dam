@@ -10,14 +10,16 @@ const Tapcreen = ({ navigation }) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const [lastTapTime, setLastTapTime] = useState(null);
-  const { coin, setCoin } = useContext(ScreensContext);
-  const { cantClicks, setCantClicks } = useContext(ScreensContext);
+  const [isMoonClicked, setIsMoonClicked] = useState(false)
+  const {coin, setCoin} = useContext(ScreensContext);
+  const {cantClicks, setCantClicks} = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
-  const { userInfo, setUserInfo } = useContext(ScreensContext);
-  const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
+  const {userInfo, setUserInfo} = useContext(ScreensContext);
+  const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
 
+  
   const [path, setPath] = useState([
     require('../../assets/sound/moonClick1.mp3'),
     require('../../assets/sound/MoonClick2.mp3'),
@@ -50,18 +52,22 @@ const Tapcreen = ({ navigation }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCoin(prevCoin => prevCoin + pointsPerSecond);
+      setCoin(coin + pointsPerSecond);
     }, 1000);
     return () => clearInterval(interval);
   }, [coin, pointsPerSecond]);
 
   useEffect(() => {
+    setCoin(coin + pointsPerClick);
+  }, [isMoonClicked]);
+
+/*   useEffect(() => {
     const timer = setInterval(() => {
       setTapsPerSecond(0);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [tapsPerSecond]);
+  }, [tapsPerSecond]); */
 
   useEffect(() => {
     return sound
@@ -74,21 +80,22 @@ const Tapcreen = ({ navigation }) => {
 
 
   const handlePress = async () => {
-    setCoin(coin + pointsPerClick);
+    //setCoin(coin + pointsPerClick);
+    setIsMoonClicked(!isMoonClicked);
     setCantClicks(cantClicks + 1)
-    const now = Date.now();
-
+/*     const now = Date.now();
+    
     const randomIndex = Math.floor(Math.random() * path.length); // Generar un índice aleatorio válido
 
     const { sound } = await Audio.Sound.createAsync(path[randomIndex]);
     setSound(sound);
-    await sound.playAsync();
-
-    if (lastTapTime) {
+    await sound.playAsync(); */
+  
+/*     if (lastTapTime) {
       const timeDiff = now - lastTapTime;
       const tapsPerSecondValue = 1000 / timeDiff;
       setTapsPerSecond(tapsPerSecondValue.toFixed(2));
-    }
+    } */
     setLastTapTime(now);
     Animated.sequence([
       Animated.timing(scaleAnim, {
