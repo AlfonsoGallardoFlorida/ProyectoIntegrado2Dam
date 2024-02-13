@@ -9,9 +9,9 @@ import ScreensContext from './ScreenContext';
 const Tapcreen = ({ navigation }) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
+  const [lastTapTime, setLastTapTime] = useState(null);
   const {coin, setCoin} = useContext(ScreensContext);
   const {cantClicks, setCantClicks} = useContext(ScreensContext);
-  const [lastTapTime, setLastTapTime] = useState(null);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);

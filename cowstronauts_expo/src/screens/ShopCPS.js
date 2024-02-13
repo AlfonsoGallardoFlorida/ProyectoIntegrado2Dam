@@ -30,7 +30,7 @@ const ShopCPS = () => {
         upgradeLevel = 0;
       } 
     })
-    console.log(upgradeLevel);
+    
 
     if(upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved);
@@ -39,7 +39,7 @@ const ShopCPS = () => {
   }
 
   const buyOne = (data, isUpgradeSaved) => {
-    console.log(upgradesUnlocked);
+    console.log(data.id);
     if(data.cost <= coin) {
       setCoin(coin - data.cost);
       if(isUpgradeSaved) {
@@ -83,6 +83,9 @@ const ShopCPS = () => {
                   <Text>
                     {element.description}
                   </Text>
+                </View>
+                <View style={{ flex: .6 }}>
+                  <Text>{upgradesUnlocked.map(e => (e.upgradeId === element.id) ? e.cantUpgrade : 0)} / {element.lvlMax}</Text>
                 </View>
               </View>
             </TouchableOpacity>
