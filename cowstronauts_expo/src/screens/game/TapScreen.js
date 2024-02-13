@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Animated, Easing, Image } from 'react-native';
 import { Audio } from 'expo-av';
-import SvgMoon from '../../assets/img/svg/SvgMoon';
+import SvgMoon from '../../../assets/img/svg/SvgMoon';
 import { useContext } from 'react';
-import ScreensContext from './ScreenContext';
+import ScreensContext from '../ScreenContext';
 
 
 const Tapcreen = ({ navigation }) => {

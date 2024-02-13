@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { useContext, useEffect } from 'react';
-import ScreensContext from './ScreenContext';
+import ScreensContext from '../ScreenContext';
 
 const AchievementsScreen = () => {
 
