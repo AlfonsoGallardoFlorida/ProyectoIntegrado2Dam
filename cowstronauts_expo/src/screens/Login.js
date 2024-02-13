@@ -26,7 +26,7 @@ const Login = ({ navigation }) => {
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setTapsPerSecond(0);
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
-          console.log(jsonResponse.data.save[0].upgrades);
+          (jsonResponse.data.save[0] !== undefined) && console.log(jsonResponse.data.save[0].upgrades);
           navigation.navigate("TabsGame");
         } else {
           setUserInfo(null);
