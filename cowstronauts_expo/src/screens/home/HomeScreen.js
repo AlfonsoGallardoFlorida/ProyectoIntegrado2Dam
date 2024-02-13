@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
-import SvgLogo from '../../assets/img/svg/SvgLogo';
+import SvgLogo from '../../../assets/img/svg/SvgLogo';
 
 let soundObject;
 

@@ -4,7 +4,7 @@ import { Slider, CheckBox, Button } from 'react-native-elements';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
 import { useContext } from 'react';
-import ScreensContext from './ScreenContext';
+import ScreensContext from '../ScreenContext';
 
 
 const Configuration = ({ navigation }) => {

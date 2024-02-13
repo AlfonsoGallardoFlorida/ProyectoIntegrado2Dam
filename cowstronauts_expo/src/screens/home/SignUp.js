@@ -1,5 +1,5 @@
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, KeyboardAvoidingView, Platform } from 'react-native';
-import SvgLogo from '../../assets/img/svg/SvgLogo';
+import SvgLogo from '../../../assets/img/svg/SvgLogo';
 import React, { useState } from 'react';
 
 const SignUp = ({ navigation }) => {
