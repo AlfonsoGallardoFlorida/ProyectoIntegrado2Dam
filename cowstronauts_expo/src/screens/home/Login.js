@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
-import SvgLogo from '../../assets/img/svg/SvgLogo';
+import SvgLogo from '../../../assets/img/svg/SvgLogo';
 import { useContext } from 'react';
-import ScreensContext from './ScreenContext';
+import ScreensContext from '../ScreenContext';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = React.useState('');

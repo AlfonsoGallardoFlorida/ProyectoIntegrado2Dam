@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import SvgLogo from '../../assets/img/svg/SvgLogo';
+import SvgLogo from '../../../assets/img/svg/SvgLogo';
 
 const Home = ({navigation}) => {
 

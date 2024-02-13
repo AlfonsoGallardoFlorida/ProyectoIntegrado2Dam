@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { View, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native';
-import SvgJupiter from '../../assets/img/svg/SvgJupiter';
-import SvgPluto from '../../assets/img/svg/SvgPluto';
+import SvgJupiter from '../../../assets/img/svg/SvgJupiter';
+import SvgPluto from '../../../assets/img/svg/SvgPluto';
 
 const ButtonTemplate = ({ navigation }) => {
   const rotateAnimJupiter = useRef(new Animated.Value(0)).current;
@@ -64,7 +64,7 @@ const ButtonTemplate = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#393939',
   },
   firstContainer: {
     flex: 1,

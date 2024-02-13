@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
 import { useContext } from 'react';
-import ScreensContext from './ScreenContext';
+import ScreensContext from '../ScreenContext';
 
-const ShopClick = () => {
+const ShopCPS = () => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { coin, setCoin } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
-  const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
+  const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
 
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../assets/sound/Josh.exe.mp3'));
@@ -30,7 +30,7 @@ const ShopClick = () => {
         upgradeLevel = 0;
       }
     })
-    console.log(upgradeLevel);
+
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved);
@@ -39,7 +39,7 @@ const ShopClick = () => {
   }
 
   const buyOne = (data, isUpgradeSaved) => {
-    console.log(upgradesUnlocked);
+    console.log(data.id);
     if (data.cost <= coin) {
       setCoin(coin - data.cost);
       if (isUpgradeSaved) {
@@ -55,7 +55,7 @@ const ShopClick = () => {
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
 
-      setPointsPerClick(pointsPerClick + data.effect[0].quantity);
+      setPointsPerSecond(pointsPerSecond + data.effect[0].quantity);
     } else {
       alert("Not enough Zlotys to buy this upgrade.")
     }
@@ -63,31 +63,37 @@ const ShopClick = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Moneda</Text>
-      <Text style={styles.title}>TIENDA CLICK MULTIPLIER</Text>
+      <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
+
       <View style={styles.section}>
-        {allUpgrades?.upgrade?.map((element, i) => {
-          if (element.effect[0]?.type === "click") {
+        <Text style={styles.sectionTitle}>Moneda</Text>
+        {allUpgrades.upgrade.map((element, i) => {
+          if (element.effect[0].type === "cps") {
+            let cantUpgrade = 0;
+            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
             return (
               <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
                 <View style={styles.product}>
                   <View style={{ flex: 1 }}>
                     <Image
                       source={{ uri: 'data:image/gif;base64,' + element.img }}
-                      style={{ width: 100, height: 100 }}
+                      style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
                     />
                   </View>
-                  <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <Text>{element.name}</Text>
-                    <Text>
+                  <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
+                    <Text>{element.name.toUpperCase()}</Text>
+                    <Text style={{ textAlign: 'justify' }}>
                       {element.description}
                     </Text>
+                    <Text>{element.cost}</Text>
+                  </View>
+                  <View style={{ flex: .6 }}>
+                    <Text>{cantUpgrade} / {element.lvlMax}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
-            );
+            )
           }
-          return null; // Agrega esta línea si deseas ignorar elementos que no cumplen con la condición
         })}
         <View style={styles.product}>
           <Text>SOY MILK</Text>
@@ -103,12 +109,9 @@ const ShopClick = () => {
       <View style={styles.navigation}>
         {/* Agregar botones de navegación con iconos */}
       </View>
-    </View >
+    </View>
   );
-}
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -122,9 +125,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    marginTop: 30
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 5,
   },
   sectionTitle: {
     color: '#fff',
@@ -139,7 +143,6 @@ const styles = StyleSheet.create({
   },
   product: {
     backgroundColor: '#D9D9D9',
-    padding: 10,
     borderRadius: 5,
     marginBottom: 10,
     flexDirection: 'row',
@@ -148,11 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
-  }, backgroundImage: {
-    width: windowWidth,
-    height: windowHeight * 0.85,
-    justifyContent: 'center',
   },
 });
 
-export default ShopClick;
+export default ShopCPS;
