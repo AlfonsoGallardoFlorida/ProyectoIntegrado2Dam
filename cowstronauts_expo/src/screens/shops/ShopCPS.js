@@ -7,7 +7,7 @@ import ScreensContext from '../ScreenContext';
 const ShopCPS = () => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
-  const { coin, setCoin } = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
 
@@ -41,7 +41,7 @@ const ShopCPS = () => {
   const buyOne = (data, isUpgradeSaved) => {
     console.log(data.id);
     if (data.cost <= coin) {
-      setCoin(coin - data.cost);
+      dispatch({type: 'reduceByPurchase', value: data.cost});
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)

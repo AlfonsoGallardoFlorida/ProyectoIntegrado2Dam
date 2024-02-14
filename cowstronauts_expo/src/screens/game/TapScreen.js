@@ -10,8 +10,9 @@ const Tapcreen = ({ navigation }) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const [lastTapTime, setLastTapTime] = useState(null);
-  const [isMoonClicked, setIsMoonClicked] = useState(false)
-  const {coin, setCoin} = useContext(ScreensContext);
+  const [isMoonClicked, setIsMoonClicked] = useState(false);
+  const [isSecondComplete, setIsSecondComplete] = useState(false);
+  //const {coin, setCoin} = useContext(ScreensContext);
   const {cantClicks, setCantClicks} = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
@@ -19,6 +20,7 @@ const Tapcreen = ({ navigation }) => {
   const {userInfo, setUserInfo} = useContext(ScreensContext);
   const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
   const {isMoonMoving, setIsMoonMoving} = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
 
   
   const [path, setPath] = useState([
@@ -60,13 +62,15 @@ const Tapcreen = ({ navigation }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCoin(coin + pointsPerSecond);
+      dispatch({type: 'cps'});
+      setIsSecondComplete(!isSecondComplete);
     }, 1000);
+    console.log(isSecondComplete);
     return () => clearInterval(interval);
-  }, [coin, pointsPerSecond]);
+  }, [isSecondComplete, pointsPerSecond]);
 
   useEffect(() => {
-    setCoin(coin + pointsPerClick);
+    dispatch({type: 'click'});
   }, [isMoonClicked]);
 
 /*   useEffect(() => {

@@ -41,7 +41,7 @@ const ShopClick = () => {
   const buyOne = (data, isUpgradeSaved) => {
     console.log(upgradesUnlocked);
     if (data.cost <= coin) {
-      setCoin(coin - data.cost);
+      dispatch({type: 'reduceByPurchase', value: data.cost});
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)

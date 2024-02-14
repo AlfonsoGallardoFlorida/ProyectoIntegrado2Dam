@@ -9,11 +9,13 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = React.useState('');
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
-  const { coin, setCoin } = useContext(ScreensContext);
+  //const { coin, setCoin } = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { poinstPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
+
   const getData = async (url) => {
     try {
       const response = await fetch(url);
@@ -22,7 +24,7 @@ const Login = ({ navigation }) => {
         if (jsonResponse.data.validated) {
           setUserInfo(jsonResponse);
           (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
-          (jsonResponse.data.save[0] !== undefined) ? setCoin(jsonResponse.data.save[0].cantPoints) : setCoin(0);
+          (jsonResponse.data.save[0] !== undefined) ? dispatch({type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints}) :  dispatch({type: 'InitialValue'}, 0);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setTapsPerSecond(0);
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
