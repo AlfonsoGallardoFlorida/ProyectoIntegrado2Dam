@@ -7,7 +7,7 @@ import ScreensContext from '../ScreenContext';
 const ShopClick = () => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
-  const { coin, setCoin } = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
 
@@ -33,18 +33,21 @@ const ShopClick = () => {
     console.log(upgradeLevel);
 
     if (upgradeLevel < lvlMax) {
-      buyOne(data, isupgradeSaved);
+      buyOne(data, isupgradeSaved, lvlMax);
     }
 
   }
 
-  const buyOne = (data, isUpgradeSaved) => {
+  const buyOne = (data, isUpgradeSaved, lvlMax) => {
     console.log(upgradesUnlocked);
     if (data.cost <= coin) {
       dispatch({type: 'reduceByPurchase', value: data.cost});
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
-        upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)
+        upgradesSave.map(element => {
+          (element.idUpgrade === data.id) && (element.cantUpgrade++)
+          (element.cantUpgrade > lvlMax) && (element.cantUpgrade = lvlMax)
+        })
         console.log(upgradesSave);
         setUpgradesUnlocked(upgradesSave);
       } else {
