@@ -52,7 +52,6 @@ const Login = ({ navigation }) => {
       <View style={styles.logoContainer}>
         <SvgLogo />
       </View>
-
       <View style={styles.loginForm}>
         <TextInput
           style={styles.inputField}
@@ -72,6 +71,9 @@ const Login = ({ navigation }) => {
           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
             {/*En caso de que no funcione el LogIn  <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}> */}
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{marginTop: 40}} onPress={() => navigation.navigate('TabsGame')}>
+            <Text style={{color: '#FFFFFF'}}>Cowntinue without account</Text>
           </TouchableOpacity>
         </View>
       </View>
