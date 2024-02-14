@@ -7,7 +7,7 @@ import ScreensContext from '../ScreenContext';
 const ShopClick = () => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
-  const { coin, setCoin } = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
 

@@ -12,7 +12,6 @@ const Tapcreen = ({ navigation }) => {
   const [lastTapTime, setLastTapTime] = useState(null);
   const [isMoonClicked, setIsMoonClicked] = useState(false);
   const [isSecondComplete, setIsSecondComplete] = useState(false);
-  //const {coin, setCoin} = useContext(ScreensContext);
   const {cantClicks, setCantClicks} = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
@@ -65,7 +64,6 @@ const Tapcreen = ({ navigation }) => {
       dispatch({type: 'cps'});
       setIsSecondComplete(!isSecondComplete);
     }, 1000);
-    console.log(isSecondComplete);
     return () => clearInterval(interval);
   }, [isSecondComplete, pointsPerSecond]);
 
