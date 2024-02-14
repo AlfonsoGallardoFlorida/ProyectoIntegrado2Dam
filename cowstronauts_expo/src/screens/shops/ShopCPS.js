@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
 import { Audio } from 'expo-av';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
@@ -41,7 +41,7 @@ const ShopCPS = () => {
   const buyOne = (data, isUpgradeSaved) => {
     console.log(data.id);
     if (data.cost <= coin) {
-      dispatch({type: 'reduceByPurchase', value: data.cost});
+      dispatch({ type: 'reduceByPurchase', value: data.cost });
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)
@@ -66,48 +66,38 @@ const ShopCPS = () => {
       <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Moneda</Text>
-        {allUpgrades.upgrade.map((element, i) => {
-          if (element.effect[0].type === "cps") {
+        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        <FlatList
+          data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => {
             let cantUpgrade = 0;
-            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
+            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
             return (
-              <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
+              <TouchableOpacity onPress={() => buyUpgrade(item)}>
                 <View style={styles.product}>
                   <View style={{ flex: 1 }}>
                     <Image
-                      source={{ uri: 'data:image/gif;base64,' + element.img }}
+                      source={{ uri: 'data:image/gif;base64,' + item.img }}
                       style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
                     />
                   </View>
                   <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
-                    <Text>{element.name.toUpperCase()}</Text>
-                    <Text style={{ textAlign: 'justify' }}>
-                      {element.description}
+                    <Text style={styles.upgradeName}>{item.name.toUpperCase()}</Text>
+                    <Text style={{ alignSelf: 'center', textAlign: "center" }}>
+                      {item.description}
                     </Text>
-                    <Text>{element.cost}</Text>
                   </View>
-                  <View style={{ flex: .6 }}>
-                    <Text>{cantUpgrade} / {element.lvlMax}</Text>
+                  <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
+                    <Text></Text>
+                    <Text style={{ textAlign: "center", fontWeight: "450" }}>{cantUpgrade} / {item.lvlMax}</Text>
+                    <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
                   </View>
                 </View>
               </TouchableOpacity>
-            )
-          }
-        })}
-        <View style={styles.product}>
-          <Text>SOY MILK</Text>
-          <Text>Les vaques produiran el doble durant 3 minuts</Text>
-          {/* Agregar icono de vaso de leche */}
-        </View>
-        <View style={styles.product}>
-          <Text>VACA TANICA</Text>
-          <Text>Probabilitat del 32% que aparega una vaca satànica</Text>
-          {/* Agregar icono de vaca */}
-        </View>
-      </View>
-      <View style={styles.navigation}>
-        {/* Agregar botones de navegación con iconos */}
+            );
+          }}
+        />
       </View>
     </View>
   );
@@ -125,9 +115,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    marginTop: 30
+    marginTop: 30,
+    fontFamily: "Arial,sans-serif",
   },
   section: {
+    flex: 1,
     marginBottom: 5,
   },
   sectionTitle: {
@@ -137,21 +129,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  sectionText: {
-    color: '#fff',
-    fontSize: 16,
-  },
   product: {
     backgroundColor: '#D9D9D9',
     borderRadius: 5,
     marginBottom: 10,
     flexDirection: 'row',
+    fontFamily: "sans-serif",
   },
-  navigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
+  upgradeName: {
+    alignSelf: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    textDecorationLine: 'underline',
+    fontSize: 15
   },
+  coinImage: {
+    width: 15,
+    height: 15,
+  }
 });
 
 export default ShopCPS;

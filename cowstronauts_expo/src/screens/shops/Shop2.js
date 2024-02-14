@@ -10,11 +10,61 @@ import {
   Dimensions,
 } from 'react-native';
 import { Audio } from 'expo-av';
-import Icon from 'react-native-vector-icons/FontAwesome'; 
-//import svgEarth from '../../../assets/img/svg/svgEarth';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useContext } from 'react';
+import ScreensContext from '../ScreenContext';
+//import svgEarth from './assets/img/svg/svgEarth';
 
 const App = () => {
   const [upgradePurchased, setUpgradePurchased] = useState(false);
+  const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
+  const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
+
+  const buyUpgrade = (data) => {
+    const id = data.id;
+    const lvlMax = data.lvlMax;
+    let upgradeLevel = 0;
+    let isupgradeSaved = false;
+    upgradesUnlocked.map(element => {
+      if (element.idUpgrade === id) {
+        upgradeLevel = element.cantUpgrade
+        isupgradeSaved = true;
+      } else {
+        upgradeLevel = 0;
+      }
+    })
+
+
+    if (upgradeLevel < lvlMax) {
+      buyOne(data, isupgradeSaved);
+    }
+
+  }
+
+  const buyOne = (data, isUpgradeSaved) => {
+    console.log(data.id);
+    if (data.cost <= coin) {
+      dispatch({type: 'reduceByPurchase', value: data.cost});
+      if (isUpgradeSaved) {
+        let upgradesSave = [...upgradesUnlocked];
+        upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)
+        console.log(upgradesSave);
+        setUpgradesUnlocked(upgradesSave);
+      } else {
+        let newUpgrade = {
+          idUpgrade: data.id,
+          cantUpgrade: 1
+        }
+        setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
+      }
+
+      setPointsPerSecond(pointsPerSecond + data.effect[0].quantity);
+    } else {
+      alert("Not enough Zlotys to buy this upgrade.")
+    }
+  }
+
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(
       require('../../../assets/sound/Josh.exe.mp3')
@@ -33,20 +83,52 @@ const App = () => {
         source={require('../../../assets/img/planets/earth.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
+        <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Moneda</Text>
+        {allUpgrades.upgrade.map((element, i) => {
+          if (element.effect[0].type === "end") {
+            let cantUpgrade = 0;
+            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
+            return (
+              <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
+                <View style={styles.product}>
+                  <View style={{ flex: 1 }}>
+                    <Image
+                      source={{ uri: 'data:image/gif;base64,' + element.img }}
+                      style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
+                    />
+                  </View>
+                  <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
+                    <Text>{element.name.toUpperCase()}</Text>
+                    <Text style={{ textAlign: 'justify' }}>
+                      {element.description}
+                    </Text>
+                    <Text>{element.cost}</Text>
+                  </View>
+                  <View style={{ flex: .6 }}>
+                    <Text>{cantUpgrade} / {element.lvlMax}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            )
+          }
+        })}
+        </View>
+        {/*
         <View style={styles.scrollViewContent}>
           <ScrollView style={{ height: windowHeight - 200 }}>
-            <TouchableOpacity onPress={() => setUpgradePurchased(true)} style={styles.product}>
+            <TouchableOpacity
+              onPress={() => setUpgradePurchased(true)}
+              style={styles.product}>
               <View style={styles.productImageContainer}>
                 <Image
-                  source={require('../../../assets/img/upgrades_cps/images/Josh.jpg')}
+                  source={require('./assets/img/upgrades_finals/mootor.png')}
                   style={styles.productImage}
                 />
               </View>
               <View style={styles.productInfo}>
-                <Text style={styles.productTitle}>JOSH HUTCHERSON</Text>
-                <Text style={styles.productDescription}>
-                  JoshHutchersonJoshHutchersonJoshHutchersonJoshHutchersonJoshHutcherson
-                </Text>
+                <Text style={styles.productTitle}>MOO-TOR</Text>
+                <Text style={styles.productDescription}>Motor</Text>
                 <Text style={styles.coinsUpgrade}>
                   {upgradePurchased ? (
                     <Icon name="check" size={20} color="green" />
@@ -54,7 +136,7 @@ const App = () => {
                     <>
                       1000 &nbsp;
                       <Image
-                        source={require('../../../assets/img/logos/zloty.png')}
+                        source={require('./assets/img/logos/zloty.png')}
                         style={styles.coinImage}
                       />
                     </>
@@ -65,19 +147,19 @@ const App = () => {
             <TouchableOpacity onPress={play} style={styles.product}>
               <View style={styles.productImageContainer}>
                 <Image
-                  source={require('../../../assets/img/upgrades_cps/images/Josh.jpg')}
+                  source={require('./assets/img/upgrades_finals/lechette.png')}
                   style={styles.productImage}
                 />
               </View>
               <View style={styles.productInfo}>
-                <Text style={styles.productTitle}>SOY MILK</Text>
+                <Text style={styles.productTitle}>LECH-ETTE</Text>
                 <Text style={styles.productDescription}>
                   Les vaques produiran el doble durant 3 minuts
                 </Text>
                 <Text style={styles.coinsUpgrade}>
                   1000 &nbsp;
                   <Image
-                    source={require('../../../assets/img/logos/zloty.png')}
+                    source={require('./assets/img/logos/zloty.png')}
                     style={styles.coinImage}
                   />
                 </Text>
@@ -91,6 +173,7 @@ const App = () => {
             </View>
           </ScrollView>
         </View>
+                  */}
       </ImageBackground>
       <View style={styles.navigation} />
     </View>
@@ -148,7 +231,7 @@ const styles = StyleSheet.create({
     marginLeft: 7,
   },
   productImageContainer: {
-    width: 100,
+    width: 65,
     alignItems: 'center',
     justifyContent: 'center',
   },
