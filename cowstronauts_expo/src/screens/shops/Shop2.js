@@ -45,7 +45,7 @@ const App = () => {
   const buyOne = (data, isUpgradeSaved) => {
     console.log(data.id);
     if (data.cost <= coin) {
-      dispatch({type: 'reduceByPurchase', value: data.cost});
+      dispatch({ type: 'reduceByPurchase', value: data.cost });
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)
@@ -84,35 +84,49 @@ const App = () => {
         resizeMode="cover"
         style={styles.backgroundImage}>
         <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Moneda</Text>
-        {allUpgrades.upgrade.map((element, i) => {
-          if (element.effect[0].type === "end") {
-            let cantUpgrade = 0;
-            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
-            return (
-              <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
-                <View style={styles.product}>
-                  <View style={{ flex: 1 }}>
-                    <Image
-                      source={{ uri: 'data:image/gif;base64,' + element.img }}
-                      style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
-                    />
+          <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+          {allUpgrades.upgrade.map((element, i) => {
+            if (element.effect[0].type === "end") {
+              let cantUpgrade = 0;
+              (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
+              return (
+                <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
+                  <View style={styles.product}>
+                    <View style={{ flex: 1 }}>
+                      <Image
+                        source={{ uri: 'data:image/gif;base64,' + element.img }}
+                        style={styles.productImage}
+                      />
+                    </View>
+                    <View style={styles.productInfo}>
+                      <Text style={styles.productTitle}>{element.name.toUpperCase()}</Text>
+                      <Text style={styles.productDescription}>
+                        {element.description}
+                      </Text>
+                      <Text style={styles.coinsUpgrade}>
+                        {element.cost}
+                        {upgradePurchased ? (
+                          <Icon name="check" size={20} color="green" />
+                        ) : (
+                          <>
+                            &nbsp;
+                            <Image
+                              source={require('../../../assets/img/logos/zloty.png')}
+                              style={styles.coinImage}
+                            />
+                          </>
+                        )}
+
+                      </Text>
+                    </View>
+                    <View style={{ flex: .6 }}>
+                      <Text>{cantUpgrade} / {element.lvlMax}</Text>
+                    </View>
                   </View>
-                  <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
-                    <Text>{element.name.toUpperCase()}</Text>
-                    <Text style={{ textAlign: 'justify' }}>
-                      {element.description}
-                    </Text>
-                    <Text>{element.cost}</Text>
-                  </View>
-                  <View style={{ flex: .6 }}>
-                    <Text>{cantUpgrade} / {element.lvlMax}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            )
-          }
-        })}
+                </TouchableOpacity>
+              )
+            }
+          })}
         </View>
         {/*
         <View style={styles.scrollViewContent}>
@@ -268,6 +282,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
+  },
+  sectionTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
   },
 });
 
