@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import { View, ScrollView, Image, Switch, Text, StyleSheet } from 'react-native';
 import { Slider, CheckBox, Button } from 'react-native-elements';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
-import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
 
 
@@ -24,6 +23,7 @@ const Configuration = ({ navigation }) => {
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const navigationUsage = useNavigation();
+  const { isMuted, setIsMuted } = useContext(ScreensContext);
 
 
   const data = [
@@ -32,8 +32,8 @@ const Configuration = ({ navigation }) => {
     { key: '3', value: 'Castellano' },
   ];
 
-  const handleVolumeChange = (volume) => {
-    setVolume(volume);
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
   };
 
   const toggleDaltonicMode = () => {
@@ -95,7 +95,9 @@ const Configuration = ({ navigation }) => {
   const handleShowCredits = () => {
 
   };
-
+  const handleReturn= () => {
+    navigation.navigate('Home');
+  };
   const handleLogout = () => {
     navigation.navigate('Login');
   };
@@ -115,17 +117,14 @@ const Configuration = ({ navigation }) => {
       <ScrollView style={styles.settingsContainer}>
         <Text style={styles.title}>COWFIGURATION</Text>
         <View style={styles.volumeContainer}>
-          <Text style={styles.volumeLabelText}>Volume:</Text>
-          <Slider
-            style={styles.slider}
-            minimumValue={0}
-            maximumValue={100}
-            value={volume}
-            onValueChange={handleVolumeChange}
-            minimumTrackTintColor="#D0BCFF"
-            maximumTrackTintColor="#4F378B"
-            thumbTintColor="#FFFF"
-            thumbStyle={styles.thumb}
+          <Text style={styles.volumeLabelText}>Moote:</Text>
+          <CheckBox
+            checked={isMuted}
+            onPress={toggleMute}
+            checkedIcon='check-circle'
+            checkedColor='#8C81A7'
+            uncheckedColor='#8C81A7'
+            containerStyle={styles.checkBox}
           />
         </View>
         <View style={styles.settingRow}>
@@ -203,6 +202,12 @@ const Configuration = ({ navigation }) => {
             <Button
               title="Close Game"
               onPress={handleCloseGame}
+              buttonStyle={[styles.button]}
+              textStyle={styles.buttonText}
+            />
+              <Button
+              title="Return"
+              onPress={handleReturn}
               buttonStyle={[styles.button, { marginBottom: 20 }]}
               textStyle={styles.buttonText}
             />
