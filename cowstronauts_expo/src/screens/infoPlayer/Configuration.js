@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, ScrollView, Image, Switch, Text, StyleSheet, Alert  } from 'react-native';
+import { View, ScrollView, Image, Switch, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { Slider, CheckBox, Button } from 'react-native-elements';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
@@ -109,9 +109,6 @@ const Configuration = ({ navigation }) => {
   };
 
 
-  const handleCloseGame = () => {
-    navigation.navigate('Home');
-  };
 
   return (
     <View style={styles.container}>
@@ -188,12 +185,14 @@ const Configuration = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.leftButtons}>
-            <Button
-              title="Save progress"
-              onPress={() => saveProgress()}
-              buttonStyle={styles.button}
-              textStyle={styles.buttonText}
-            />
+            <View style={{ marginBottom: 20 }}>
+              <Button
+                title="Save progress"
+                onPress={() => saveProgress()}
+                buttonStyle={styles.button}
+                textStyle={styles.buttonText}
+              />
+            </View>
             <Button
               title="Logout"
               onPress={handleLogout}
@@ -246,6 +245,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     backgroundColor: 'transparent',
     borderWidth: 0,
+  }, backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
   },
 
   settingRow: {
@@ -275,7 +279,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxWidth: 800,
     marginRight: 5,
-    marginBottom: 10
   },
 
   rightButtons: {
@@ -291,7 +294,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     borderRadius: 20,
     backgroundColor: '#777777',
-    marginBottom: 20,
+    borderWidth: 1,
   },
 
   buttonText: {

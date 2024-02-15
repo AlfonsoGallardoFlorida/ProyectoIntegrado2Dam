@@ -15,13 +15,17 @@ import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
 //import svgEarth from './assets/img/svg/svgEarth';
 
-const Shop2 = () => {
+const Shop2 = ({ navigation }) => {
   const [upgradePurchased, setUpgradePurchased] = useState(false);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
 
+  const handleGoBack = () => {
+    navigation.navigate('Home');
+  };
+  
   const buyUpgrade = (data) => {
     const id = data.id;
     const lvlMax = data.lvlMax;
