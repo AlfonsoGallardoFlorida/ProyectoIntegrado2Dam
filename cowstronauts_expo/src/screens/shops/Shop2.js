@@ -77,22 +77,25 @@ const App = () => {
       <View style={styles.header}>
         <Text style={styles.titleShip}>SHIP</Text>
         <Text style={styles.titleUp}>UPGRADES</Text>
+        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
       </View>
 
       <ImageBackground
         source={require('../../../assets/img/planets/earth.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
-          {allUpgrades.upgrade.map((element, i) => {
-            if (element.effect[0].type === "end") {
-              let cantUpgrade = 0;
-              (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
-              return (
-                <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
-                  <View style={styles.product}>
-                    <View style={{ flex: 1 }}>
+        <View style={styles.scrollViewContent}>
+          <ScrollView style={{ height: windowHeight - 200, width: '80%' }}>
+            {allUpgrades.upgrade.map((element, i) => {
+              if (element.effect[0].type === "end") {
+                let cantUpgrade = 0;
+                (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
+                return (
+                  <TouchableOpacity
+                    onPress={() => buyUpgrade(element)}
+                    key={i.toString()}
+                    style={styles.product}>
+                    <View style={styles.productImageContainer}>
                       <Image
                         source={{ uri: 'data:image/gif;base64,' + element.img }}
                         style={styles.productImage}
@@ -119,75 +122,12 @@ const App = () => {
 
                       </Text>
                     </View>
-                    <View style={{ flex: .6 }}>
-                      <Text>{cantUpgrade} / {element.lvlMax}</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )
-            }
-          })}
-        </View>
-        {/*
-        <View style={styles.scrollViewContent}>
-          <ScrollView style={{ height: windowHeight - 200 }}>
-            <TouchableOpacity
-              onPress={() => setUpgradePurchased(true)}
-              style={styles.product}>
-              <View style={styles.productImageContainer}>
-                <Image
-                  source={require('./assets/img/upgrades_finals/mootor.png')}
-                  style={styles.productImage}
-                />
-              </View>
-              <View style={styles.productInfo}>
-                <Text style={styles.productTitle}>MOO-TOR</Text>
-                <Text style={styles.productDescription}>Motor</Text>
-                <Text style={styles.coinsUpgrade}>
-                  {upgradePurchased ? (
-                    <Icon name="check" size={20} color="green" />
-                  ) : (
-                    <>
-                      1000 &nbsp;
-                      <Image
-                        source={require('./assets/img/logos/zloty.png')}
-                        style={styles.coinImage}
-                      />
-                    </>
-                  )}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={play} style={styles.product}>
-              <View style={styles.productImageContainer}>
-                <Image
-                  source={require('./assets/img/upgrades_finals/lechette.png')}
-                  style={styles.productImage}
-                />
-              </View>
-              <View style={styles.productInfo}>
-                <Text style={styles.productTitle}>LECH-ETTE</Text>
-                <Text style={styles.productDescription}>
-                  Les vaques produiran el doble durant 3 minuts
-                </Text>
-                <Text style={styles.coinsUpgrade}>
-                  1000 &nbsp;
-                  <Image
-                    source={require('./assets/img/logos/zloty.png')}
-                    style={styles.coinImage}
-                  />
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <View style={styles.product}>
-              <Text style={styles.productTitle}>VACA TANICA</Text>
-              <Text style={styles.productDescription}>
-                Probabilitat del 32% que aparega una vaca satànica
-              </Text>
-            </View>
+                  </TouchableOpacity>
+                )
+              }
+            })}
           </ScrollView>
         </View>
-                  */}
       </ImageBackground>
       <View style={styles.navigation} />
     </View>
@@ -234,7 +174,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   product: {
-    width: '85%',
+    width: '100%',
     padding: 10,
     marginVertical: 5,
     backgroundColor: '#2B2930',
@@ -242,7 +182,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     elevation: 4,
     overflow: 'hidden',
-    marginLeft: 7,
+    justifyContent: 'center',
   },
   productImageContainer: {
     width: 65,
@@ -257,6 +197,7 @@ const styles = StyleSheet.create({
   productInfo: {
     flex: 1,
     marginLeft: 10,
+    marginRight: 10,
   },
   productTitle: {
     fontWeight: 'bold',
