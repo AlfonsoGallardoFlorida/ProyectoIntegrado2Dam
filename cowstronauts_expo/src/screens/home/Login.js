@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import SvgLogo from '../../../assets/img/svg/SvgLogo';
 import { useContext } from 'react';
@@ -15,6 +15,15 @@ const Login = ({ navigation }) => {
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
 
+  useEffect(() => {
+    setUserInfo(null);
+    setCantClicks(0);
+    dispatch({type: 'InitialValue', value: 0});
+    setPointsPerSecond(0);
+    setUpgradesUnlocked([]);
+    setPointsPerClick(1);
+  }, []);
+
   const getData = async (url) => {
     try {
       const response = await fetch(url);
@@ -24,7 +33,7 @@ const Login = ({ navigation }) => {
           setUserInfo(jsonResponse);
           (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
           (jsonResponse.data.save[0] !== undefined) && dispatch({type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints});
-          (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setTapsPerSecond(0);
+          (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setPointsPerSecond(0);
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
           (jsonResponse.data.save[0] !== undefined) && console.log(jsonResponse.data.save[0].upgrades);
