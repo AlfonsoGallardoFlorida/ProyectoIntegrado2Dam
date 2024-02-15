@@ -20,6 +20,7 @@ const App = () => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
+  const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
 
   const buyUpgrade = (data) => {
     const id = data.id;
