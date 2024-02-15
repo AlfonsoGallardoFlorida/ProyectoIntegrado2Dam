@@ -78,6 +78,7 @@ const ShopCPS = () => {
         <FlatList
           data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
           keyExtractor={(item, index) => index.toString()}
+          style={{margin: 20}}
           renderItem={({ item, index }) => {
             let cantUpgrade = 0;
             (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
