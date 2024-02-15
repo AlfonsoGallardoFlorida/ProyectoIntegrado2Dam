@@ -20,7 +20,7 @@ const Tapcreen = ({ navigation }) => {
   const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
   const {isMoonMoving, setIsMoonMoving} = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
-
+  const {isMuted, setIsMuted} = useContext(ScreensContext);
   
   const [path, setPath] = useState([
     require('../../../assets/sound/moonClick1.mp3'),
@@ -96,9 +96,11 @@ const Tapcreen = ({ navigation }) => {
     
     const randomIndex = Math.floor(Math.random() * path.length); // Generar un índice aleatorio válido
 
-    const { sound } = await Audio.Sound.createAsync(path[randomIndex]);
-    setSound(sound);
-    await sound.playAsync();
+    if(!isMuted){
+      const { sound } = await Audio.Sound.createAsync(path[randomIndex]);
+      setSound(sound);
+      await sound.playAsync();
+    }
   
     if (lastTapTime) {
       const timeDiff = now - lastTapTime;
