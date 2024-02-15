@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import SvgLogo from '../../../assets/img/svg/SvgLogo';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
@@ -31,13 +31,14 @@ const Login = ({ navigation }) => {
       if (response.status === 200) {
         if (jsonResponse.data.validated) {
           setUserInfo(jsonResponse);
+          console.log(jsonResponse.data.save[0]);
           (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
           (jsonResponse.data.save[0] !== undefined) && dispatch({type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints});
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setPointsPerSecond(0);
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
           (jsonResponse.data.save[0] !== undefined) && console.log(jsonResponse.data.save[0].upgrades);
-          navigation.navigate("TabsGame");
+          (jsonResponse.data.save[0] !== undefined) ? navigation.navigate("TabsGame") : navigation.navigate("Introduction");
         } else {
           setUserInfo(null);
           alert("Correct Credentials\nUser is NOT validated, check your e-mail");
@@ -80,12 +81,11 @@ const Login = ({ navigation }) => {
           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{marginTop: 40}} onPress={() => navigation.navigate('TabsGame')}>
+          <TouchableOpacity style={{marginTop: 40}} onPress={() => navigation.navigate('Introduction')}>
             <Text style={{color: '#FFFFFF'}}>Cowntinue without account</Text>
           </TouchableOpacity>
         </View>
       </View>
-
       <Image source={require('../../../assets/img/planets/planetLogin.png')} style={styles.marteImage} />
 
       <View style={styles.footerTextContainer}>
