@@ -68,15 +68,17 @@ const ShopCPS = () => {
     <View style={styles.container}>
       <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
-        <ImageBackground
+      <ImageBackground
         source={require('../../../assets/img/planets/Pluto.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+          <View>
         <FlatList
           data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
           keyExtractor={(item, index) => index.toString()}
+          style={{margin: 20}}
           renderItem={({ item, index }) => {
             let cantUpgrade = 0;
             (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
@@ -105,8 +107,9 @@ const ShopCPS = () => {
             );
           }}
         />
-        </ImageBackground>
+        </View>
       </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -159,10 +162,14 @@ const styles = StyleSheet.create({
     height: 15,
   },
   backgroundImage: {
-    width: windowWidth*0.85,
-    height: windowHeight * 0.85,
+    width: windowWidth,
+    height: windowHeight * 0.75,
     justifyContent: 'center',
+    position: 'absolute',
+    top: 170,
+    left: 0,
   },
+  
 });
 
 export default ShopCPS;
