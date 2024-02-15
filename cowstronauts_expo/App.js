@@ -13,6 +13,7 @@ import TabsGame from './src/screens/game/TabsGame';
 import Configuration from './src/screens/infoPlayer/Configuration';
 import ShopCPS from './src/screens/shops/ShopCPS';
 import ShopClick from './src/screens/shops/ShopClick';
+import Introduction from './src/screens/game/Introduction';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App() {
           <Stack.Screen name="Configuration" component={Configuration} />
           <Stack.Screen name="ShopCPS" component={ShopCPS} />
           <Stack.Screen name="ShopClick" component={ShopClick} />
+          <Stack.Screen name="Introduction" component={Introduction} />
         </Stack.Navigator>
       </NavigationContainer>
     </ScreensProvider>

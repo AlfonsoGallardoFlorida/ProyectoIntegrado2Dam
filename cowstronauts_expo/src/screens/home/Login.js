@@ -37,7 +37,7 @@ const Login = ({ navigation }) => {
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
           (jsonResponse.data.save[0] !== undefined) && console.log(jsonResponse.data.save[0].upgrades);
-          navigation.navigate("TabsGame");
+          (jsonResponse.data.save[0] !== null) ? navigation.navigate("TabsGame") : navigation.navigate("Introduction");
         } else {
           setUserInfo(null);
           alert("Correct Credentials\nUser is NOT validated, check your e-mail");
@@ -80,7 +80,7 @@ const Login = ({ navigation }) => {
           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{marginTop: 40}} onPress={() => navigation.navigate('TabsGame')}>
+          <TouchableOpacity style={{marginTop: 40}} onPress={() => navigation.navigate('Introduction')}>
             <Text style={{color: '#FFFFFF'}}>Cowntinue without account</Text>
           </TouchableOpacity>
         </View>

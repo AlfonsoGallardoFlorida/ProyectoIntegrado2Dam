@@ -46,7 +46,7 @@ const ShopClick = () => {
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => {
-          (element.idUpgrade === data.id) && (element.cantUpgrade++)
+          (element.idUpgrade === data.id) && (element.cantUpgrade + 1)
           (element.cantUpgrade > lvlMax) && (element.cantUpgrade = lvlMax)
         })
         console.log(upgradesSave);
