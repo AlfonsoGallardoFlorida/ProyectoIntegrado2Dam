@@ -31,13 +31,14 @@ const Login = ({ navigation }) => {
       if (response.status === 200) {
         if (jsonResponse.data.validated) {
           setUserInfo(jsonResponse);
+          console.log(jsonResponse.data.save[0]);
           (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
           (jsonResponse.data.save[0] !== undefined) && dispatch({type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints});
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setPointsPerSecond(0);
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
           (jsonResponse.data.save[0] !== undefined) && console.log(jsonResponse.data.save[0].upgrades);
-          (jsonResponse.data.save[0] !== null) ? navigation.navigate("TabsGame") : navigation.navigate("Introduction");
+          (jsonResponse.data.save[0] !== undefined) ? navigation.navigate("TabsGame") : navigation.navigate("Introduction");
         } else {
           setUserInfo(null);
           alert("Correct Credentials\nUser is NOT validated, check your e-mail");
