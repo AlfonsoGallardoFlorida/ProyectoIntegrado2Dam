@@ -66,11 +66,17 @@ const ShopClick = () => {
     <View style={styles.container}>
       <Text style={styles.title}>TIENDA CLICK MULTIPLIER</Text>
 
+      <ImageBackground
+        source={require('../../../assets/img/planets/jupiter.png')}
+        resizeMode="cover"
+        style={styles.backgroundImage}>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        <View>
         <FlatList
           data={allUpgrades.upgrade.filter(element => element.effect[0].type === "click")}
           keyExtractor={(item, index) => index.toString()}
+          style={{margin: 20}}
           renderItem={({ item, index }) => {
             let cantUpgrade = 0;
             (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
@@ -99,7 +105,9 @@ const ShopClick = () => {
             );
           }}
         />
+        </View>
       </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -150,7 +158,15 @@ const styles = StyleSheet.create({
   coinImage: {
     width: 15,
     height: 15,
-  }
+  },
+  backgroundImage: {
+    width: windowWidth,
+    height: windowHeight * 0.75,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 170,
+    left: 0,
+  },
 });
 
 export default ShopClick;
