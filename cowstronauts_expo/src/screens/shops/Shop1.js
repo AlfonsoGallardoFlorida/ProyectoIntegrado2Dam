@@ -40,33 +40,39 @@ const ButtonTemplate = ({ navigation }) => {
     );
   };
 
+
   return (
     <View style={styles.container}>
       <View style={styles.firstContainer}></View>
       <View style={styles.secondContainer}>
         <View style={styles.jupiterContainer}>
-          {renderPlanet(rotateAnimJupiter, <SvgJupiter />, () => navigation.navigate("ShopClick"))}
+          {renderPlanet(rotateAnimJupiter, <SvgJupiter />)}
         </View>
-        <View style={{ flex: 5, flexWrap:"wrap" }}>
-        <TouchableOpacity onPress={() => navigation.navigate('ShopClick')}>
-        <Text style={styles.buttonTopText}> + </Text>
-        </TouchableOpacity>
+        <View style={{ flex: 5, flexWrap: "wrap" }}>
+          <TouchableOpacity
+            style={[styles.button, { top: 110, left: 150 }]}
+            onPress={() => navigation.navigate('ShopClick')}
+          >
+            <Text style={styles.buttonText}> + </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.secondContainer}>
-        <View style={{ flex: 1, flexWrap:"wrap", flexDirection:"row-reverse",zIndex:10 }}>
-        <TouchableOpacity onPress={()=>{navigation.navigate("ShopCPS")}}>
-        <Text style={styles.buttonBottomText}> + </Text>
-        </TouchableOpacity>
+        <View style={{ flex: 1, flexWrap: "wrap", flexDirection: "row-reverse", zIndex: 10 }}>
+          <TouchableOpacity
+            style={[styles.button, { left: -100, marginTop: 100 }]}
+            onPress={() => { navigation.navigate("ShopCPS") }}
+          >
+            <Text style={styles.buttonText}> + </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.plutoContainer}>
-          {renderPlanet(rotateAnimPluto, <SvgPluto />, () => navigation.navigate("ShopCPS"))}
+          {renderPlanet(rotateAnimPluto, <SvgPluto />)}
         </View>
       </View>
     </View>
   );
 };
-
 
 
 const styles = StyleSheet.create({
@@ -88,6 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     right: 100,
     bottom: 50,
+
   },
   secondContainer: {
     flex: 2,
@@ -95,23 +102,29 @@ const styles = StyleSheet.create({
   },
   buttonTopText: {
     color: 'white',
-    textAlign:"center",
+    textAlign: "center",
     fontSize: 25,
     backgroundColor: 'black',
     borderRadius: 10,
     padding: 20,
-    top:80,
   },
-  buttonBottomText:{
+  buttonBottomText: {
     color: 'white',
-    textAlign:"center",
+    textAlign: "center",
     fontSize: 25,
     backgroundColor: 'black',
     borderRadius: 10,
     padding: 20,
-    top:150,
-    left:150,
-  }
+  }, button: {
+    backgroundColor: '#3D4039', 
+    borderRadius: 10,
+    padding: 20,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: "center",
+    fontSize: 25,
+  },
 });
 
 export default ButtonTemplate;
