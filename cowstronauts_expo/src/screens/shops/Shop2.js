@@ -13,10 +13,10 @@ import { Audio } from 'expo-av';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
-//import svgEarth from './assets/img/svg/svgEarth';
 
 const Shop2 = () => {
-  const [upgradePurchased, setUpgradePurchased] = useState(false);
+  const [selectedUpgrades, setSelectedUpgrades] = useState([]);
+  const [purchasedUpgrades, setPurchasedUpgrades] = useState([]);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
@@ -27,21 +27,19 @@ const Shop2 = () => {
     const lvlMax = data.lvlMax;
     let upgradeLevel = 0;
     let isupgradeSaved = false;
-    upgradesUnlocked.map(element => {
+    upgradesUnlocked.forEach(element => {
       if (element.idUpgrade === id) {
-        upgradeLevel = element.cantUpgrade
+        upgradeLevel = element.cantUpgrade;
         isupgradeSaved = true;
       } else {
         upgradeLevel = 0;
       }
-    })
-
+    });
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved);
     }
-
-  }
+  };
 
   const buyOne = (data, isUpgradeSaved) => {
     console.log(data.id);
@@ -49,22 +47,31 @@ const Shop2 = () => {
       dispatch({ type: 'reduceByPurchase', value: data.cost });
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
-        upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)
+        upgradesSave.forEach(element => (element.idUpgrade === data.id) && element.cantUpgrade++);
         console.log(upgradesSave);
         setUpgradesUnlocked(upgradesSave);
       } else {
         let newUpgrade = {
           idUpgrade: data.id,
           cantUpgrade: 1
-        }
+        };
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
 
       setPointsPerSecond(pointsPerSecond + data.effect[0].quantity);
+      setPurchasedUpgrades([...purchasedUpgrades, data.id]); // Mark the upgrade as purchased
     } else {
-      alert("Not enough Zlotys to buy this upgrade.")
+      alert("Not enough Zlotys to buy this upgrade.");
     }
-  }
+  };
+
+  const toggleSelection = (id) => {
+    if (selectedUpgrades.includes(id)) {
+      setSelectedUpgrades(selectedUpgrades.filter(item => item !== id));
+    } else {
+      setSelectedUpgrades([...selectedUpgrades, id]);
+    }
+  };
 
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(
@@ -72,7 +79,7 @@ const Shop2 = () => {
     );
     await sound.playAsync();
   };
-  // <svgEarth />
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -87,13 +94,13 @@ const Shop2 = () => {
         style={styles.backgroundImage}>
         <View style={styles.scrollViewContent}>
           <ScrollView style={{ height: windowHeight - 200, width: '80%' }}>
-            {allUpgrades && allUpgrades.upgrade && Array.isArray(allUpgrades.upgrade) && allUpgrades.upgrade.map((element, i) => {
+            {allUpgrades.upgrade.map((element, i) => {
               if (element.effect[0].type === "end") {
                 let cantUpgrade = 0;
                 (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
                 return (
                   <TouchableOpacity
-                    onPress={() => buyUpgrade(element)}
+                    onPress={() => { buyUpgrade(element); toggleSelection(element.id); }}
                     key={i.toString()}
                     style={styles.product}>
                     <View style={styles.productImageContainer}>
@@ -107,24 +114,24 @@ const Shop2 = () => {
                       <Text style={styles.productDescription}>
                         {element.description}
                       </Text>
-                      <Text style={styles.coinsUpgrade}>
-                        {element.cost}
-                        {upgradePurchased ? (
+                      <View style={styles.coinsUpgrade}>
+                        {purchasedUpgrades.includes(element.id) ? (
                           <Icon name="check" size={20} color="green" />
                         ) : (
                           <>
-                            &nbsp;
-                            <Image
-                              source={require('../../../assets/img/logos/zloty.png')}
-                              style={styles.coinImage}
-                            />
+                            <Text style={styles.coinsUpgrade}>
+                              {element.cost}&nbsp;
+                              <Image
+                                source={require('../../../assets/img/logos/zloty.png')}
+                                style={styles.coinImage}
+                              />
+                            </Text>
                           </>
                         )}
-
-                      </Text>
+                      </View>
                     </View>
                   </TouchableOpacity>
-                )
+                );
               }
             })}
           </ScrollView>
@@ -222,7 +229,7 @@ const styles = StyleSheet.create({
   coinsUpgrade: {
     color: 'white',
     position: 'absolute',
-    bottom: -7,
+    bottom: -5,
     right: 0,
   },
   sectionTitle: {
