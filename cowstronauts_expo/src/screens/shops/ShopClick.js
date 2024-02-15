@@ -45,10 +45,7 @@ const ShopClick = () => {
       dispatch({type: 'reduceByPurchase', value: data.cost});
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
-        upgradesSave.map(element => {
-          (element.idUpgrade === data.id) && (element.cantUpgrade++)
-          (element.cantUpgrade > lvlMax) && (element.cantUpgrade = lvlMax)
-        })
+        upgradesSave.map(element => ((element.idUpgrade === data.id) && (element.cantUpgrade++)))
         console.log(upgradesSave);
         setUpgradesUnlocked(upgradesSave);
       } else {

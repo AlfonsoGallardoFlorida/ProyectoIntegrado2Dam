@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   coinsUpgrade: {
     color: 'white',
     position: 'absolute',
-    bottom: 0,
+    bottom: -7,
     right: 0,
   },
   sectionTitle: {
