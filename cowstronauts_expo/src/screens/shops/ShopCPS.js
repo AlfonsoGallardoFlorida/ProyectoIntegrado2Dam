@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, ImageBackground, Dimensions } from 'react-native';
 import { Audio } from 'expo-av';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
@@ -61,7 +61,7 @@ const ShopCPS = () => {
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
 
-      setPointsPerClick(pointsPerClick + data.effect[0].quantity);
+      setPointsPerSecond(pointsPerSecond + data.effect[0].quantity);
     } else {
       alert("Not enough Zlotys to buy this upgrade.")
     }
@@ -73,6 +73,10 @@ const ShopCPS = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        <ImageBackground
+        source={require('../../../assets/img/planets/Pluto.png')}
+        resizeMode="cover"
+        style={styles.backgroundImage}>
         <FlatList
           data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
           keyExtractor={(item, index) => index.toString()}
@@ -104,10 +108,14 @@ const ShopCPS = () => {
             );
           }}
         />
+        </ImageBackground>
       </View>
     </View>
   );
 };
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -152,7 +160,12 @@ const styles = StyleSheet.create({
   coinImage: {
     width: 15,
     height: 15,
-  }
+  },
+  backgroundImage: {
+    width: windowWidth*0.85,
+    height: windowHeight * 0.85,
+    justifyContent: 'center',
+  },
 });
 
 export default ShopCPS;

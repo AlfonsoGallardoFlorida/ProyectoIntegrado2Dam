@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Dimensions,FlatList } from 'react-native';
 import { Audio } from 'expo-av';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
@@ -67,47 +67,43 @@ const ShopClick = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Moneda</Text>
       <Text style={styles.title}>TIENDA CLICK MULTIPLIER</Text>
+
       <View style={styles.section}>
-        {allUpgrades?.upgrade?.map((element, i) => {
-          if (element.effect[0]?.type === "click") {
+        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        <FlatList
+          data={allUpgrades.upgrade.filter(element => element.effect[0].type === "click")}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => {
+            let cantUpgrade = 0;
+            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
             return (
-              <TouchableOpacity onPress={() => buyUpgrade(element)} key={i.toString()}>
+              <TouchableOpacity onPress={() => buyUpgrade(item)}>
                 <View style={styles.product}>
                   <View style={{ flex: 1 }}>
                     <Image
-                      source={{ uri: 'data:image/gif;base64,' + element.img }}
-                      style={{ width: 100, height: 100 }}
+                      source={{ uri: 'data:image/gif;base64,' + item.img }}
+                      style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
                     />
                   </View>
-                  <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <Text>{element.name}</Text>
-                    <Text>
-                      {element.description}
+                  <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
+                    <Text style={styles.upgradeName}>{item.name.toUpperCase()}</Text>
+                    <Text style={{ alignSelf: 'center', textAlign: "center" }}>
+                      {item.description}
                     </Text>
+                  </View>
+                  <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
+                    <Text></Text>
+                    <Text style={{ textAlign: "center", fontWeight: "450" }}>{cantUpgrade} / {item.lvlMax}</Text>
+                    <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
                   </View>
                 </View>
               </TouchableOpacity>
             );
-          }
-          return null; // Agrega esta línea si deseas ignorar elementos que no cumplen con la condición
-        })}
-        <View style={styles.product}>
-          <Text>SOY MILK</Text>
-          <Text>Les vaques produiran el doble durant 3 minuts</Text>
-          {/* Agregar icono de vaso de leche */}
-        </View>
-        <View style={styles.product}>
-          <Text>VACA TANICA</Text>
-          <Text>Probabilitat del 32% que aparega una vaca satànica</Text>
-          {/* Agregar icono de vaca */}
-        </View>
+          }}
+        />
       </View>
-      <View style={styles.navigation}>
-        {/* Agregar botones de navegación con iconos */}
-      </View>
-    </View >
+    </View>
   );
 }
 
@@ -126,9 +122,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    marginTop: 30,
+    fontFamily: "Arial,sans-serif",
   },
   section: {
-    marginBottom: 20,
+    flex: 1,
+    marginBottom: 5,
   },
   sectionTitle: {
     color: '#fff',
@@ -137,26 +136,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  sectionText: {
-    color: '#fff',
-    fontSize: 16,
-  },
   product: {
     backgroundColor: '#D9D9D9',
-    padding: 10,
     borderRadius: 5,
     marginBottom: 10,
     flexDirection: 'row',
+    fontFamily: "sans-serif",
   },
-  navigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  }, backgroundImage: {
-    width: windowWidth,
-    height: windowHeight * 0.85,
-    justifyContent: 'center',
+  upgradeName: {
+    alignSelf: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    textDecorationLine: 'underline',
+    fontSize: 15
   },
+  coinImage: {
+    width: 15,
+    height: 15,
+  }
 });
 
 export default ShopClick;
