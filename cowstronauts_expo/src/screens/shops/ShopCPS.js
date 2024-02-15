@@ -68,13 +68,12 @@ const ShopCPS = () => {
     <View style={styles.container}>
       <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
 
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
-        <ImageBackground
+      <ImageBackground
         source={require('../../../assets/img/planets/Pluto.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
           <View>
         <FlatList
           data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
@@ -108,8 +107,8 @@ const ShopCPS = () => {
           }}
         />
         </View>
-        </ImageBackground>
       </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
     height: windowHeight * 0.75,
     justifyContent: 'center',
     position: 'absolute',
-    top: 70,
+    top: 170,
     left: 0,
   },
   
