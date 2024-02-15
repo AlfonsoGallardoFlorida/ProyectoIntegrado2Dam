@@ -39,7 +39,7 @@ const Introduction = ({ navigation }) => {
         }, 7000);
     }, []);
     return (
-        <ImageBackground source={require("../../../assets/img/backgrounds/TapBackground.png")} style={styles.background}>
+        <ImageBackground source={require("../../../assets/img/backgrounds/ConstellationIntro.png")} style={styles.background}>
             <View style={{flex: 1, margin: 20, marginTop: 100}}>
                 <Text style={ styles.text }>{text1}</Text>
                 <Text style={ styles.text }>{text2}</Text>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
       flex: 1,
       resizeMode: 'cover',
       justifyContent: 'center',
-      backgroundColor: '#393939',
+      backgroundColor: '#393939 ',
     },
     text: {
         color: "white",

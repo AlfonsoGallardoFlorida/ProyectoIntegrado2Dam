@@ -91,7 +91,7 @@ const ShopClick = () => {
                   </View>
                   <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
                     <Text></Text>
-                    <Text style={{ textAlign: "center", fontWeight: "450" }}>{cantUpgrade} / {item.lvlMax}</Text>
+                    <Text style={{ textAlign: "center", fontWeight: "400" }}>{cantUpgrade} / {item.lvlMax}</Text>
                     <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
                   </View>
                 </View>
