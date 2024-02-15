@@ -57,7 +57,7 @@ const Configuration = ({ navigation }) => {
   };
 
   const saveProgress = () => {
-
+    console.log(userInfo)
     if (userInfo === undefined) return;
 
     const jsonSave = [
@@ -186,6 +186,9 @@ const Configuration = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonContainer}>
+          <View style={{marginBottom: 10}}>
+            <Text style={{color: 'white'}}>Account{(userInfo !== undefined) && <Text>: {userInfo.data.name}</Text>}</Text>
+          </View>
           <View style={styles.leftButtons}>
             <Button
               title="Save progress"

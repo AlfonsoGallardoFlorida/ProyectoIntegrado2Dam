@@ -90,7 +90,6 @@ const Tapcreen = ({ navigation }) => {
 
 
   const handlePress = async () => {
-    //setCoin(coin + pointsPerClick);
     setIsMoonClicked(!isMoonClicked);
     setCantClicks(cantClicks + 1)
     const now = Date.now();

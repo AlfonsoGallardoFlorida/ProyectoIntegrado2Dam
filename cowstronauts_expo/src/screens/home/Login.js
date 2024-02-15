@@ -9,7 +9,6 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = React.useState('');
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
-  //const { coin, setCoin } = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { poinstPerSecond, setPointsPerSecond } = useContext(ScreensContext);
@@ -24,7 +23,7 @@ const Login = ({ navigation }) => {
         if (jsonResponse.data.validated) {
           setUserInfo(jsonResponse);
           (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
-          (jsonResponse.data.save[0] !== undefined) ? dispatch({type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints}) :  dispatch({type: 'InitialValue'}, 0);
+          (jsonResponse.data.save[0] !== undefined) && dispatch({type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints});
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setTapsPerSecond(0);
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
@@ -53,7 +52,6 @@ const Login = ({ navigation }) => {
       <View style={styles.logoContainer}>
         <SvgLogo />
       </View>
-
       <View style={styles.loginForm}>
         <TextInput
           style={styles.inputField}
@@ -71,8 +69,10 @@ const Login = ({ navigation }) => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.loginButton} onPress={() => onPressLogIn(username, password)}>
-            {/*En caso de que no funcione el LogIn  <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('TabsGame')}> */}
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{marginTop: 40}} onPress={() => navigation.navigate('TabsGame')}>
+            <Text style={{color: '#FFFFFF'}}>Cowntinue without account</Text>
           </TouchableOpacity>
         </View>
       </View>
