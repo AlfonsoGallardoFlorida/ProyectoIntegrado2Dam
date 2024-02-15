@@ -1,20 +1,21 @@
-import {createContext, useReducer, useState} from "react";
+import { createContext, useReducer, useState } from "react";
 
 
 const ScreensContext = createContext();
 
 export const ScreensProvider = ({ children }) => {
-    const [ uris, setUris ] = useState([]);
-    const [ areConstellationsVisible, setAreConstellationsVisible ] = useState(true);
+    const [uris, setUris] = useState([]);
+    const [areConstellationsVisible, setAreConstellationsVisible] = useState(true);
     //const [ coin, setCoin ] = useState(0);
-    const [ cantClicks, setCantClicks ] = useState(0);
-    const [ userInfo, setUserInfo ] = useState(undefined);
-    const [ tapsPerSecond, setTapsPerSecond ] = useState(0);
-    const [ pointsPerClick, setPointsPerClick ] = useState(1);
-    const [ upgradesUnlocked, setUpgradesUnlocked ] = useState([]);
-    const [ allUpgrades, setAllUpgrades ] = useState([]);
-    const [ pointsPerSecond, setPointsPerSecond] = useState(0);
+    const [cantClicks, setCantClicks] = useState(0);
+    const [userInfo, setUserInfo] = useState(undefined);
+    const [tapsPerSecond, setTapsPerSecond] = useState(0);
+    const [pointsPerClick, setPointsPerClick] = useState(1);
+    const [upgradesUnlocked, setUpgradesUnlocked] = useState([]);
+    const [allUpgrades, setAllUpgrades] = useState([]);
+    const [pointsPerSecond, setPointsPerSecond] = useState(0);
     const [isMoonMoving, setIsMoonMoving] = useState(true);
+    const [isMuted, setIsMuted] = useState(false);
 
     const reducer = (coin, action) => {
         switch (action.type) {
@@ -34,23 +35,24 @@ export const ScreensProvider = ({ children }) => {
         }
     }
 
-    const[coin, dispatch] = useReducer(reducer, 0);
+    const [coin, dispatch] = useReducer(reducer, 0);
 
     return (
-        <ScreensContext.Provider value ={{ 
-         uris, setUris,
-         areConstellationsVisible, setAreConstellationsVisible,
-         //coin, setCoin,
-         cantClicks, setCantClicks,
-         userInfo, setUserInfo,
-         tapsPerSecond, setTapsPerSecond,
-         pointsPerClick, setPointsPerClick,
-         upgradesUnlocked, setUpgradesUnlocked,
-         allUpgrades, setAllUpgrades,
-         pointsPerSecond,setPointsPerSecond,
-         isMoonMoving, setIsMoonMoving,
-         coin, dispatch
-          }}>
+        <ScreensContext.Provider value={{
+            uris, setUris,
+            areConstellationsVisible, setAreConstellationsVisible,
+            //coin, setCoin,
+            cantClicks, setCantClicks,
+            userInfo, setUserInfo,
+            tapsPerSecond, setTapsPerSecond,
+            pointsPerClick, setPointsPerClick,
+            upgradesUnlocked, setUpgradesUnlocked,
+            allUpgrades, setAllUpgrades,
+            pointsPerSecond, setPointsPerSecond,
+            isMoonMoving, setIsMoonMoving,
+            isMuted, setIsMuted,
+            coin, dispatch
+        }}>
             {children}
         </ScreensContext.Provider>
     )
