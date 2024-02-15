@@ -10,9 +10,9 @@ const ShopCPS = () => {
   const { coin, dispatch } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
-
+  const {isMuted, setIsMuted} = useContext(ScreensContext);
   const play = async () => {
-    const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/Josh.exe.mp3'));
+    const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/lvlUpUpgrade.mp3'));
     await sound.playAsync();
   };
 
@@ -22,6 +22,7 @@ const ShopCPS = () => {
     const lvlMax = data.lvlMax;
     let upgradeLevel = 0;
     let isupgradeSaved = false;
+  
     upgradesUnlocked.map(element => {
       if (element.idUpgrade === id) {
         upgradeLevel = element.cantUpgrade
@@ -33,18 +34,23 @@ const ShopCPS = () => {
 
 
     if (upgradeLevel < lvlMax) {
-      buyOne(data, isupgradeSaved);
+      buyOne(data, isupgradeSaved, lvlMax);
+      if(!isMuted){
+        play();
+      }
     }
 
   }
 
-  const buyOne = (data, isUpgradeSaved) => {
-    console.log(data.id);
+  const buyOne = (data, isUpgradeSaved,lvlMax) => {
     if (data.cost <= coin) {
-      dispatch({ type: 'reduceByPurchase', value: data.cost });
+      dispatch({type: 'reduceByPurchase', value: data.cost});
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
-        upgradesSave.map(element => (element.idUpgrade === data.id) && element.cantUpgrade++)
+        upgradesSave.map(element => {
+          (element.idUpgrade === data.id) && (element.cantUpgrade++)
+          (element.cantUpgrade > lvlMax) && (element.cantUpgrade = lvlMax)
+        })
         console.log(upgradesSave);
         setUpgradesUnlocked(upgradesSave);
       } else {
@@ -55,7 +61,7 @@ const ShopCPS = () => {
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
 
-      setPointsPerSecond(pointsPerSecond + data.effect[0].quantity);
+      setPointsPerClick(pointsPerClick + data.effect[0].quantity);
     } else {
       alert("Not enough Zlotys to buy this upgrade.")
     }

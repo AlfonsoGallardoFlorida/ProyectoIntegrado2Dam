@@ -15,7 +15,7 @@ export const ScreensProvider = ({ children }) => {
     const [allUpgrades, setAllUpgrades] = useState([]);
     const [pointsPerSecond, setPointsPerSecond] = useState(0);
     const [isMoonMoving, setIsMoonMoving] = useState(true);
-    const [isMuted, setIsMuted] = useState(false);
+    const [isMuted, setIsMuted] = useState(true);
 
     const reducer = (coin, action) => {
         switch (action.type) {
