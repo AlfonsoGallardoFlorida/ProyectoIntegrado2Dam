@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import SvgLogo from '../../../assets/img/svg/SvgLogo';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
@@ -85,7 +85,6 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-
       <Image source={require('../../../assets/img/planets/planetLogin.png')} style={styles.marteImage} />
 
       <View style={styles.footerTextContainer}>

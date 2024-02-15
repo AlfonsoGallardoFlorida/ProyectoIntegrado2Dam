@@ -15,12 +15,12 @@ import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
 //import svgEarth from './assets/img/svg/svgEarth';
 
-const App = () => {
+const Shop2 = () => {
   const [upgradePurchased, setUpgradePurchased] = useState(false);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
-  const {pointsPerSecond, setPointsPerSecond} = useContext(ScreensContext);
+  const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
 
   const buyUpgrade = (data) => {
     const id = data.id;
@@ -87,7 +87,7 @@ const App = () => {
         style={styles.backgroundImage}>
         <View style={styles.scrollViewContent}>
           <ScrollView style={{ height: windowHeight - 200, width: '80%' }}>
-            {allUpgrades.upgrade.map((element, i) => {
+            {allUpgrades && allUpgrades.upgrade && Array.isArray(allUpgrades.upgrade) && allUpgrades.upgrade.map((element, i) => {
               if (element.effect[0].type === "end") {
                 let cantUpgrade = 0;
                 (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
@@ -234,4 +234,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Shop2;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext  } from 'react';
-import { View, ScrollView, Image, Switch, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, ScrollView, Image, Switch, Text, StyleSheet, Alert  } from 'react-native';
 import { Slider, CheckBox, Button } from 'react-native-elements';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,7 @@ const Configuration = ({ navigation }) => {
   const { areConstellationsVisible, setAreConstellationsVisible } =
     useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
-  const {isMoonMoving, setIsMoonMoving} = useContext(ScreensContext);
+  const { isMoonMoving, setIsMoonMoving } = useContext(ScreensContext);
   const [selected, setSelected] = useState('');
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
   const { coin, setCoin } = useContext(ScreensContext);
@@ -40,20 +40,12 @@ const Configuration = ({ navigation }) => {
     setIsDaltonicMode(!isDaltonicMode);
   };
 
-  const toggleEpilepticMode = () => {
-    setIsEpilepticMode(!isEpilepticMode);
-  };
-
   const toggleConstellationsVisible = () => {
     setAreConstellationsVisible(!areConstellationsVisible);
   };
 
   const toggleMoonMoving = () => {
     setIsMoonMoving(!isMoonMoving);
-  };
-
-  const handleHorizontalToggle = () => {
-    setIsHorizontal(!isHorizontal);
   };
 
   const saveProgress = () => {
@@ -71,8 +63,6 @@ const Configuration = ({ navigation }) => {
     ]
     console.log(upgradesUnlocked);
     saveApi(jsonSave);
-
-
 
   };
 
@@ -95,12 +85,29 @@ const Configuration = ({ navigation }) => {
   const handleShowCredits = () => {
 
   };
-  const handleReturn= () => {
+  const handleReturn = () => {
     navigation.navigate('Home');
   };
   const handleLogout = () => {
-    navigation.navigate('Login');
+    Alert.alert(
+      'Logout',
+      'Are you sure? Your unsaved progress will be erased.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          onPress: () => {
+            navigation.navigate('Login');
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
+
 
   const handleCloseGame = () => {
     navigation.navigate('Home');
@@ -132,17 +139,6 @@ const Configuration = ({ navigation }) => {
           <CheckBox
             checked={isDaltonicMode}
             onPress={toggleDaltonicMode}
-            checkedIcon='check-circle'
-            checkedColor='#8C81A7'
-            uncheckedColor='#8C81A7'
-            containerStyle={styles.checkBox}
-          />
-        </View>
-        <View style={styles.settingRow}>
-          <Text style={styles.settingText}>Epileptic Mode</Text>
-          <CheckBox
-            checked={isEpilepticMode}
-            onPress={toggleEpilepticMode}
             checkedIcon='check-circle'
             checkedColor='#8C81A7'
             uncheckedColor='#8C81A7'
@@ -186,8 +182,10 @@ const Configuration = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <View style={{marginBottom: 10}}>
-            <Text style={{color: 'white'}}>Account{(userInfo !== undefined) && <Text>: {userInfo.data.name}</Text>}</Text>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={{ color: 'white' }}>
+              Account{userInfo && userInfo.data ? <Text>: {userInfo.data.name}</Text> : ''}
+            </Text>
           </View>
           <View style={styles.leftButtons}>
             <Button
@@ -200,12 +198,6 @@ const Configuration = ({ navigation }) => {
               title="Logout"
               onPress={handleLogout}
               buttonStyle={styles.button}
-              textStyle={styles.buttonText}
-            />
-            <Button
-              title="Close Game"
-              onPress={handleCloseGame}
-              buttonStyle={[styles.button]}
               textStyle={styles.buttonText}
             />
           </View>
@@ -299,7 +291,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     borderRadius: 20,
     backgroundColor: '#777777',
-    marginBottom: 10,
+    marginBottom: 20,
   },
 
   buttonText: {
