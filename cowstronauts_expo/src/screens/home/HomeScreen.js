@@ -53,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View style={styles.thirdContainer}>
           <TouchableOpacity onPress={() => {stopSound(); navigation.navigate('Account')}} style={styles.tapSection}>
-            <Text style={styles.tapTxt}>Pulsa para continuar...</Text>
+            <Text style={styles.tapTxt}>Tap to continue...</Text>
           </TouchableOpacity>
         </View>
       </View>

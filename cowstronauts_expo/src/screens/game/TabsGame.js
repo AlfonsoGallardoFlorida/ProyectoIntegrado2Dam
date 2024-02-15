@@ -7,20 +7,17 @@ import {
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// Importa tus componentes de pantalla
 import Screen1 from './TapScreen';
 import Screen2 from '../shops/Shop1';
 import Screen3 from '../shops/Shop2';
 import Screen4 from '../infoPlayer/Configuration';
 import Screen5 from '../infoPlayer/Achievements';
 
-// Crea un componente de navegación en pestañas
 const Tab = createBottomTabNavigator();
 
-// Define el tema oscuro para react-native-paper
 const paperTheme = {
   ...PaperDefaultTheme,
-  dark: true, // Establece el tema en modo oscuro
+  dark: true, 
 };
 
 const TabsGame = () => {
@@ -30,10 +27,10 @@ const TabsGame = () => {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: '#211F26', // Establece el color de fondo del tab bar en negro
+            backgroundColor: '#211F26', 
           },
-          tabBarActiveTintColor: 'white', // Establece el color de los íconos de los tabs activos en blanco
-          tabBarInactiveTintColor: 'gray', // Establece el color de los íconos de los tabs inactivos en gris
+          tabBarActiveTintColor: 'white',
+          tabBarInactiveTintColor: 'gray', 
         }}>
         <Tab.Screen
           name="Main Page"
