@@ -208,12 +208,6 @@ const Configuration = ({ navigation }) => {
               buttonStyle={[styles.button]}
               textStyle={styles.buttonText}
             />
-              <Button
-              title="Return"
-              onPress={handleReturn}
-              buttonStyle={[styles.button, { marginBottom: 20 }]}
-              textStyle={styles.buttonText}
-            />
           </View>
         </View>
       </ScrollView>
