@@ -33,7 +33,7 @@ const ShopClick = ({navigation}) => {
     })
 
     if (upgradeLevel < lvlMax) {
-      buyOne(data, isupgradeSaved, lvlMax);
+      buyOne(data, isupgradeSaved, lvlMax); // sergi borra esto
       
     }
 
