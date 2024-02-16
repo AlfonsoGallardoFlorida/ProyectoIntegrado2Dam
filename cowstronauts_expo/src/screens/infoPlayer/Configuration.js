@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#2B2930',
+    marginTop: 10,
     paddingVertical: 20,
   },
   imageContainer: {
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 40,
   },
   leftButtons: {
     flex: 1,
@@ -265,8 +266,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   button: {
-    width: 300,
-    maxWidth: 300,
+    width: 250,
+    maxWidth: 250,
     borderRadius: 20,
     backgroundColor: '#777777',
     borderWidth: 1,
