@@ -21,8 +21,9 @@ const Shop2 = () => {
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
-  const totalEndUpgrades = 5
-
+  const { isMuted, setIsMuted } = useContext(ScreensContext);
+  const totalEndUpgrades = 5;
+  
   const buyUpgrade = (data) => {
     const id = data.id;
     const lvlMax = data.lvlMax;
@@ -36,6 +37,9 @@ const Shop2 = () => {
     });
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved);
+      if (!isMuted) {
+        play();
+      }
     }
   };
 
@@ -72,9 +76,7 @@ const Shop2 = () => {
   };
 
   const play = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require('../../../assets/sound/Josh.exe.mp3')
-    );
+    const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/ClickOvni.mp3'));
     await sound.playAsync();
   };
 
@@ -136,7 +138,7 @@ const Shop2 = () => {
             })}
             {purchasedUpgrades.length === totalEndUpgrades && (
               <View style={styles.completedMessageContainer}>
-                <Text style={styles.completedMessage}>Se ha completado el juego y has vuelto a la tierra</Text>
+                <Text style={styles.completedMessage}>YOU'VE COMPLETED THE MISSION</Text>
                 <Image source={require("../../../assets/img/backgrounds/EndGame.png")} style={styles.endImage} />
               </View>
             )}
