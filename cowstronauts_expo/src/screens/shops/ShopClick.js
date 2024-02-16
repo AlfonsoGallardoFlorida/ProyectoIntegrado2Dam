@@ -27,12 +27,10 @@ const ShopClick = () => {
     upgradesUnlocked.map(element => {
       if (element.idUpgrade === id) {
         upgradeLevel = element.cantUpgrade
+        console.log(element.cantUpgrade)
         isupgradeSaved = true;
-      } else {
-        upgradeLevel = 0;
       }
     })
-    console.log(upgradeLevel);
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);

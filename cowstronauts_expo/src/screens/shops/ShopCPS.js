@@ -30,8 +30,6 @@ const ShopCPS = () => {
       if (element.idUpgrade === id) {
         upgradeLevel = element.cantUpgrade
         isupgradeSaved = true;
-      } else {
-        upgradeLevel = 0;
       }
     })
 
