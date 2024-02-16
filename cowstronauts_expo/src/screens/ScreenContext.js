@@ -51,7 +51,7 @@ export const ScreensProvider = ({ children }) => {
             pointsPerSecond, setPointsPerSecond,
             isMoonMoving, setIsMoonMoving,
             isMuted, setIsMuted,
-            coin, dispatch
+            coin, dispatch,
         }}>
             {children}
         </ScreensContext.Provider>

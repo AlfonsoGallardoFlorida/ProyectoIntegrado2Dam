@@ -13,6 +13,7 @@ const ShopClick = ({ navigation }) => {
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
+  const { isMuted, setIsMuted } = useContext(ScreensContext);
 
   // Function to play sound effect
   const play = async () => {
@@ -36,6 +37,9 @@ const ShopClick = ({ navigation }) => {
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);
+      if (!isMuted) {
+        play();
+      }
     }
   }
 
