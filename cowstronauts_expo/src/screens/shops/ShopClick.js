@@ -109,6 +109,7 @@ const ShopClick = () => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
         <View>
+        {allUpgrades.upgrade.length > 0 && (
         <FlatList
           data={allUpgrades.upgrade.filter(element => element.effect[0].type === "click")}
           keyExtractor={(item, index) => index.toString()}
@@ -141,6 +142,7 @@ const ShopClick = () => {
             );
           }}
         />
+        )}
         </View>
       </View>
       </ImageBackground>

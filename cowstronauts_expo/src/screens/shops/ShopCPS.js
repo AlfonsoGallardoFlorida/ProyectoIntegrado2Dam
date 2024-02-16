@@ -10,7 +10,7 @@ const ShopCPS = () => {
   const { coin, dispatch } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
-  const {isMuted, setIsMuted} = useContext(ScreensContext);
+  const { isMuted, setIsMuted } = useContext(ScreensContext);
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
 
@@ -25,7 +25,7 @@ const ShopCPS = () => {
     const lvlMax = data.lvlMax;
     let upgradeLevel = 0;
     let isupgradeSaved = false;
-  
+
     upgradesUnlocked.map(element => {
       if (element.idUpgrade === id) {
         upgradeLevel = element.cantUpgrade
@@ -38,16 +38,16 @@ const ShopCPS = () => {
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);
-      if(!isMuted){
+      if (!isMuted) {
         play();
       }
     }
 
   }
 
-  const buyOne = (data, isUpgradeSaved,lvlMax) => {
+  const buyOne = (data, isUpgradeSaved, lvlMax) => {
     if (data.cost <= coin) {
-      dispatch({type: 'reduceByPurchase', value: data.cost});
+      dispatch({ type: 'reduceByPurchase', value: data.cost });
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => ((element.idUpgrade === data.id) && (element.cantUpgrade++)))
@@ -109,43 +109,45 @@ const ShopCPS = () => {
         source={require('../../../assets/img/planets/Pluto.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
           <View>
-        <FlatList
-          data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
-          keyExtractor={(item, index) => index.toString()}
-          style={{margin: 20}}
-          renderItem={({ item, index }) => {
-            let cantUpgrade = 0;
-            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
-            return (
-              <TouchableOpacity onPress={() => buyUpgrade(item)}>
-                <View style={styles.product}>
-                  <View style={{ flex: 1 }}>
-                    <Image
-                      source={{ uri: 'data:image/gif;base64,' + item.img }}
-                      style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
-                    />
-                  </View>
-                  <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
-                    <Text style={styles.upgradeName}>{item.name.toUpperCase()}</Text>
-                    <Text style={{ alignSelf: 'center', textAlign: "center" }}>
-                      {item.description}
-                    </Text>
-                  </View>
-                  <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
-                    <Text></Text>
-                    <Text style={{ textAlign: "center", fontWeight: "450" }}>{cantUpgrade} / {item.lvlMax}</Text>
-                    <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+            {allUpgrades.upgrade.length > 0 && (
+              <FlatList
+                data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
+                keyExtractor={(item, index) => index.toString()}
+                style={{ margin: 20 }}
+                renderItem={({ item, index }) => {
+                  let cantUpgrade = 0;
+                  (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
+                  return (
+                    <TouchableOpacity onPress={() => buyUpgrade(item)}>
+                      <View style={styles.product}>
+                        <View style={{ flex: 1 }}>
+                          <Image
+                            source={{ uri: 'data:image/gif;base64,' + item.img }}
+                            style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
+                          />
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
+                          <Text style={styles.upgradeName}>{item.name.toUpperCase()}</Text>
+                          <Text style={{ alignSelf: 'center', textAlign: "center" }}>
+                            {item.description}
+                          </Text>
+                        </View>
+                        <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
+                          <Text></Text>
+                          <Text style={{ textAlign: "center", fontWeight: "450" }}>{cantUpgrade} / {item.lvlMax}</Text>
+                          <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            )}
+          </View>
         </View>
-      </View>
       </ImageBackground>
     </View>
   );
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
     top: 170,
     left: 0,
   },
-  
+
 });
 
 export default ShopCPS;
