@@ -113,7 +113,10 @@ const ShopCPS = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
+        <Text style={styles.txtCoins}>{pointsPerSecond} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />/s</Text>
+
         <View style={styles.section}>
+          
           <View>
             {allUpgrades.upgrade.length > 0 && (
               <FlatList
@@ -219,6 +222,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 170,
     left: 0,
+  },
+  txtCoins: {
+    color: "white",
+    top: -15,
+    fontSize: 20,
+    textAlign: "center",
   },
 });
 
