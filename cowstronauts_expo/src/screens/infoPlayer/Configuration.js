@@ -198,13 +198,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#2B2930',
-    marginTop: 10,
     paddingVertical: 20,
   },
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 1,
+    marginBottom: 10,
+    marginTop:20
   },
   image: {
     width: 200,
@@ -270,7 +270,6 @@ const styles = StyleSheet.create({
     maxWidth: 250,
     borderRadius: 20,
     backgroundColor: '#777777',
-    borderWidth: 1,
   },
   buttonText: {
     textAlign: 'center',

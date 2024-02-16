@@ -20,6 +20,7 @@ const Stack = createStackNavigator();
 export default function App() {
   LogBox.ignoreLogs(["Require cycle:"])
   LogBox.ignoreAllLogs();
+  console.disableYellowBox = true;
 
   return (
     <ScreensProvider>

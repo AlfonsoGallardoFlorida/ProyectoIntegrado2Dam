@@ -46,11 +46,11 @@ const TapScreen = ({ navigation }) => {
   useEffect(() => {
     if (isMoonMoving) {
       Animated.loop(
-        Animated.timing(rotateAnim, { useNativeDriver: false, toValue: 1, easing: Easing.linear, duration: 20000 })
+        Animated.timing(rotateAnim, { useNativeDriver: true, toValue: 1, easing: Easing.linear, duration: 20000 })
       ).start();
     } else {
       Animated.loop(
-        Animated.timing(rotateAnim, { useNativeDriver: false, toValue: 1, easing: Easing.linear, duration: 20000 })
+        Animated.timing(rotateAnim, { useNativeDriver: true, toValue: 1, easing: Easing.linear, duration: 20000 })
       ).stop();
     }
   }, [isMoonMoving]);
