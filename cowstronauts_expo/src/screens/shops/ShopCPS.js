@@ -11,6 +11,9 @@ const ShopCPS = () => {
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const {isMuted, setIsMuted} = useContext(ScreensContext);
+  const { cantClicks, setCantClicks } = useContext(ScreensContext);
+  const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
+
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/lvlUpUpgrade.mp3'));
     await sound.playAsync();
@@ -57,10 +60,44 @@ const ShopCPS = () => {
         }
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
+      saveProgress();
 
       setPointsPerSecond(pointsPerSecond + data.effect[0].quantity);
     } else {
       alert("Not enough Zlotys to buy this upgrade.")
+    }
+  }
+
+  const saveProgress = () => {
+    if (userInfo === undefined) return;
+
+    const jsonSave = [
+      {
+        upgrades: upgradesUnlocked,
+        cantClicks: cantClicks,
+        cantPoints: coin,
+        cps: pointsPerSecond,
+        pointsPerClick: pointsPerClick
+      }
+    ]
+    console.log(upgradesUnlocked);
+    saveApi(jsonSave);
+
+  };
+
+  const saveApi = async (jsonSave) => {
+    try {
+      const response = await fetch('http://18.213.13.32:8080/load?id=' + userInfo.data.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonSave)
+      })
+      console.log(response.status);
+      if (response.ok) console.log("Progress Saved!");
+    } catch (error) {
+      console.log(error)
     }
   }
 

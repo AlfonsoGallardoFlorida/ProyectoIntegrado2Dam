@@ -7,17 +7,14 @@ import ScreensContext from '../ScreenContext';
 
 
 const Configuration = ({ navigation }) => {
-  const [isHorizontal, setIsHorizontal] = useState(false);
-  const [volume, setVolume] = useState(50);
   const [isDaltonicMode, setIsDaltonicMode] = useState(false);
-  const [isEpilepticMode, setIsEpilepticMode] = useState(false);
   const { areConstellationsVisible, setAreConstellationsVisible } =
     useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { isMoonMoving, setIsMoonMoving } = useContext(ScreensContext);
   const [selected, setSelected] = useState('');
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
-  const { coin, setCoin } = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
