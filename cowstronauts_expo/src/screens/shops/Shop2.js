@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -21,10 +21,7 @@ const Shop2 = () => {
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
-
-  const handleGoBack = () => {
-    navigation.navigate('Home');
-  };
+  const totalEndUpgrades = 5
 
   const buyUpgrade = (data) => {
     const id = data.id;
@@ -100,7 +97,7 @@ const Shop2 = () => {
                 let cantUpgrade = 0;
                 (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
                 return (
-                  !purchasedUpgrades.includes(element.id) && ( 
+                  !purchasedUpgrades.includes(element.id) && (
                     <TouchableOpacity
                       onPress={() => { buyUpgrade(element); toggleSelection(element.id); }}
                       key={i.toString()}
@@ -137,10 +134,10 @@ const Shop2 = () => {
                 );
               }
             })}
-            {purchasedUpgrades.length === 5 && (
+            {purchasedUpgrades.length === totalEndUpgrades && (
               <View style={styles.completedMessageContainer}>
                 <Text style={styles.completedMessage}>Se ha completado el juego y has vuelto a la tierra</Text>
-                <Image source={require("../../../assets/img/logos/config.png")} style={styles.endImage} />
+                <Image source={require("../../../assets/img/backgrounds/EndGame.png")} style={styles.endImage} />
               </View>
             )}
           </ScrollView>
@@ -261,6 +258,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 200,
     height: 200,
+    borderRadius: 50
   },
 });
 
