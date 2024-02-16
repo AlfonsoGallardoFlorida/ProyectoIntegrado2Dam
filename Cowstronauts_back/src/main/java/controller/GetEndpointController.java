@@ -31,6 +31,12 @@ public class GetEndpointController {
 	@Autowired
 	private AchievementsRepository achievementsRepository;
 
+	/**
+	 * Realiza el inicio de sesión de un usuario, en caso de que las credenciales sean correctas, devuelve la información del mismo.
+	 * @param user
+	 * @param pass
+	 * @return
+	 */
 	@GetMapping("/login")
 	ResponseEntity<JSONObject> login(@RequestParam(value = "user") String user,
 			@RequestParam(value = "pass") String pass) {
@@ -52,6 +58,10 @@ public class GetEndpointController {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonString);
 	}
 
+	/**
+	 * Devuelve una lista con todas las mejoras almacenadas en la base de datos.
+	 * @return
+	 */
 	@GetMapping("/upgrades")
 	ResponseEntity<JSONObject> getUpgrades() {
 		JSONObject jsonString = new JSONObject();
@@ -60,6 +70,10 @@ public class GetEndpointController {
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
+	/**
+	 * Endpoint para recibir una lista de logros desde la base de datos
+	 * @return
+	 */
 	@GetMapping("/achievements")
 	ResponseEntity<JSONObject> getAchievements() {
 		JSONObject jsonString = new JSONObject();
@@ -68,6 +82,11 @@ public class GetEndpointController {
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
+	/**
+	 * Obtiene el archivo de guardado de un usuario
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/getSaves")
 	ResponseEntity<JSONObject> getSaves(@RequestParam(value = "id") String id) {
 		JSONObject jsonString = new JSONObject();
@@ -76,6 +95,11 @@ public class GetEndpointController {
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
+	/**
+	 * devuelve el número de validación de un usuario.
+	 * @param validationNum
+	 * @return
+	 */
 	@GetMapping("/getValidationNum")
 	ResponseEntity<JSONObject> getValidationNum(@RequestParam(value = "validationNum") String validationNum) {
 		JSONObject jsonString = new JSONObject();
@@ -84,6 +108,11 @@ public class GetEndpointController {
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
+	/**
+	 * Convierte la String de contraseña que viene del frontend a MD5
+	 * @param input
+	 * @return
+	 */
 	public static String encryptToMD5(String input) {
 		try {
 

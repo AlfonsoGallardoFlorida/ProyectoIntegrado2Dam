@@ -49,6 +49,11 @@ public class PostEndpointController {
 	@Autowired
 	private AchievementsRepository achievementsRepository;
 
+	/**
+	 * Endpoint que permite añadir un nuevo usuario, enviando a su vez un correo de verificación
+	 * @param newUser
+	 * @return
+	 */
 	@PostMapping("/register")
 	public ResponseEntity<JSONObject> register(@RequestBody Users newUser) {
 
@@ -92,6 +97,11 @@ public class PostEndpointController {
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
 
+	/**
+	 * Valida el usuario con el enlace que se le ha enviado al correo.
+	 * @param number
+	 * @return
+	 */
 	@GetMapping("/validate")
 	public ResponseEntity<String> validateUser(@RequestParam(value = "number") String number) {
 		Users user = usersRepository.findByValidationNum(number);
@@ -106,6 +116,11 @@ public class PostEndpointController {
 		}
 	}
 
+	/**
+	 * Endpoint que permite añadir una nueva mejora.
+	 * @param newUpgrade
+	 * @return
+	 */
 	@PostMapping("/newUpgrade")
 	public ResponseEntity<String> newUpgrade(@RequestBody Upgrades newUpgrade) {
 		List<Upgrades> existingUpgrades = upgradesRepository.findAll();
@@ -124,6 +139,11 @@ public class PostEndpointController {
 		return new ResponseEntity<>("Mejora registrada exitosamente.", HttpStatus.OK);
 	}
 
+	/**
+	 * Endpoint que permite añadir un nuevo logro.
+	 * @param newAchievement
+	 * @return
+	 */
 	@PostMapping("/newAchievement")
 	public ResponseEntity<String> newAchievement(@RequestBody userAchievements newAchievement) {
 		List<userAchievements> existingAchievements = achievementsRepository.findAll();
@@ -142,6 +162,10 @@ public class PostEndpointController {
 		return new ResponseEntity<>("Logro registrado exitosamente.", HttpStatus.OK);
 	}
 
+	/**
+	 * Devuelve el ID más alto de la colección de usuarios.
+	 * @return
+	 */
 	private int getMaxIdUser() {
 		int maxId = 0;
 		List<Users> listUser = usersRepository.findAll();
@@ -155,6 +179,10 @@ public class PostEndpointController {
 
 	}
 
+	/**
+	 * Devuelve el ID más alto de la colección de mejoras.
+	 * @return
+	 */
 	private int getMaxIdUpgrade() {
 		int maxId = 0;
 		List<Upgrades> listUpgrades = upgradesRepository.findAll();
@@ -168,6 +196,10 @@ public class PostEndpointController {
 
 	}
 
+	/**
+	 * Devuelve el ID más alto de la colección de logros.
+	 * @return
+	 */
 	private int getMaxIdAchievement() {
 		int maxId = 0;
 		List<userAchievements> listAchievements = achievementsRepository.findAll();
@@ -207,6 +239,10 @@ public class PostEndpointController {
 		}
 	}
 
+	/**
+	 * Genera un número aleatorio que servirá como número de validación.
+	 * @return
+	 */
 	public static String validationNumGenerator() {
 		Random random = new Random();
 
