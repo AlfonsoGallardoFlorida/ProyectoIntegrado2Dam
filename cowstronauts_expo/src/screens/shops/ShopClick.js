@@ -33,7 +33,7 @@ const ShopClick = ({navigation}) => {
     })
 
     if (upgradeLevel < lvlMax) {
-      buyOne(data, isupgradeSaved, lvlMax);
+      buyOne(data, isupgradeSaved, lvlMax); // sergi borra esto
       
     }
 
@@ -110,6 +110,7 @@ const ShopClick = ({navigation}) => {
         </TouchableOpacity>
       <Text style={styles.title}>TIENDA CLICK MULTIPLIER</Text>
       <View style={styles.section}>
+      <Text style={styles.txtCoins}>{pointsPerClick} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />/tap</Text>
         <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
         <View>
         {allUpgrades.upgrade.length > 0 && (
@@ -216,6 +217,22 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 170,
     left: 0,
+  },
+  productImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+  },
+  productImageContainer: {
+    width: 65,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  txtCoins: {
+    color: "white",
+    top: -15,
+    fontSize: 20,
+    textAlign: "center",
   },
 });
 

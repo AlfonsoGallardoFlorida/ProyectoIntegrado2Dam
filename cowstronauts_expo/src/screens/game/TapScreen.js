@@ -137,9 +137,9 @@ const TapScreen = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.firstContainer}>
           <Text style={styles.txtCoins}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
-          <Text style={styles.txtCoins}>{pointsPerSecond} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />
-            /s</Text>
-        </View>
+          <Text style={styles.txtCoins}>{pointsPerSecond}  <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />/s</Text>
+          <Text style={styles.txtCoins}>{pointsPerClick} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />/tap</Text>
+         </View>
         <View style={styles.secondContainer}>
           <TouchableOpacity activeOpacity={1} onPress={handlePress} style={{ width: "100%", height: "100%", alignSelf: "center" }}>
             <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
