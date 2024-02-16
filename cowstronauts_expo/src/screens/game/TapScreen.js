@@ -17,7 +17,6 @@ const TapScreen = ({ navigation }) => {
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
-  const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const { isMoonMoving, setIsMoonMoving } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
@@ -181,12 +180,6 @@ const styles = StyleSheet.create({
   secondContainer: {
     flex: 1,
     flexDirection: 'column-reverse',
-  },
-  moonImage: {
-    top: 150,
-    width: '125%',
-    height: '125%',
-    alignSelf: 'center',
   },
   txtCoins: {
     color: "white",

@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
-  Provider as PaperProvider,
-  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 

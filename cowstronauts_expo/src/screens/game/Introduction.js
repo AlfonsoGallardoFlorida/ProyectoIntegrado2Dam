@@ -40,7 +40,7 @@ const Introduction = ({ navigation }) => {
             setTextButton("Tap to continue...")
         }, 7000);
     }, []);
-    
+
     return (
         <ImageBackground source={require("../../../assets/img/backgrounds/ConstellationIntro.png")} style={styles.background}>
             <View style={{flex: 1, margin: 20, marginTop: 100}}>
@@ -68,34 +68,5 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "700"
     },
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    firstContainer: {
-      flex: 1.25,
-      width: '100%',
-    },
-    secondContainer: {
-      flex: 1,
-      flexDirection: 'column-reverse',
-    },
-    moonImage: {
-      top: 150,
-      width: '125%',
-      height: '125%',
-      alignSelf: 'center',
-    },
-    txtCoins: {
-      color: "white",
-      top: 70,
-      fontSize: 30,
-      textAlign: "center",
-    },
-    coinImage:{
-      width:30,
-      height:30,
-    }
   });
 export default Introduction;
