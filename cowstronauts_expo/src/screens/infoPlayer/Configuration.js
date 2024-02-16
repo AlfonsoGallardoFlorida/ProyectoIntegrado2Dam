@@ -136,18 +136,6 @@ const Configuration = ({ navigation }) => {
             containerStyle={styles.checkBox}
           />
         </View>
-        {/* Daltonic Mode Switch */}
-        <View style={styles.settingRow}>
-          <Text style={styles.settingText}>Daltonic Mode</Text>
-          <CheckBox
-            checked={isDaltonicMode}
-            onPress={toggleDaltonicMode}
-            checkedIcon='check-circle'
-            checkedColor='#8C81A7'
-            uncheckedColor='#8C81A7'
-            containerStyle={styles.checkBox}
-          />
-        </View>
         {/* Visible Constellations Switch */}
         <View style={styles.settingRow}>
           <Text style={styles.settingText}>Visible Constellations</Text>
@@ -170,19 +158,6 @@ const Configuration = ({ navigation }) => {
             checkedColor='#8C81A7'
             uncheckedColor='#8C81A7'
             containerStyle={styles.checkBox}
-          />
-        </View>
-        {/* Language Selection */}
-        <View style={styles.selectListContainer}>
-          <Text style={styles.languageText}>Language</Text>
-          <SelectList
-            setSelected={(val) => setSelected(val)}
-            data={data}
-            save="value"
-            style={styles.selectList}
-            itemStyle={styles.selectListItem}
-            itemTextStyle={styles.selectListItemText}
-            defaultOption={{ key: '1', value: 'English' }}
           />
         </View>
         {/* Buttons Container */}

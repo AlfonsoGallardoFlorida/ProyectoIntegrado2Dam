@@ -34,11 +34,11 @@ const ShopUpgrades = ({ navigation }) => {
           transform: [{
             rotate: rotateAnim.interpolate({
               inputRange: [0, 1],
-              outputRange: ['0deg', '360deg'] // Rotate from 0 to 360 degrees
+              outputRange: ['0deg', '360deg'] 
             })
           }]
         }}>
-          {planetSvg} {/* Render planet SVG */}
+          {planetSvg}
         </Animated.View>
       </TouchableOpacity>
     );
@@ -46,7 +46,7 @@ const ShopUpgrades = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.firstContainer}></View> {/* First container */}
+      <View style={styles.firstContainer}></View> 
       {/* Second container with Jupiter */}
       <View style={styles.secondContainer}>
         <View style={styles.jupiterContainer}>
