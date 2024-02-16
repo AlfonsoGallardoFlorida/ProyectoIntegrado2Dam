@@ -98,7 +98,7 @@ const Shop2 = () => {
         style={styles.backgroundImage}>
         <View style={styles.scrollViewContent}>
           <ScrollView style={{ height: windowHeight - 200, width: '80%' }}>
-            {allUpgrades.upgrade.map((element, i) => {
+          {allUpgrades && allUpgrades.upgrade && Array.isArray(allUpgrades.upgrade) && allUpgrades.upgrade.map((element, i) => {
               if (element.effect[0].type === "end") {
                 let cantUpgrade = 0;
                 (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
