@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
 
 const ShopCPS = ({ navigation }) => {
+  // Destructuring context values
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
@@ -14,12 +15,13 @@ const ShopCPS = ({ navigation }) => {
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
 
+  // Function to play sound effect
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/lvlUpUpgrade.mp3'));
     await sound.playAsync();
   };
 
-
+  // Function to handle buying an upgrade
   const buyUpgrade = (data) => {
     const id = data.id;
     const lvlMax = data.lvlMax;
@@ -33,16 +35,15 @@ const ShopCPS = ({ navigation }) => {
       }
     })
 
-
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);
       if (!isMuted) {
         play();
       }
     }
-
   }
 
+  // Function to handle buying one unit of an upgrade
   const buyOne = (data, isUpgradeSaved, lvlMax) => {
     if (data.cost <= coin) {
       dispatch({ type: 'reduceByPurchase', value: data.cost });
@@ -66,6 +67,7 @@ const ShopCPS = ({ navigation }) => {
     }
   }
 
+  // Function to save progress
   const saveProgress = () => {
     if (userInfo === undefined) return;
 
@@ -80,9 +82,9 @@ const ShopCPS = ({ navigation }) => {
     ]
     console.log(upgradesUnlocked);
     saveApi(jsonSave);
-
   };
 
+  // Function to save progress to the API
   const saveApi = async (jsonSave) => {
     try {
       const response = await fetch('http://18.213.13.32:8080/load?id=' + userInfo.data.id, {
@@ -101,22 +103,26 @@ const ShopCPS = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-
+      {/* Background image */}
       <ImageBackground
         source={require('../../../assets/img/planets/Pluto.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
+        {/* Displaying current coins */}
         <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        {/* Back button */}
         <TouchableOpacity style={styles.arrowContainer} onPress={() => navigation.navigate('Shop1')}>
           <View>
             <Image source={require("../../../assets/img/logos/flecha.png")} style={styles.arrowImage} />
           </View>
         </TouchableOpacity>
+        {/* Shop title */}
         <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
+        {/* Displaying current points per second */}
         <Text style={styles.txtCoins}>{pointsPerSecond} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />/s</Text>
 
         <View style={styles.section}>
-          
+          {/* Displaying upgrades available for clicks per second */}
           <View>
             {allUpgrades.upgrade.length > 0 && (
               <FlatList
@@ -130,12 +136,14 @@ const ShopCPS = ({ navigation }) => {
                     <TouchableOpacity onPress={() => buyUpgrade(item)}>
                       <View style={styles.product}>
                         <View style={{ flex: 1 }}>
+                          {/* Displaying upgrade image */}
                           <Image
                             source={{ uri: 'data:image/gif;base64,' + item.img }}
                             style={{ width: 130, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
                           />
                         </View>
                         <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
+                          {/* Displaying upgrade name and description */}
                           <Text style={styles.upgradeName}>{item.name.toUpperCase()}</Text>
                           <Text style={{ alignSelf: 'center', textAlign: "center" }}>
                             {item.description}
@@ -143,6 +151,7 @@ const ShopCPS = ({ navigation }) => {
                         </View>
                         <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
                           <Text></Text>
+                          {/* Displaying current level of upgrade, maximum level, and cost */}
                           <Text style={{ textAlign: "center", fontWeight: "400" }}>{cantUpgrade} / {item.lvlMax}</Text>
                           <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
                         </View>
@@ -159,9 +168,11 @@ const ShopCPS = ({ navigation }) => {
   );
 };
 
+// Getting window dimensions
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -230,6 +241,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
 
 export default ShopCPS;
