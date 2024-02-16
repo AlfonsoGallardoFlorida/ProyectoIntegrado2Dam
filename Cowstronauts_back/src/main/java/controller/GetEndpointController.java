@@ -107,6 +107,28 @@ public class GetEndpointController {
 		jsonString.put("saves", user.getValidationNum());
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString);
 	}
+	
+	/**
+	 * Handles validation of a user based on the provided validation number.
+	 *
+	 * @param number The validation number associated with the user.
+	 * @return ResponseEntity<String> indicating the result of the validation.
+	 *         - If successful, returns "User validated successfully!" with HTTP status OK (200).
+	 *         - If unsuccessful, returns "Invalid validation request." with HTTP status BAD_REQUEST (400).
+	 */
+	@GetMapping("/validate")
+	public ResponseEntity<String> validateUser(@RequestParam(value = "number") String number) {
+		Users user = usersRepository.findByValidationNum(number);
+
+		if (user != null && !user.isValidated()) {
+			user.setValidated(true);
+			usersRepository.save(user);
+
+			return ResponseEntity.ok("User validated successfully!");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid validation request.");
+		}
+	}
 
 	/**
 	 * Converts the password string to MD5

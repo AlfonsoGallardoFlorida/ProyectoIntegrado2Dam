@@ -20,6 +20,19 @@ public class SendEmailController {
 
 	}
 
+	/**
+     * Constructor to send an email with the specified details.
+     * 
+     * @param messageToSend      The content of the email message.
+     * @param matter             The subject of the email.
+     * @param email_sender       The sender's email address.
+     * @param email_sender_pass  The password for the sender's email account.
+     * @param host_email         The SMTP host for sending the email.
+     * @param port_email         The port number for the email server.
+     * @param email_desti        An array containing the recipient's email address/es.
+     * @throws UnsupportedEncodingException If an unsupported encoding is encountered.
+     * @throws MessagingException           If an error occurs during the messaging process.
+     */
 	public SendEmailController(String messageToSend, String matter, String email_sender, String email_sender_pass,
 			String host_email, String port_email, String[] email_desti)
 			throws UnsupportedEncodingException, MessagingException {
