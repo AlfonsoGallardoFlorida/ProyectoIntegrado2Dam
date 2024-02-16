@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import SvgLogo from '../../../assets/img/svg/SvgLogo';
 
 const Home = ({navigation}) => {
@@ -38,11 +37,6 @@ const styles = StyleSheet.create({
   logoContainer: {
     marginTop: 50, 
     marginBottom: 20, 
-  },
-  logo: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
   },
   buttonContainer: {
     alignItems: 'center',

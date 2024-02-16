@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, ScrollView, Image, Switch, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { Slider, CheckBox, Button } from 'react-native-elements';
-import { SelectList } from 'react-native-dropdown-select-list';
-import { useNavigation } from '@react-navigation/native';
+import React, { useContext } from 'react';
+import { View, ScrollView, Image, Text, StyleSheet, Alert } from 'react-native';
+import { CheckBox, Button } from 'react-native-elements';
 import ScreensContext from '../ScreenContext';
 
 const Configuration = ({ navigation }) => {
-  // State variables
-  const [isDaltonicMode, setIsDaltonicMode] = useState(false);
-  const [selected, setSelected] = useState('');
   
   // Context variables
   const { areConstellationsVisible, setAreConstellationsVisible } = useContext(ScreensContext);
@@ -16,28 +11,15 @@ const Configuration = ({ navigation }) => {
   const { isMoonMoving, setIsMoonMoving } = useContext(ScreensContext);
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
-  const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const { isMuted, setIsMuted } = useContext(ScreensContext);
 
-  const navigationUsage = useNavigation();
-
-  // Language options data
-  const data = [
-    { key: '1', value: 'English' },
-    { key: '2', value: 'Valencià' },
-    { key: '3', value: 'Castellano' },
-  ];
 
   // Toggle functions
   const toggleMute = () => {
     setIsMuted(!isMuted);
-  };
-
-  const toggleDaltonicMode = () => {
-    setIsDaltonicMode(!isDaltonicMode);
   };
 
   const toggleConstellationsVisible = () => {
@@ -85,11 +67,6 @@ const Configuration = ({ navigation }) => {
     }
   };
 
-  // Handling navigation actions
-  const handleShowCredits = () => {};
-  const handleReturn = () => {
-    navigation.navigate('Home');
-  };
   const handleLogout = () => {
     // Alert for logout confirmation
     Alert.alert(
@@ -218,20 +195,10 @@ const styles = StyleSheet.create({
     width: '93%',
     marginBottom: 10,
   },
-  slider: {
-    width: 200,
-    height: 40,
-  },
   checkBox: {
     marginTop: 5,
     backgroundColor: 'transparent',
     borderWidth: 0,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    zIndex: 1,
   },
   settingRow: {
     flexDirection: 'row',
@@ -258,13 +225,6 @@ const styles = StyleSheet.create({
     maxWidth: 800,
     marginRight: 5,
   },
-  rightButtons: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    marginLeft: 5,
-  },
   button: {
     width: 250,
     maxWidth: 250,
@@ -273,32 +233,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-  },
-  thumb: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-  },
-  selectListContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 5,
-    marginBottom: 10,
-  },
-  languageText: {
-    color: '#FFFF',
-  },
-  selectList: {
-    flex: 1,
-    alignSelf: 'flex-end',
-  },
-  selectListItem: {
-    backgroundColor: '#FFFFFF',
-  },
-  selectListItemText: {
-    color: '#FFFFFF',
-    alignSelf: 'flex-start',
   },
   volumeContainer: {
     flexDirection: 'row',

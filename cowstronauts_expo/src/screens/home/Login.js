@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import SvgLogo from '../../../assets/img/svg/SvgLogo';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
@@ -9,7 +9,6 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = React.useState('');
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
-  const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { poinstPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
@@ -110,12 +109,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 50,
   },
-  logo: {
-    position: 'absolute',
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-  },
   loginForm: {
     flex: 1,
     width: '65%',
@@ -145,7 +138,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
   },
-
   marteImage: {
     position: 'absolute',
     bottom: 2,
