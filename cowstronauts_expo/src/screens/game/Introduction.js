@@ -15,7 +15,9 @@ const Introduction = ({ navigation }) => {
         "But my spaceship broke and I am trapped in this planet",
         "Now, I need to fix my spaceship with the help of the locals!"
     ]
-    
+
+    //This useEffect assigns the texts from the array to each variable with a time difference in each assignation to 
+    //make it appear like an animation.
     useEffect(() => {
 
         setText1(texts[0]);
@@ -38,6 +40,7 @@ const Introduction = ({ navigation }) => {
             setTextButton("Tap to continue...")
         }, 7000);
     }, []);
+    
     return (
         <ImageBackground source={require("../../../assets/img/backgrounds/ConstellationIntro.png")} style={styles.background}>
             <View style={{flex: 1, margin: 20, marginTop: 100}}>

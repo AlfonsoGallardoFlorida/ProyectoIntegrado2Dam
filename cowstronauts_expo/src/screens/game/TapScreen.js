@@ -53,10 +53,6 @@ const Tapcreen = ({ navigation }) => {
 
   useEffect(() => {
     getAllUpgrades();
-    /*     console.log(userInfo.data.save);
-        if(userInfo.data.save[0].cantPoints !== undefined) {
-          setCoin(userInfo.data.save[0].cantPoints)
-        } */
   }, [])
 
   useEffect(() => {
@@ -71,13 +67,6 @@ const Tapcreen = ({ navigation }) => {
     dispatch({type: 'click'});
   }, [isMoonClicked]);
 
-/*   useEffect(() => {
-    const timer = setInterval(() => {
-      setTapsPerSecond(0);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [tapsPerSecond]); */
 
   useEffect(() => {
     return sound

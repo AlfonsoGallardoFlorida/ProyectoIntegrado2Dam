@@ -15,14 +15,11 @@ import Screen5 from '../infoPlayer/Achievements';
 
 const Tab = createBottomTabNavigator();
 
-const paperTheme = {
-  ...PaperDefaultTheme,
-  dark: true, 
-};
-
+//This tab screen has the navigation to each screen of the game: 
+//the main game screen, to both shops, to the configuration screen and to the achievements.
 const TabsGame = () => {
   return (
-    <PaperProvider theme={paperTheme}>
+    <PaperProvider>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
