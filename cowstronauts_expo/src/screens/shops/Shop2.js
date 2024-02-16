@@ -100,7 +100,7 @@ const Shop2 = () => {
                 let cantUpgrade = 0;
                 (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
                 return (
-                  !purchasedUpgrades.includes(element.id) && ( // Corrección aquí
+                  !purchasedUpgrades.includes(element.id) && ( 
                     <TouchableOpacity
                       onPress={() => { buyUpgrade(element); toggleSelection(element.id); }}
                       key={i.toString()}
@@ -137,6 +137,12 @@ const Shop2 = () => {
                 );
               }
             })}
+            {purchasedUpgrades.length === 5 && (
+              <View style={styles.completedMessageContainer}>
+                <Text style={styles.completedMessage}>Se ha completado el juego y has vuelto a la tierra</Text>
+                <Image source={require("../../../assets/img/logos/config.png")} style={styles.endImage} />
+              </View>
+            )}
           </ScrollView>
         </View>
       </ImageBackground>
@@ -241,6 +247,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
+  },
+  completedMessageContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  completedMessage: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  endImage: {
+    marginTop: 10,
+    width: 200,
+    height: 200,
   },
 });
 
