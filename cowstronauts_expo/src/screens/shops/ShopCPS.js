@@ -4,13 +4,16 @@ import { Audio } from 'expo-av';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
 
-const ShopCPS = () => {
+const ShopCPS = ({ navigation }) => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
-  const {isMuted, setIsMuted} = useContext(ScreensContext);
+  const { isMuted, setIsMuted } = useContext(ScreensContext);
+  const { cantClicks, setCantClicks } = useContext(ScreensContext);
+  const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
+
   const play = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/lvlUpUpgrade.mp3'));
     await sound.playAsync();
@@ -22,29 +25,27 @@ const ShopCPS = () => {
     const lvlMax = data.lvlMax;
     let upgradeLevel = 0;
     let isupgradeSaved = false;
-  
+
     upgradesUnlocked.map(element => {
       if (element.idUpgrade === id) {
         upgradeLevel = element.cantUpgrade
         isupgradeSaved = true;
-      } else {
-        upgradeLevel = 0;
       }
     })
 
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);
-      if(!isMuted){
+      if (!isMuted) {
         play();
       }
     }
 
   }
 
-  const buyOne = (data, isUpgradeSaved,lvlMax) => {
+  const buyOne = (data, isUpgradeSaved, lvlMax) => {
     if (data.cost <= coin) {
-      dispatch({type: 'reduceByPurchase', value: data.cost});
+      dispatch({ type: 'reduceByPurchase', value: data.cost });
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => ((element.idUpgrade === data.id) && (element.cantUpgrade++)))
@@ -57,6 +58,7 @@ const ShopCPS = () => {
         }
         setUpgradesUnlocked([...upgradesUnlocked, newUpgrade]);
       }
+      saveProgress();
 
       setPointsPerSecond(pointsPerSecond + data.effect[0].quantity);
     } else {
@@ -64,51 +66,91 @@ const ShopCPS = () => {
     }
   }
 
+  const saveProgress = () => {
+    if (userInfo === undefined) return;
+
+    const jsonSave = [
+      {
+        upgrades: upgradesUnlocked,
+        cantClicks: cantClicks,
+        cantPoints: coin,
+        cps: pointsPerSecond,
+        pointsPerClick: pointsPerClick
+      }
+    ]
+    console.log(upgradesUnlocked);
+    saveApi(jsonSave);
+
+  };
+
+  const saveApi = async (jsonSave) => {
+    try {
+      const response = await fetch('http://18.213.13.32:8080/load?id=' + userInfo.data.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonSave)
+      })
+      console.log(response.status);
+      if (response.ok) console.log("Progress Saved!");
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
 
       <ImageBackground
         source={require('../../../assets/img/planets/Pluto.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
-      <View style={styles.section}>
         <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        <TouchableOpacity style={styles.arrowContainer} onPress={() => navigation.navigate('Shop1')}>
           <View>
-        <FlatList
-          data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
-          keyExtractor={(item, index) => index.toString()}
-          style={{margin: 20}}
-          renderItem={({ item, index }) => {
-            let cantUpgrade = 0;
-            (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
-            return (
-              <TouchableOpacity onPress={() => buyUpgrade(item)}>
-                <View style={styles.product}>
-                  <View style={{ flex: 1 }}>
-                    <Image
-                      source={{ uri: 'data:image/gif;base64,' + item.img }}
-                      style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
-                    />
-                  </View>
-                  <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
-                    <Text style={styles.upgradeName}>{item.name.toUpperCase()}</Text>
-                    <Text style={{ alignSelf: 'center', textAlign: "center" }}>
-                      {item.description}
-                    </Text>
-                  </View>
-                  <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
-                    <Text></Text>
-                    <Text style={{ textAlign: "center", fontWeight: "450" }}>{cantUpgrade} / {item.lvlMax}</Text>
-                    <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+            <Image source={require("../../../assets/img/logos/flecha.png")} style={styles.arrowImage} />
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
+        <View style={styles.section}>
+          <View>
+            {allUpgrades.upgrade.length > 0 && (
+              <FlatList
+                data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
+                keyExtractor={(item, index) => index.toString()}
+                style={{ margin: 20 }}
+                renderItem={({ item, index }) => {
+                  let cantUpgrade = 0;
+                  (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === item.id) && (cantUpgrade = e.cantUpgrade));
+                  return (
+                    <TouchableOpacity onPress={() => buyUpgrade(item)}>
+                      <View style={styles.product}>
+                        <View style={{ flex: 1 }}>
+                          <Image
+                            source={{ uri: 'data:image/gif;base64,' + item.img }}
+                            style={{ width: 130, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
+                          />
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
+                          <Text style={styles.upgradeName}>{item.name.toUpperCase()}</Text>
+                          <Text style={{ alignSelf: 'center', textAlign: "center" }}>
+                            {item.description}
+                          </Text>
+                        </View>
+                        <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
+                          <Text></Text>
+                          <Text style={{ textAlign: "center", fontWeight: "400" }}>{cantUpgrade} / {item.lvlMax}</Text>
+                          <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            )}
+          </View>
         </View>
-      </View>
       </ImageBackground>
     </View>
   );
@@ -128,9 +170,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
-    marginTop: 30,
     fontFamily: "Arial,sans-serif",
+    top: -100
   },
   section: {
     flex: 1,
@@ -161,6 +202,16 @@ const styles = StyleSheet.create({
     width: 15,
     height: 15,
   },
+  arrowImage: {
+    width: 55,
+    height: 55,
+  },
+  arrowContainer: {
+    position: 'absolute',
+    top: -130,
+    left: -1,
+    zIndex: 1,
+  },
   backgroundImage: {
     width: windowWidth,
     height: windowHeight * 0.75,
@@ -169,7 +220,7 @@ const styles = StyleSheet.create({
     top: 170,
     left: 0,
   },
-  
 });
+
 
 export default ShopCPS;

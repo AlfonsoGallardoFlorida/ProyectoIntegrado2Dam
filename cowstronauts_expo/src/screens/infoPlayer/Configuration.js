@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, ScrollView, Image, Switch, Text, StyleSheet, Alert  } from 'react-native';
+import { View, ScrollView, Image, Switch, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { Slider, CheckBox, Button } from 'react-native-elements';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
@@ -7,17 +7,14 @@ import ScreensContext from '../ScreenContext';
 
 
 const Configuration = ({ navigation }) => {
-  const [isHorizontal, setIsHorizontal] = useState(false);
-  const [volume, setVolume] = useState(50);
   const [isDaltonicMode, setIsDaltonicMode] = useState(false);
-  const [isEpilepticMode, setIsEpilepticMode] = useState(false);
   const { areConstellationsVisible, setAreConstellationsVisible } =
     useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { isMoonMoving, setIsMoonMoving } = useContext(ScreensContext);
   const [selected, setSelected] = useState('');
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
-  const { coin, setCoin } = useContext(ScreensContext);
+  const { coin, dispatch } = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
@@ -109,9 +106,6 @@ const Configuration = ({ navigation }) => {
   };
 
 
-  const handleCloseGame = () => {
-    navigation.navigate('Home');
-  };
 
   return (
     <View style={styles.container}>
@@ -188,12 +182,14 @@ const Configuration = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.leftButtons}>
-            <Button
-              title="Save progress"
-              onPress={() => saveProgress()}
-              buttonStyle={styles.button}
-              textStyle={styles.buttonText}
-            />
+            <View style={{ marginBottom: 20 }}>
+              <Button
+                title="Save progress"
+                onPress={() => saveProgress()}
+                buttonStyle={styles.button}
+                textStyle={styles.buttonText}
+              />
+            </View>
             <Button
               title="Logout"
               onPress={handleLogout}
@@ -246,6 +242,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     backgroundColor: 'transparent',
     borderWidth: 0,
+  }, backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
   },
 
   settingRow: {
@@ -275,7 +276,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxWidth: 800,
     marginRight: 5,
-    marginBottom: 10
   },
 
   rightButtons: {
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     borderRadius: 20,
     backgroundColor: '#777777',
-    marginBottom: 20,
+    borderWidth: 1,
   },
 
   buttonText: {
