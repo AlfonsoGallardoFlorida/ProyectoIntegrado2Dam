@@ -4,7 +4,7 @@ import { Audio } from 'expo-av';
 import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
 
-const ShopCPS = () => {
+const ShopCPS = ({ navigation }) => {
   const { allUpgrades, setAllUpgrades } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
@@ -101,14 +101,19 @@ const ShopCPS = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
 
       <ImageBackground
         source={require('../../../assets/img/planets/Pluto.png')}
         resizeMode="cover"
         style={styles.backgroundImage}>
+        <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
+        <TouchableOpacity style={styles.arrowContainer} onPress={() => navigation.navigate('Shop1')}>
+          <View>
+            <Image source={require("../../../assets/img/logos/flecha.png")} style={styles.arrowImage} />
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
           <View>
             {allUpgrades.upgrade.length > 0 && (
               <FlatList
@@ -124,7 +129,7 @@ const ShopCPS = () => {
                         <View style={{ flex: 1 }}>
                           <Image
                             source={{ uri: 'data:image/gif;base64,' + item.img }}
-                            style={{ width: 100, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
+                            style={{ width: 130, height: 130, borderBottomLeftRadius: 5, borderTopLeftRadius: 5 }}
                           />
                         </View>
                         <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingBottom: 5, alignItems: 'flex-start' }}>
@@ -135,7 +140,7 @@ const ShopCPS = () => {
                         </View>
                         <View style={{ flex: .6, justifyContent: "space-between", backgroundColor: "#bebebebe", borderRadius: 5 }}>
                           <Text></Text>
-                          <Text style={{ textAlign: "center", fontWeight: "450" }}>{cantUpgrade} / {item.lvlMax}</Text>
+                          <Text style={{ textAlign: "center", fontWeight: "400" }}>{cantUpgrade} / {item.lvlMax}</Text>
                           <Text style={{ textAlign: "right", paddingRight: 10, fontWeight: "bold" }}>{item.cost} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
                         </View>
                       </View>
@@ -165,9 +170,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
-    marginTop: 30,
     fontFamily: "Arial,sans-serif",
+    top: -100
   },
   section: {
     flex: 1,
@@ -198,6 +202,16 @@ const styles = StyleSheet.create({
     width: 15,
     height: 15,
   },
+  arrowImage: {
+    width: 55,
+    height: 55,
+  },
+  arrowContainer: {
+    position: 'absolute',
+    top: -130,
+    left: -1,
+    zIndex: 1,
+  },
   backgroundImage: {
     width: windowWidth,
     height: windowHeight * 0.75,
@@ -206,7 +220,7 @@ const styles = StyleSheet.create({
     top: 170,
     left: 0,
   },
-
 });
+
 
 export default ShopCPS;
