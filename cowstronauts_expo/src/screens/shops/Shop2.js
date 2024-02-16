@@ -25,7 +25,7 @@ const Shop2 = () => {
   const handleGoBack = () => {
     navigation.navigate('Home');
   };
-  
+
   const buyUpgrade = (data) => {
     const id = data.id;
     const lvlMax = data.lvlMax;
@@ -98,43 +98,45 @@ const Shop2 = () => {
         style={styles.backgroundImage}>
         <View style={styles.scrollViewContent}>
           <ScrollView style={{ height: windowHeight - 200, width: '80%' }}>
-          {allUpgrades && allUpgrades.upgrade && Array.isArray(allUpgrades.upgrade) && allUpgrades.upgrade.map((element, i) => {
+            {allUpgrades && allUpgrades.upgrade && Array.isArray(allUpgrades.upgrade) && allUpgrades.upgrade.map((element, i) => {
               if (element.effect[0].type === "end") {
                 let cantUpgrade = 0;
                 (upgradesUnlocked !== undefined) && upgradesUnlocked.map(e => (e.idUpgrade === element.id) && (cantUpgrade = e.cantUpgrade));
                 return (
-                  <TouchableOpacity
-                    onPress={() => { buyUpgrade(element); toggleSelection(element.id); }}
-                    key={i.toString()}
-                    style={styles.product}>
-                    <View style={styles.productImageContainer}>
-                      <Image
-                        source={{ uri: 'data:image/gif;base64,' + element.img }}
-                        style={styles.productImage}
-                      />
-                    </View>
-                    <View style={styles.productInfo}>
-                      <Text style={styles.productTitle}>{element.name.toUpperCase()}</Text>
-                      <Text style={styles.productDescription}>
-                        {element.description}
-                      </Text>
-                      <View style={styles.coinsUpgrade}>
-                        {purchasedUpgrades.includes(element.id) ? (
-                          <Icon name="check" size={20} color="green" />
-                        ) : (
-                          <>
-                            <Text style={styles.coinsUpgrade}>
-                              {element.cost}&nbsp;
-                              <Image
-                                source={require('../../../assets/img/logos/zloty.png')}
-                                style={styles.coinImage}
-                              />
-                            </Text>
-                          </>
-                        )}
+                  !purchasedUpgrades.includes(element.id) && ( // Corrección aquí
+                    <TouchableOpacity
+                      onPress={() => { buyUpgrade(element); toggleSelection(element.id); }}
+                      key={i.toString()}
+                      style={styles.product}>
+                      <View style={styles.productImageContainer}>
+                        <Image
+                          source={{ uri: 'data:image/gif;base64,' + element.img }}
+                          style={styles.productImage}
+                        />
                       </View>
-                    </View>
-                  </TouchableOpacity>
+                      <View style={styles.productInfo}>
+                        <Text style={styles.productTitle}>{element.name.toUpperCase()}</Text>
+                        <Text style={styles.productDescription}>
+                          {element.description}
+                        </Text>
+                        <View style={styles.coinsUpgrade}>
+                          {purchasedUpgrades.includes(element.id) ? (
+                            <Icon name="check" size={20} color="green" />
+                          ) : (
+                            <>
+                              <Text style={styles.coinsUpgrade}>
+                                {element.cost}&nbsp;
+                                <Image
+                                  source={require('../../../assets/img/logos/zloty.png')}
+                                  style={styles.coinImage}
+                                />
+                              </Text>
+                            </>
+                          )}
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )
                 );
               }
             })}
