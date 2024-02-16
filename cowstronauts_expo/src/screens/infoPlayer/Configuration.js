@@ -5,30 +5,33 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
 import ScreensContext from '../ScreenContext';
 
-
 const Configuration = ({ navigation }) => {
+  // State variables
   const [isDaltonicMode, setIsDaltonicMode] = useState(false);
-  const { areConstellationsVisible, setAreConstellationsVisible } =
-    useContext(ScreensContext);
+  const [selected, setSelected] = useState('');
+  
+  // Context variables
+  const { areConstellationsVisible, setAreConstellationsVisible } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
   const { isMoonMoving, setIsMoonMoving } = useContext(ScreensContext);
-  const [selected, setSelected] = useState('');
   const { cantClicks, setCantClicks } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
   const { tapsPerSecond, setTapsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
-  const navigationUsage = useNavigation();
   const { isMuted, setIsMuted } = useContext(ScreensContext);
 
+  const navigationUsage = useNavigation();
 
+  // Language options data
   const data = [
     { key: '1', value: 'English' },
     { key: '2', value: 'Valencià' },
     { key: '3', value: 'Castellano' },
   ];
 
+  // Toggle functions
   const toggleMute = () => {
     setIsMuted(!isMuted);
   };
@@ -45,10 +48,12 @@ const Configuration = ({ navigation }) => {
     setIsMoonMoving(!isMoonMoving);
   };
 
+  // Function to save progress
   const saveProgress = () => {
-    console.log(userInfo)
+    // Checking if user info is available
     if (userInfo === undefined) return;
 
+    // Creating JSON object for save data
     const jsonSave = [
       {
         upgrades: upgradesUnlocked,
@@ -57,12 +62,13 @@ const Configuration = ({ navigation }) => {
         cps: pointsPerSecond,
         pointsPerClick: pointsPerClick
       }
-    ]
-    console.log(upgradesUnlocked);
-    saveApi(jsonSave);
+    ];
 
+    // Calling save API function
+    saveApi(jsonSave);
   };
 
+  // Function to call save API
   const saveApi = async (jsonSave) => {
     try {
       const response = await fetch('http://18.213.13.32:8080/load?id=' + userInfo.data.id, {
@@ -71,21 +77,21 @@ const Configuration = ({ navigation }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(jsonSave)
-      })
-      console.log(response.status);
+      });
+
       if (response.ok) console.log("Progress Saved!");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-
-  const handleShowCredits = () => {
-
   };
+
+  // Handling navigation actions
+  const handleShowCredits = () => {};
   const handleReturn = () => {
     navigation.navigate('Home');
   };
   const handleLogout = () => {
+    // Alert for logout confirmation
     Alert.alert(
       'Logout',
       'Are you sure? Your unsaved progress will be erased.',
@@ -105,20 +111,22 @@ const Configuration = ({ navigation }) => {
     );
   };
 
-
-
   return (
     <View style={styles.container}>
+      {/* Configuration Image */}
       <View style={styles.imageContainer}>
         <Image
           source={require('../../../assets/img/logos/config.png')}
           style={styles.image}
         />
       </View>
+      {/* Configuration Settings */}
       <ScrollView style={styles.settingsContainer}>
+        {/* Title */}
         <Text style={styles.title}>COWFIGURATION</Text>
+        {/* Mute Switch */}
         <View style={styles.volumeContainer}>
-          <Text style={styles.volumeLabelText}>Moote:</Text>
+          <Text style={styles.volumeLabelText}>Mute:</Text>
           <CheckBox
             checked={isMuted}
             onPress={toggleMute}
@@ -128,6 +136,7 @@ const Configuration = ({ navigation }) => {
             containerStyle={styles.checkBox}
           />
         </View>
+        {/* Daltonic Mode Switch */}
         <View style={styles.settingRow}>
           <Text style={styles.settingText}>Daltonic Mode</Text>
           <CheckBox
@@ -139,6 +148,7 @@ const Configuration = ({ navigation }) => {
             containerStyle={styles.checkBox}
           />
         </View>
+        {/* Visible Constellations Switch */}
         <View style={styles.settingRow}>
           <Text style={styles.settingText}>Visible Constellations</Text>
           <CheckBox
@@ -150,6 +160,7 @@ const Configuration = ({ navigation }) => {
             containerStyle={styles.checkBox}
           />
         </View>
+        {/* Moving Moon Switch */}
         <View style={styles.settingRow}>
           <Text style={styles.settingText}>Moving Moon</Text>
           <CheckBox
@@ -161,6 +172,7 @@ const Configuration = ({ navigation }) => {
             containerStyle={styles.checkBox}
           />
         </View>
+        {/* Language Selection */}
         <View style={styles.selectListContainer}>
           <Text style={styles.languageText}>Language</Text>
           <SelectList
@@ -170,17 +182,18 @@ const Configuration = ({ navigation }) => {
             style={styles.selectList}
             itemStyle={styles.selectListItem}
             itemTextStyle={styles.selectListItemText}
-
             defaultOption={{ key: '1', value: 'English' }}
           />
         </View>
-
+        {/* Buttons Container */}
         <View style={styles.buttonContainer}>
+          {/* Displaying account name if available */}
           <View style={{ marginBottom: 10 }}>
             <Text style={{ color: 'white' }}>
               Account{userInfo && userInfo.data ? <Text>: {userInfo.data.name}</Text> : ''}
             </Text>
           </View>
+          {/* Save Progress Button */}
           <View style={styles.leftButtons}>
             <View style={{ marginBottom: 20 }}>
               <Button
@@ -190,6 +203,7 @@ const Configuration = ({ navigation }) => {
                 textStyle={styles.buttonText}
               />
             </View>
+            {/* Logout Button */}
             <Button
               title="Logout"
               onPress={handleLogout}
@@ -204,7 +218,6 @@ const Configuration = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     alignItems: 'center',
@@ -212,19 +225,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#2B2930',
     paddingVertical: 20,
   },
-
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 1,
   },
-
   image: {
     width: 200,
     height: 200,
     resizeMode: 'contain',
   },
-
   settingsContainer: {
     backgroundColor: '#49464F',
     borderRadius: 20,
@@ -232,43 +242,38 @@ const styles = StyleSheet.create({
     width: '93%',
     marginBottom: 10,
   },
-
   slider: {
     width: 200,
     height: 40,
   },
-
   checkBox: {
     marginTop: 5,
     backgroundColor: 'transparent',
     borderWidth: 0,
-  }, backButton: {
+  },
+  backButton: {
     position: 'absolute',
     top: 10,
     left: 10,
     zIndex: 1,
   },
-
   settingRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 5,
   },
-
   settingText: {
     flex: 1,
     marginRight: 10,
     color: '#FFFF',
   },
-
   buttonContainer: {
     flexDirection: 'column',
     width: '100%',
     justifyContent: 'space-between',
     marginTop: 10,
   },
-
   leftButtons: {
     flex: 1,
     flexDirection: 'column',
@@ -277,7 +282,6 @@ const styles = StyleSheet.create({
     maxWidth: 800,
     marginRight: 5,
   },
-
   rightButtons: {
     flex: 1,
     flexDirection: 'column',
@@ -285,7 +289,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginLeft: 5,
   },
-
   button: {
     width: 300,
     maxWidth: 300,
@@ -293,17 +296,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#777777',
     borderWidth: 1,
   },
-
   buttonText: {
     textAlign: 'center',
   },
-
   thumb: {
     width: 20,
     height: 20,
     borderRadius: 10,
   },
-
   selectListContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -311,36 +311,29 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
   },
-
   languageText: {
     color: '#FFFF',
   },
-
   selectList: {
     flex: 1,
     alignSelf: 'flex-end',
   },
-
   selectListItem: {
     backgroundColor: '#FFFFFF',
   },
-
   selectListItemText: {
     color: '#FFFFFF',
     alignSelf: 'flex-start',
   },
-
   volumeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-
   volumeLabelText: {
     color: '#FFFF',
     marginRight: 10,
   },
-
   title: {
     fontSize: 30,
     fontWeight: 'bold',

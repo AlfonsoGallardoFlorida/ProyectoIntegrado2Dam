@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import ScreensContext from '../ScreenContext';
 
 const AchievementsScreen = () => {
-
-  const {cantClicks, setCantClicks} = useContext(ScreensContext);
+  // Accessing context data
+  const { cantClicks, setCantClicks } = useContext(ScreensContext);
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
 
+  // Array of achievements with their respective details
   const achievements = [
     { name: 'Make 100 clicks', description: 'Click the planet 100 times.', progress: cantClicks, total: 100 },
     { name: 'Make 1,000 clicks', description: 'Click the planet 1000 times.', progress: cantClicks, total: 1000 },
@@ -20,32 +21,42 @@ const AchievementsScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Background Image */}
       <Image
         source={require('../../../assets/img/planets/neptune.png')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
+      {/* Content Container */}
       <View style={styles.content}>
+        {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Achievements</Text>
         </View>
+        {/* Trophy Image */}
         <Image
           source={require('../../../assets/img/logos/trophy.png')}
           style={styles.trophyImage}
           resizeMode="contain"
         />
+        {/* Achievement List */}
         <ScrollView contentContainerStyle={styles.achievementList}>
           {achievements.map((achievement, index) => {
             return (
               <View key={index} style={styles.achievement}>
+                {/* Achievement Number */}
                 <Text style={styles.achievementNumber}>{index + 1}</Text>
                 <View style={styles.achievementInfo}>
+                  {/* Achievement Name */}
                   <Text style={styles.achievementName}>{achievement.name}</Text>
+                  {/* Achievement Description */}
                   <Text style={styles.achievementDescription}>
                     {achievement.description}
                   </Text>
                 </View>
+                {/* Progress Counter */}
                 <View style={styles.progressCounter}>
+                  {/* Display progress or completion */}
                   {(achievement.progress < achievement.total) ? <Text style={styles.progressText}>{achievement.progress} / {achievement.total}</Text> : <Text style={styles.progressText}>complete</Text>}
                 </View>
               </View>

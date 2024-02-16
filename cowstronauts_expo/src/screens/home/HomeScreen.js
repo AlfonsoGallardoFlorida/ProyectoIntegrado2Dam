@@ -9,10 +9,11 @@ let soundObject;
 const HomeScreen = ({ navigation }) => {
   const { isMuted, setIsMuted } = useContext(ScreensContext);
 
-  const playSound = async (calla) => {
-    console.log("calla: " + calla);
+  // Function to play the sound
+  const playSound = async (mute) => {
+    console.log("mute: " + mute);
 
-    if (!calla) {
+    if (!mute) {
       try {
         const { sound } = await Audio.Sound.createAsync(
           require('../../../assets/sound/GameSong.mp3')
@@ -20,11 +21,12 @@ const HomeScreen = ({ navigation }) => {
         soundObject = sound;
         await soundObject.playAsync();
       } catch (error) {
-        console.log('Error al reproducir el sonido: ', error);
+        console.log('Error playing sound: ', error);
       }
     }
   };
 
+  // Function to stop the sound
   const stopSound = async () => {
     try {
       if (soundObject) {
@@ -32,10 +34,11 @@ const HomeScreen = ({ navigation }) => {
         await soundObject.unloadAsync();
       }
     } catch (error) {
-      console.log('Error al detener el sonido: ', error);
+      console.log('Error stopping sound: ', error);
     }
   };
 
+  // Effect hook to handle sound playback based on mute state
   useEffect(() => {
     const focusListener = navigation.addListener('focus', () => {
       console.log("useEffect;" + isMuted)
@@ -47,22 +50,21 @@ const HomeScreen = ({ navigation }) => {
     return focusListener;
   }, [isMuted]);
 
-
-
-
-
   return (
     <ImageBackground source={require('../../../assets/img/backgrounds/inicio.png')} style={styles.background}>
       <View style={styles.container}>
         <View style={styles.firstContainer}>
+          {/* Button to navigate to Configuration screen */}
           <TouchableOpacity onPress={() => { stopSound(); navigation.navigate('Configuration') }}>
             <Image source={require('../../../assets/img/logos/screw.png')} style={{ width: 45, height: 50 }} />
           </TouchableOpacity>
         </View>
         <View style={styles.secondContainer}>
+          {/* Logo */}
           <SvgLogo />
         </View>
         <View style={styles.thirdContainer}>
+          {/* Text to prompt user to tap */}
           <TouchableOpacity onPress={() => {stopSound(); navigation.navigate('Account')}} style={styles.tapSection}>
             <Text style={styles.tapTxt}>Tap to continue...</Text>
           </TouchableOpacity>

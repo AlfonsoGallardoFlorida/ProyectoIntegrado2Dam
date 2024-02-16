@@ -8,7 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Screen1 from './TapScreen';
-import Screen2 from '../shops/Shop1';
+import Screen2 from '../shops/ShopUpgrades';
 import Screen3 from '../shops/Shop2';
 import Screen4 from '../infoPlayer/Configuration';
 import Screen5 from '../infoPlayer/Achievements';

@@ -8,41 +8,52 @@ const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
-  const handleSignUp = async () => {
-    try {
-      if (password !== repeatPassword) {
-        alert("Las contraseñas no coinciden");
-        return;
-      }
-      const jsonBody = {
-        name: username,
-        password: password,
-        email: email,
-        dateCreated: new Date().toISOString().split("T")[0],
-        lastSave: new Date().toISOString().split("T")[0],
-        save: [],
-      }
-      const response = await fetch('http://18.213.13.32:8080/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jsonBody),
-      });
-
-      const data = await response.json();
-
-      if (response.status === 200) {
-        alert('Registro exitoso');
-        navigation.navigate('Login');
-      } else if (response.status === 400) {
-        alert(`Error en el registro: ${data.error}`);
-      }
-    } catch (error) {
-      console.log(`Error en la solicitud: ${error.message}`);
+  // Function to handle the sign-up process
+const handleSignUp = async () => {
+  try {
+    // Check if the passwords match
+    if (password !== repeatPassword) {
+      // If passwords do not match, show an alert and return
+      alert("Passwords do not match");
+      return;
     }
-  };
 
+    // Create a JSON body with user data
+    const jsonBody = {
+      name: username,
+      password: password,
+      email: email,
+      dateCreated: new Date().toISOString().split("T")[0],
+      lastSave: new Date().toISOString().split("T")[0],
+      save: [],
+    };
+
+    // Send a POST request to the server to register the user
+    const response = await fetch('http://18.213.13.32:8080/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(jsonBody),
+    });
+
+    // Parse the response as JSON
+    const data = await response.json();
+
+    // Check the status code of the response
+    if (response.status === 200) {
+      // If registration is successful, show an alert and navigate to the login screen
+      alert('Successful registration');
+      navigation.navigate('Login');
+    } else if (response.status === 400) {
+      // If there's an error in the registration process, show an alert with the error message
+      alert(`Error in registration: ${data.error}`);
+    }
+  } catch (error) {
+    // Catch any errors that occur during the registration process and log them
+    console.log(`Error in request: ${error.message}`);
+  }
+};
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>

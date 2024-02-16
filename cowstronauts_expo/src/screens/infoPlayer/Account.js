@@ -7,15 +7,19 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      {/* Logo Container */}
       <View style={styles.logoContainer}>
         <SvgLogo />
       </View>
 
+      {/* Button Container */}
       <View style={styles.buttonContainer}>
+        {/* Log In Button */}
         <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate("Login")}>
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
 
+        {/* Sign Up Button */}
         <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate("SignUp")}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>

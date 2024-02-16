@@ -15,15 +15,17 @@ const Login = ({ navigation }) => {
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
 
+  // Reset user info and game state on component mount
   useEffect(() => {
     setUserInfo(null);
     setCantClicks(0);
-    dispatch({type: 'InitialValue', value: 0});
+    dispatch({ type: 'InitialValue', value: 0 });
     setPointsPerSecond(0);
     setUpgradesUnlocked([]);
     setPointsPerClick(1);
   }, []);
 
+  // Function to fetch user data from server
   const getData = async (url) => {
     try {
       const response = await fetch(url);
@@ -33,7 +35,7 @@ const Login = ({ navigation }) => {
           setUserInfo(jsonResponse);
           console.log(jsonResponse.data.save[0]);
           (jsonResponse.data.save[0] !== undefined) ? setCantClicks(jsonResponse.data.save[0].cantClicks) : setCantClicks(0);
-          (jsonResponse.data.save[0] !== undefined) && dispatch({type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints});
+          (jsonResponse.data.save[0] !== undefined) && dispatch({ type: 'InitialValue', value: jsonResponse.data.save[0].cantPoints });
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerSecond(jsonResponse.data.save[0].cps) : setPointsPerSecond(0);
           (jsonResponse.data.save[0] !== undefined) ? setUpgradesUnlocked(jsonResponse.data.save[0].upgrades) : setUpgradesUnlocked([]);
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
@@ -48,15 +50,15 @@ const Login = ({ navigation }) => {
         alert("Login not correct. Please try again");
       }
     } catch (error) {
-      console.error(`Error en la solicitud: ${error.message}`);
+      console.error(`Error in request: ${error.message}`);
     }
   };
 
-
+  // Function to handle login button press
   function onPressLogIn(name, pass) {
     getData(`http://18.213.13.32:8080/login?user=${name}&pass=${pass}`);
-
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -82,7 +84,7 @@ const Login = ({ navigation }) => {
             <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Log In</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{marginTop: 40}} onPress={() => navigation.navigate('Introduction')}>
-            <Text style={{color: '#FFFFFF'}}>Cowntinue without account</Text>
+            <Text style={{color: '#FFFFFF'}}>Continue without account</Text>
           </TouchableOpacity>
         </View>
       </View>
