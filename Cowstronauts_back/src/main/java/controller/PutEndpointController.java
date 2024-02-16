@@ -24,7 +24,7 @@ public class PutEndpointController {
 	private UsersRepository usersRepository;
 
 	/**
-	 * actualiza el archivo de guardado de un usuario en concreto, cuando le da al botón de guardar partida
+	 * updates the save file of the selected user with 
 	 * @param id
 	 * @param body
 	 * @return

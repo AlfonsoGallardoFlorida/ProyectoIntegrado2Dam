@@ -32,7 +32,7 @@ public class GetEndpointController {
 	private AchievementsRepository achievementsRepository;
 
 	/**
-	 * Realiza el inicio de sesión de un usuario, en caso de que las credenciales sean correctas, devuelve la información del mismo.
+	 * validate the credentials of the user, in case they are correct, returns all the user information
 	 * @param user
 	 * @param pass
 	 * @return
@@ -59,7 +59,7 @@ public class GetEndpointController {
 	}
 
 	/**
-	 * Devuelve una lista con todas las mejoras almacenadas en la base de datos.
+	 * Returns a list with all upgrades stored in database.
 	 * @return
 	 */
 	@GetMapping("/upgrades")
@@ -71,7 +71,7 @@ public class GetEndpointController {
 	}
 
 	/**
-	 * Endpoint para recibir una lista de logros desde la base de datos
+	 * This endpoint returns the achievements stored in the database
 	 * @return
 	 */
 	@GetMapping("/achievements")
@@ -83,7 +83,7 @@ public class GetEndpointController {
 	}
 
 	/**
-	 * Obtiene el archivo de guardado de un usuario
+	 * Returns the save file of a user
 	 * @param id
 	 * @return
 	 */
@@ -96,7 +96,7 @@ public class GetEndpointController {
 	}
 
 	/**
-	 * devuelve el número de validación de un usuario.
+	 * returns the validation number of a user
 	 * @param validationNum
 	 * @return
 	 */
@@ -109,7 +109,7 @@ public class GetEndpointController {
 	}
 
 	/**
-	 * Convierte la String de contraseña que viene del frontend a MD5
+	 * Converts the password string to MD5
 	 * @param input
 	 * @return
 	 */
@@ -139,6 +139,12 @@ public class GetEndpointController {
 		}
 	}
 
+	/**
+	 * check if the encrypted password is the same as the database one
+	 * @param dbPass
+	 * @param userPass
+	 * @return
+	 */
 	private Boolean checkPassword(String dbPass, String userPass) {
 
 		String userEncrypted = encryptToMD5(userPass);

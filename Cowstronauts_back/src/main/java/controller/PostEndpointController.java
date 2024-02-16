@@ -50,7 +50,7 @@ public class PostEndpointController {
 	private AchievementsRepository achievementsRepository;
 
 	/**
-	 * Endpoint que permite añadir un nuevo usuario, enviando a su vez un correo de verificación
+	 * Adds a new user to the database and sends an Email for the verification
 	 * @param newUser
 	 * @return
 	 */
@@ -98,7 +98,7 @@ public class PostEndpointController {
 	}
 
 	/**
-	 * Valida el usuario con el enlace que se le ha enviado al correo.
+	 * fonsi
 	 * @param number
 	 * @return
 	 */
@@ -117,7 +117,7 @@ public class PostEndpointController {
 	}
 
 	/**
-	 * Endpoint que permite añadir una nueva mejora.
+	 * This endpoint is only for development purposes. Allows the dev teams to add a new upgrade
 	 * @param newUpgrade
 	 * @return
 	 */
@@ -140,7 +140,7 @@ public class PostEndpointController {
 	}
 
 	/**
-	 * Endpoint que permite añadir un nuevo logro.
+	 * This endpoint is only for development purposes. Allows the dev teams to add a new achievement
 	 * @param newAchievement
 	 * @return
 	 */
@@ -163,7 +163,7 @@ public class PostEndpointController {
 	}
 
 	/**
-	 * Devuelve el ID más alto de la colección de usuarios.
+	 * return the highest ID number in the user collection
 	 * @return
 	 */
 	private int getMaxIdUser() {
@@ -180,7 +180,7 @@ public class PostEndpointController {
 	}
 
 	/**
-	 * Devuelve el ID más alto de la colección de mejoras.
+	 * return the highest ID number in the upgrade collection
 	 * @return
 	 */
 	private int getMaxIdUpgrade() {
@@ -197,7 +197,7 @@ public class PostEndpointController {
 	}
 
 	/**
-	 * Devuelve el ID más alto de la colección de logros.
+	 * return the highest ID number in the achievement collection
 	 * @return
 	 */
 	private int getMaxIdAchievement() {
@@ -240,7 +240,7 @@ public class PostEndpointController {
 	}
 
 	/**
-	 * Genera un número aleatorio que servirá como número de validación.
+	 * Generates a random number to validate
 	 * @return
 	 */
 	public static String validationNumGenerator() {
