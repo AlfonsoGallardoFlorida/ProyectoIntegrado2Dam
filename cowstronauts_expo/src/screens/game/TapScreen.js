@@ -31,6 +31,7 @@ const TapScreen = ({ navigation }) => {
     require('../../../assets/sound/MoonClick5.mp3'),
   ]);
 
+  const { areConstellationsVisible, setAreConstellationsVisible } = useContext(ScreensContext);
   // State for sound object
   const [sound, setSound] = useState();
 
