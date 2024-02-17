@@ -15,6 +15,7 @@ const Configuration = ({ navigation }) => {
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const { isMuted, setIsMuted } = useContext(ScreensContext);
+  const {isLoggedOut,setIsLoggedOut} = useContext(ScreensContext);
 
 
   // Toggle functions
@@ -80,6 +81,7 @@ const Configuration = ({ navigation }) => {
         {
           text: 'Logout',
           onPress: () => {
+            setIsLoggedOut(true); 
             navigation.navigate('Login');
           },
         },
@@ -103,7 +105,7 @@ const Configuration = ({ navigation }) => {
         <Text style={styles.title}>COWFIGURATION</Text>
         {/* Mute Switch */}
         <View style={styles.volumeContainer}>
-          <Text style={styles.volumeLabelText}>Mute:</Text>
+          <Text style={styles.volumeLabelText}>Moote:</Text>
           <CheckBox
             checked={isMuted}
             onPress={toggleMute}
@@ -115,7 +117,7 @@ const Configuration = ({ navigation }) => {
         </View>
         {/* Visible Constellations Switch */}
         <View style={styles.settingRow}>
-          <Text style={styles.settingText}>Visible Constellations</Text>
+          <Text style={styles.settingText}>Visible Cowstellations</Text>
           <CheckBox
             checked={areConstellationsVisible}
             onPress={toggleConstellationsVisible}

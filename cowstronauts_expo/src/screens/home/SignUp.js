@@ -1,4 +1,4 @@
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import SvgLogo from '../../../assets/img/svg/SvgLogo';
 import React, { useState } from 'react';
 
@@ -9,51 +9,74 @@ const SignUp = ({ navigation }) => {
   const [repeatPassword, setRepeatPassword] = useState('');
 
   // Function to handle the sign-up process
-const handleSignUp = async () => {
-  try {
-    // Check if the passwords match
-    if (password !== repeatPassword) {
-      // If passwords do not match, show an alert and return
-      alert("Passwords do not match");
-      return;
+  const handleSignUp = async () => {
+    try {
+      if (!username || !password || !email || !repeatPassword) {
+        // If any field is empty, show an alert and return
+        Alert.alert(
+          'SignUp Error',
+          'Please fill in all the fields.',
+        );
+        return;
+      }
+
+      // Check if the passwords match
+      if (password !== repeatPassword) {
+        // If passwords do not match, show an alert and return
+        Alert.alert(
+          'SignUp Error',
+          'Passwords do not match.',
+        );
+        return;
+      }
+
+      if (!email.includes('@')) {
+        // If email doesn't contain '@', show an alert and return
+        Alert.alert(
+          'SignUp Error',
+          'Email must contain @.',
+        );
+        return;
+      }
+
+      // Create a JSON body with user data
+      const jsonBody = {
+        name: username,
+        password: password,
+        email: email,
+        dateCreated: new Date().toISOString().split("T")[0],
+        lastSave: new Date().toISOString().split("T")[0],
+        save: [],
+      };
+
+      // Send a POST request to the server to register the user
+      const response = await fetch('http://18.213.13.32:8080/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonBody),
+      });
+
+      // Parse the response as JSON
+      const data = await response.json();
+
+      // Check the status code of the response
+      if (response.status === 200) {
+        // If registration is successful, show an alert and navigate to the login screen
+        Alert.alert(
+          'SignUp Succes',
+          'Succesful registration.\nCheck your E-mail to validate your account',
+        );        navigation.navigate('Login');
+      } else if (response.status === 400) {
+        // If there's an error in the registration process, show an alert with the error message
+        alert(`Error in registration: ${data.error}`);
+      }
+    } catch (error) {
+      // Catch any errors that occur during the registration process and log them
+      console.log(`Error in request: ${error.message}`);
     }
-
-    // Create a JSON body with user data
-    const jsonBody = {
-      name: username,
-      password: password,
-      email: email,
-      dateCreated: new Date().toISOString().split("T")[0],
-      lastSave: new Date().toISOString().split("T")[0],
-      save: [],
-    };
-
-    // Send a POST request to the server to register the user
-    const response = await fetch('http://18.213.13.32:8080/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(jsonBody),
-    });
-
-    // Parse the response as JSON
-    const data = await response.json();
-
-    // Check the status code of the response
-    if (response.status === 200) {
-      // If registration is successful, show an alert and navigate to the login screen
-      alert('Successful registration');
-      navigation.navigate('Login');
-    } else if (response.status === 400) {
-      // If there's an error in the registration process, show an alert with the error message
-      alert(`Error in registration: ${data.error}`);
-    }
-  } catch (error) {
-    // Catch any errors that occur during the registration process and log them
-    console.log(`Error in request: ${error.message}`);
-  }
-};
+  };
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -98,7 +121,7 @@ const handleSignUp = async () => {
       <Image source={require('../../../assets/img/planets/planetSignUp.png')} style={styles.marteImage} />
 
       <View style={styles.footerTextContainer}>
-        <Text style={styles.footerText} onPress={()=> navigation.navigate('Login')}>Have an account?</Text>
+        <Text style={styles.footerText} onPress={() => navigation.navigate('Login')}>Have an account?</Text>
       </View>
     </View>
   );

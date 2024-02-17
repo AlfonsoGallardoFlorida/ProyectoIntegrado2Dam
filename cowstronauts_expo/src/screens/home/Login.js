@@ -13,16 +13,20 @@ const Login = ({ navigation }) => {
   const { poinstPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const { pointsPerClick, setPointsPerClick } = useContext(ScreensContext);
   const { coin, dispatch } = useContext(ScreensContext);
+  const {isLoggedOut,setIsLoggedOut} = useContext(ScreensContext);
 
   // Reset user info and game state on component mount
   useEffect(() => {
-    setUserInfo(null);
-    setCantClicks(0);
-    dispatch({ type: 'InitialValue', value: 0 });
-    setPointsPerSecond(0);
-    setUpgradesUnlocked([]);
-    setPointsPerClick(1);
-  }, []);
+    console.log(isLoggedOut);
+    if(isLoggedOut){
+      setUserInfo(null);
+      setCantClicks(0);
+      dispatch({ type: 'InitialValue', value: 0 });
+      setPointsPerSecond(0);
+      setUpgradesUnlocked([]);
+      setPointsPerClick(1);
+    }
+  }, [isLoggedOut]);
 
   // Function to fetch user data from server
   const getData = async (url) => {
@@ -40,6 +44,7 @@ const Login = ({ navigation }) => {
           (jsonResponse.data.save[0] !== undefined) ? setPointsPerClick(jsonResponse.data.save[0].pointsPerClick) : setPointsPerClick(1);
           (jsonResponse.data.save[0] !== undefined) && console.log(jsonResponse.data.save[0].upgrades);
           (jsonResponse.data.save[0] !== undefined) ? navigation.navigate("TabsGame") : navigation.navigate("Introduction");
+          setIsLoggedOut(false);
         } else {
           setUserInfo(null);
           alert("Correct Credentials\nUser is NOT validated, check your e-mail");
