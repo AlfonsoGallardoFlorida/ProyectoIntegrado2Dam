@@ -37,9 +37,6 @@ const ShopCPS = ({ navigation }) => {
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);
-      if (!isMuted) {
-        play();
-      }
     }
   }
 
@@ -47,6 +44,9 @@ const ShopCPS = ({ navigation }) => {
   const buyOne = (data, isUpgradeSaved, lvlMax) => {
     if (data.cost <= coin) {
       dispatch({ type: 'reduceByPurchase', value: data.cost });
+      if (!isMuted) {
+        play();
+      }
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => ((element.idUpgrade === data.id) && (element.cantUpgrade++)))

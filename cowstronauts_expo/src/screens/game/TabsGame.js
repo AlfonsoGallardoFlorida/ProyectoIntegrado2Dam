@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   Provider as PaperProvider
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Audio } from 'expo-av';
 
 import Screen1 from './TapScreen';
 import Screen2 from '../shops/ShopUpgrades';
@@ -16,6 +18,19 @@ const Tab = createBottomTabNavigator();
 //This tab screen has the navigation to each screen of the game: 
 //the main game screen, to both shops, to the configuration screen and to the achievements.
 const TabsGame = () => {
+
+  const playSound = async () => {
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        require('../../../assets/sound/menuSelection.mp3')
+      );
+      await sound.setStatusAsync({ volume: 1.0 });
+      await sound.playAsync();
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
+
   return (
     <PaperProvider>
       <Tab.Navigator
@@ -35,6 +50,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen1}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Shop1"
@@ -44,6 +64,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen2}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Shop2"
@@ -53,6 +78,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen3}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Config"
@@ -62,6 +92,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen4}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Achievements"
@@ -71,6 +106,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen5}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
       </Tab.Navigator>
     </PaperProvider>
