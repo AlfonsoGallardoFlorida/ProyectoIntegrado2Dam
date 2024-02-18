@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { View, ScrollView, Image, Text, StyleSheet, Alert } from 'react-native';
 import { CheckBox, Button } from 'react-native-elements';
 import ScreensContext from '../ScreenContext';
+import { Audio } from 'expo-av';
 
 const Configuration = ({ navigation }) => {
-  
+
   // Context variables
   const { areConstellationsVisible, setAreConstellationsVisible } = useContext(ScreensContext);
   const { userInfo, setUserInfo } = useContext(ScreensContext);
@@ -15,20 +16,46 @@ const Configuration = ({ navigation }) => {
   const { upgradesUnlocked, setUpgradesUnlocked } = useContext(ScreensContext);
   const { pointsPerSecond, setPointsPerSecond } = useContext(ScreensContext);
   const { isMuted, setIsMuted } = useContext(ScreensContext);
-  const {isLoggedOut,setIsLoggedOut} = useContext(ScreensContext);
+  const { isLoggedOut, setIsLoggedOut } = useContext(ScreensContext);
 
+  const playSound = async (isChecked) => {
+    try {
+      let soundFile = '';
 
+      // Determine the sound file based on the checkbox state
+      if (isChecked) {
+        soundFile = require('../../../assets/sound/checkTrue.mp3');
+      } else {
+        soundFile = require('../../../assets/sound/checkFalse.mp3');
+      }
+
+      const { sound } = await Audio.Sound.createAsync(soundFile);
+      await sound.setStatusAsync({ volume: 1.0 });
+      await sound.playAsync();
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
   // Toggle functions
   const toggleMute = () => {
     setIsMuted(!isMuted);
+    playSound(!isMuted);
   };
 
   const toggleConstellationsVisible = () => {
     setAreConstellationsVisible(!areConstellationsVisible);
+    if (!isMuted) {
+      setAreConstellationsVisible(!areConstellationsVisible);
+      playSound(!areConstellationsVisible);
+    }
   };
 
   const toggleMoonMoving = () => {
     setIsMoonMoving(!isMoonMoving);
+    if (!isMuted) {
+      setIsMoonMoving(!isMoonMoving);
+      playSound(!isMoonMoving);
+    }
   };
 
   // Function to save progress
@@ -46,6 +73,7 @@ const Configuration = ({ navigation }) => {
         pointsPerClick: pointsPerClick
       }
     ];
+    Alert.alert("Progress Saved!" , "Save")
 
     // Calling save API function
     saveApi(jsonSave);
@@ -81,7 +109,7 @@ const Configuration = ({ navigation }) => {
         {
           text: 'Logout',
           onPress: () => {
-            setIsLoggedOut(true); 
+            setIsLoggedOut(true);
             navigation.navigate('Login');
           },
         },
@@ -183,7 +211,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-    marginTop:20
+    marginTop: 20
   },
   image: {
     width: 200,
