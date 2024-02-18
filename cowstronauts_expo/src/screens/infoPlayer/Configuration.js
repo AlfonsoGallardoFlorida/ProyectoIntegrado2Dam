@@ -73,8 +73,6 @@ const Configuration = ({ navigation }) => {
         pointsPerClick: pointsPerClick
       }
     ];
-    Alert.alert("Progress Saved!" , "Save")
-
     // Calling save API function
     saveApi(jsonSave);
   };

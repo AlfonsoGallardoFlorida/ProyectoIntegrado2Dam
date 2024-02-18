@@ -54,6 +54,10 @@ const Login = ({ navigation }) => {
         alert("Login not correct. Please try again");
       }
     } catch (error) {
+      Alert.alert(
+        'Connection Error',
+        "Error connecting with the database",
+      );
       console.error(`Error in request: ${error.message}`);
     }
   };
