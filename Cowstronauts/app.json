@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Cowstronauts",
+    "slug": "Cowstronauts",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/img/logos/appLogo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/img/logos/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/img/logos/logo.png",
+        "backgroundColor": "#1D1B20"
+      },
+      "package": "com.pommpo.Cowstronauts"
+    },
+    "web": {
+      "favicon": "./assets/img/logos/logo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "518ffaba-1784-4731-a31f-0538819cce43"
+      }
+    }
+  }
+}
