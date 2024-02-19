@@ -1,14 +1,13 @@
 {
   "expo": {
-    "name": "cowstronauts_expo",
-    "slug": "cowstronauts_expo",
+    "name": "Cowstronauts",
+    "slug": "Cowstronauts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/logos/logo.png",
+    "icon": "./assets/img/logos/Cowstronauts-Logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      // imagen de carga
-      "image": "./assets/img/logos/logo.png",
+      "image": "./assets/img/logos/Cowstronauts-Logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/img/logos/logo.png",
+        "foregroundImage": "./assets/img/logos/Cowstronauts-Logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.Cowstronauts"
     },
     "web": {
-      "favicon": "./assets/img/logos/logo.png"
+      "favicon": "./assets/img/logos/Cowstronauts-Logo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "39f1678b-dd51-4a14-8c44-187cef3af8e5"
+      }
     }
   }
 }
