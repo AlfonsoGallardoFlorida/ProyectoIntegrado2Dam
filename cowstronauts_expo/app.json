@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Cowstronauts",
-    "slug": "Cowstronauts",
+    "slug": "cowstronauts_expo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/img/logos/appLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/img/logos/appLogo.png",
+      "image": "./assets/img/logos/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,7 +20,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/img/logos/logo.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#1D1B20"
       },
       "package": "com.pommpo.cowstronauts_expo"
     },
