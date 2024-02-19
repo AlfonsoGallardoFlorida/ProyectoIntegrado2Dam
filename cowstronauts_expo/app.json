@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "cowstronauts_expo",
-    "slug": "cowstronauts_expo",
+    "name": "Cowstronauts",
+    "slug": "Cowstronauts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/logos/logo.png",
+    "icon": "./assets/img/logos/appLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/img/logos/logo.png",
+      "image": "./assets/img/logos/appLogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/img/logos/logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pommpo.cowstronauts_expo"
     },
     "web": {
       "favicon": "./assets/img/logos/logo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8aceeb38-615a-4bce-b667-b43d9451705f"
+      }
     }
   }
 }
