@@ -67,13 +67,17 @@ const SignUp = ({ navigation }) => {
         Alert.alert(
           'SignUp Succes',
           'Succesful registration.\nCheck your E-mail to validate your account',
-        );        navigation.navigate('Login');
+        ); navigation.navigate('Login');
       } else if (response.status === 400) {
         // If there's an error in the registration process, show an alert with the error message
         alert(`Error in registration: ${data.error}`);
       }
     } catch (error) {
       // Catch any errors that occur during the registration process and log them
+      Alert.alert(
+        'Connection Error',
+        "Error connecting with the database",
+      );
       console.log(`Error in request: ${error.message}`);
     }
   };
