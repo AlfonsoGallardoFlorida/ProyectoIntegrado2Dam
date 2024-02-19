@@ -7,7 +7,6 @@
     "icon": "./assets/img/logos/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      // imagen de carga
       "image": "./assets/img/logos/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"

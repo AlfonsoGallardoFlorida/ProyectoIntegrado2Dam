@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   Provider as PaperProvider
@@ -12,6 +11,7 @@ import Screen2 from '../shops/ShopUpgrades';
 import Screen3 from '../shops/Shop2';
 import Screen4 from '../infoPlayer/Configuration';
 import Screen5 from '../infoPlayer/Achievements';
+import ScreensContext from '../ScreenContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,15 +19,19 @@ const Tab = createBottomTabNavigator();
 //the main game screen, to both shops, to the configuration screen and to the achievements.
 const TabsGame = () => {
 
+  const { isMuted, setIsMuted } = useContext(ScreensContext);
+
   const playSound = async () => {
-    try {
-      const { sound } = await Audio.Sound.createAsync(
-        require('../../../assets/sound/menuSelection.mp3')
-      );
-      await sound.setStatusAsync({ volume: 1.0 });
-      await sound.playAsync();
-    } catch (error) {
-      console.error('Error playing sound:', error);
+    if (!isMuted) {
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          require('../../../assets/sound/menuSelection.mp3')
+        );
+        await sound.setStatusAsync({ volume: 1.0 });
+        await sound.playAsync();
+      } catch (error) {
+        console.error('Error playing sound:', error);
+      }
     }
   };
 
@@ -37,10 +41,10 @@ const TabsGame = () => {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: '#211F26', 
+            backgroundColor: '#211F26',
           },
           tabBarActiveTintColor: 'white',
-          tabBarInactiveTintColor: 'gray', 
+          tabBarInactiveTintColor: 'gray',
         }}>
         <Tab.Screen
           name="Main Page"
