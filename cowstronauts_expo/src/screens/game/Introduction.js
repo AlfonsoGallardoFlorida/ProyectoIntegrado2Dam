@@ -10,7 +10,7 @@ const Introduction = ({ navigation }) => {
     const [ textButton, setTextButton ] = useState("")
 
     const texts = [
-        "Discovering new planets is an important commitment with our society",
+        "Discovering new planets is an important commitment in our society",
         "So, my occupation is exploring the space and find new resources",
         "But my spaceship broke and I am trapped in this planet",
         "Now, I need to fix my spaceship with the help of the locals!"

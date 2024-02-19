@@ -37,9 +37,6 @@ const ShopClick = ({ navigation }) => {
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);
-      if (!isMuted) {
-        play();
-      }
     }
   }
 
@@ -48,6 +45,9 @@ const ShopClick = ({ navigation }) => {
     console.log(upgradesUnlocked);
     if (data.cost <= coin) {
       dispatch({ type: 'reduceByPurchase', value: data.cost });
+      if (!isMuted) {
+        play();
+      }
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => ((element.idUpgrade === data.id) && (element.cantUpgrade++)))
@@ -114,14 +114,14 @@ const ShopClick = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         {/* Shop title */}
-        <Text style={styles.title}>TIENDA CLICK MULTIPLIER</Text>
+        <Text style={styles.title}>CLICK MULTIPLIER</Text>
         <View style={styles.section}>
           {/* Displaying points per click and total coins */}
           <Text style={styles.txtCoins}>{pointsPerClick} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />/tap</Text>
           <Text style={styles.sectionTitle}>{coin} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} /></Text>
           <View>
             {/* Displaying upgrades available for click multiplier */}
-            {allUpgrades.upgrade.length > 0 && (
+            {allUpgrades && allUpgrades.upgrade && allUpgrades.upgrade.length > 0 && (
               <FlatList
                 data={allUpgrades.upgrade.filter(element => element.effect[0].type === "click")}
                 keyExtractor={(item, index) => index.toString()}

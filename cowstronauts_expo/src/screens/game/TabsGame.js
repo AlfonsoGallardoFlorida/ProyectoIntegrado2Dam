@@ -1,31 +1,50 @@
-import * as React from 'react';
+import { useEffect, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   Provider as PaperProvider
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Audio } from 'expo-av';
 
 import Screen1 from './TapScreen';
 import Screen2 from '../shops/ShopUpgrades';
 import Screen3 from '../shops/Shop2';
 import Screen4 from '../infoPlayer/Configuration';
 import Screen5 from '../infoPlayer/Achievements';
+import ScreensContext from '../ScreenContext';
 
 const Tab = createBottomTabNavigator();
 
 //This tab screen has the navigation to each screen of the game: 
 //the main game screen, to both shops, to the configuration screen and to the achievements.
 const TabsGame = () => {
+
+  const { isMuted, setIsMuted } = useContext(ScreensContext);
+
+  const playSound = async () => {
+    if (!isMuted) {
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          require('../../../assets/sound/menuSelection.mp3')
+        );
+        await sound.setStatusAsync({ volume: 1.0 });
+        await sound.playAsync();
+      } catch (error) {
+        console.error('Error playing sound:', error);
+      }
+    }
+  };
+
   return (
     <PaperProvider>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: '#211F26', 
+            backgroundColor: '#211F26',
           },
           tabBarActiveTintColor: 'white',
-          tabBarInactiveTintColor: 'gray', 
+          tabBarInactiveTintColor: 'gray',
         }}>
         <Tab.Screen
           name="Main Page"
@@ -35,6 +54,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen1}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Shop1"
@@ -44,6 +68,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen2}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Shop2"
@@ -53,6 +82,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen3}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Config"
@@ -62,6 +96,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen4}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
         <Tab.Screen
           name="Achievements"
@@ -71,6 +110,11 @@ const TabsGame = () => {
             ),
           }}
           component={Screen5}
+          listeners={{
+            tabPress: () => {
+              playSound();
+            },
+          }}
         />
       </Tab.Navigator>
     </PaperProvider>

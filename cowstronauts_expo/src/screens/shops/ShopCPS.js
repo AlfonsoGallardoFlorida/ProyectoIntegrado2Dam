@@ -37,9 +37,6 @@ const ShopCPS = ({ navigation }) => {
 
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved, lvlMax);
-      if (!isMuted) {
-        play();
-      }
     }
   }
 
@@ -47,6 +44,9 @@ const ShopCPS = ({ navigation }) => {
   const buyOne = (data, isUpgradeSaved, lvlMax) => {
     if (data.cost <= coin) {
       dispatch({ type: 'reduceByPurchase', value: data.cost });
+      if (!isMuted) {
+        play();
+      }
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.map(element => ((element.idUpgrade === data.id) && (element.cantUpgrade++)))
@@ -117,14 +117,14 @@ const ShopCPS = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         {/* Shop title */}
-        <Text style={styles.title}>TIENDA CLICKS PER SECOND</Text>
+        <Text style={styles.title}>CLICKS PER SECOND</Text>
         {/* Displaying current points per second */}
         <Text style={styles.txtCoins}>{pointsPerSecond} <Image source={require("../../../assets/img/logos/zloty.png")} style={styles.coinImage} />/s</Text>
 
         <View style={styles.section}>
           {/* Displaying upgrades available for clicks per second */}
           <View>
-            {allUpgrades.upgrade.length > 0 && (
+          {allUpgrades && allUpgrades.upgrade && allUpgrades.upgrade.length > 0 && (
               <FlatList
                 data={allUpgrades.upgrade.filter(element => element.effect[0].type === "cps")}
                 keyExtractor={(item, index) => index.toString()}

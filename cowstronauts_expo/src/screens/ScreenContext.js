@@ -16,6 +16,7 @@ export const ScreensProvider = ({ children }) => {
     const [pointsPerSecond, setPointsPerSecond] = useState(0);
     const [isMoonMoving, setIsMoonMoving] = useState(true);
     const [isMuted, setIsMuted] = useState(false);
+    const [isLoggedOut, setIsLoggedOut] = useState(true);
 
     const reducer = (coin, action) => {
         switch (action.type) {
@@ -52,6 +53,7 @@ export const ScreensProvider = ({ children }) => {
             isMoonMoving, setIsMoonMoving,
             isMuted, setIsMuted,
             coin, dispatch,
+            isLoggedOut,setIsLoggedOut
         }}>
             {children}
         </ScreensContext.Provider>

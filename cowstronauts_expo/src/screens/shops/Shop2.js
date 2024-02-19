@@ -37,9 +37,6 @@ const Shop2 = () => {
     });
     if (upgradeLevel < lvlMax) {
       buyOne(data, isupgradeSaved);
-      if (!isMuted) {
-        play();
-      }
     }
   };
 
@@ -47,6 +44,9 @@ const Shop2 = () => {
     console.log(data.id);
     if (data.cost <= coin) {
       dispatch({ type: 'reduceByPurchase', value: data.cost });
+      if (!isMuted) {
+        play();
+      }
       if (isUpgradeSaved) {
         let upgradesSave = [...upgradesUnlocked];
         upgradesSave.forEach(element => (element.idUpgrade === data.id) && element.cantUpgrade++);
